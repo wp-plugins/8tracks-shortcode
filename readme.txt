@@ -15,8 +15,8 @@ Much like other Wordpress shortcodes do for YouTube or Vimeo, this plugin allows
 
 The syntax is: [8tracks]URL[/8tracks]
 
-URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942), 
-or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version).  
+URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
+or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
 
 	NOTE: Regardless of input, the plugin will convert your URL to the format 	
                     'http://8tracks.com/mixes/id/'.  
