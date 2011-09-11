@@ -33,14 +33,14 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 
-Playops is also optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
+	Playops is also optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
 	These shuffle your mix, autostart your mix, or both.
 
 
 == Installation ==
 
 
-1. Upload `8tracks-shortcode.php` to the `/wp-content/plugins/` directory
+1. Upload `8tracks_shortcode.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 That's it!  Enjoy!
