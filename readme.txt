@@ -18,7 +18,9 @@ The syntax is: [8tracks]URL[/8tracks]
 URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version).  
 
-	NOTE: Regardless of input, the plugin will convert your URL to the format 	'http://8tracks.com/mixes/id/'.  This is transparent to the user, and keeps things tidy.
+	NOTE: Regardless of input, the plugin will convert your URL to the format 	
+                    'http://8tracks.com/mixes/id/'.  
+              This is transparent to the user, and keeps things tidy.
 
 Parameters:
 	
@@ -38,9 +40,18 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 
 
 1. Upload `8tracks_shortcode.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
 That's it!  Enjoy!
+
+
+NOTE: 0.5 uses cURL to fetch information from 8tracks.
+      If your host doesn't use cURL, 0.3 is the version for you!
+      
+      0.3 will do all the same stuff, except for auto-converting mix names.
+      You can find it under "other versions" here: 
+     
+      http://wordpress.org/extend/plugins/8tracks-shortcode/download/
 
 
 == Changelog ==
