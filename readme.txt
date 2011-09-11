@@ -29,6 +29,9 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 
 	Playops is also optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
 		These shuffle your mix, autostart your mix, or both.
+		
+		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
+		It's a randomized mix, but you can still exit and resume where you were.
 
 
 == Installation ==
