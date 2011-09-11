@@ -37,7 +37,7 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 == Installation ==
 
 
-1. Upload `8tracks-shortcode.php` to the `/wp-content/plugins/` directory
+1. Upload `8tracks_shortcode.php` to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
 
 That's it!  Enjoy!
