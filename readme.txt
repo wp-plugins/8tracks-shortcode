@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8Tracks, mixtape
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 0.5
+Stable tag: 0.6
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -45,7 +45,7 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 That's it!  Enjoy!
 
 
-NOTE: 0.5 uses cURL to fetch information from 8tracks.
+NOTE: 0.6 uses cURL to fetch information from 8tracks.
       If your host doesn't use cURL, 0.3 is the version for you!
       
       0.3 will do all the same stuff, except for auto-converting mix names.
@@ -56,7 +56,8 @@ NOTE: 0.5 uses cURL to fetch information from 8tracks.
 
 == Changelog ==
 
-= 0.5 =
+= 0.6 =
+Fixed typo.
 Added some code to convert all URL values to the numerical id style link to the same mix.  
 
 
