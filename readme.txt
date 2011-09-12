@@ -25,11 +25,14 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 Parameters:
 	
 You can also add the 'height', 'width', and 'playops' parameters to the shortcode.
-This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
+
+This would look like: 
+
+	[8tracks height="" width="" playops=""]URL[/8tracks]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 
-	Playops is also optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
+	Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
 		These shuffle your mix, autostart your mix, or both.
 		
 		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
@@ -48,7 +51,8 @@ That's it!  Enjoy!
 NOTE: 0.7 uses wp_remote_retrive_body (from WP's HTTP API) to fetch information from 8tracks.
       If you'd rather use cURL, 0.6 is the version for you!
       
-      0.3 will do all the same stuff, except for fetching info (i.e. auto-converting mix names to numerical IDs).
+      0.3 will do all the same stuff, except for fetching info 
+	  (i.e. auto-converting mix names to numerical IDs).
       
       Both can be found under "other versions" here: 
      
