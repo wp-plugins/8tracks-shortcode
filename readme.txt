@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 0.6
+Stable tag: 0.7
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -45,16 +45,21 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 That's it!  Enjoy!
 
 
-NOTE: 0.6 uses cURL to fetch information from 8tracks.
-      If your host doesn't use cURL, 0.3 is the version for you!
+NOTE: 0.7 uses wp_remote_retrive_body (from WP's HTTP API) to fetch information from 8tracks.
+      If you'd rather use cURL, 0.6 is the version for you!
       
-      0.3 will do all the same stuff, except for auto-converting mix names.
-      You can find it under "other versions" here: 
+      0.3 will do all the same stuff, except for fetching info (i.e. auto-converting mix names to numerical IDs).
+      
+      Both can be found under "other versions" here: 
      
       http://wordpress.org/extend/plugins/8tracks-shortcode/download/
 
 
 == Changelog ==
+
+= 0.7 =
+Replaced cURL with Wordpress' internal http API.
+Removed unused 'url' value from 8tracks_shortcode array.
 
 = 0.6 =
 Fixed typo.
