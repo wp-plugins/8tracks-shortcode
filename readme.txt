@@ -1,24 +1,26 @@
 === Plugin Name ===
 Contributors: songsthatsaved
-Tags: music, 8Tracks, mixtape
+Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 0.5
+Stable tag: 0.7
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
 == Description ==
 
-Much like other Wordpress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8Tracks.com via a shortcode.  
+Much like other Wordpress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com via a shortcode.  
 
 == Usage ==
 
 The syntax is: [8tracks]URL[/8tracks]
 
-URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942), 
-or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version).  
+URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
+or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
 
-	NOTE: Regardless of input, the plugin will convert your URL to the format 	'http://8tracks.com/mixes/id/'.  This is transparent to the user, and keeps things tidy.
+	NOTE: Regardless of input, the plugin will convert your URL to the format 	
+                    'http://8tracks.com/mixes/id/'.  
+              This is transparent to the user, and keeps things tidy.
 
 Parameters:
 	
@@ -38,14 +40,29 @@ This would look like: [8tracks height="" width="" playops=""]URL[/8tracks]
 
 
 1. Upload `8tracks_shortcode.php` to the `/wp-content/plugins/` directory
-1. Activate the plugin through the 'Plugins' menu in WordPress
+2. Activate the plugin through the 'Plugins' menu in WordPress
 
 That's it!  Enjoy!
 
 
+NOTE: 0.7 uses wp_remote_retrive_body (from WP's HTTP API) to fetch information from 8tracks.
+      If you'd rather use cURL, 0.6 is the version for you!
+      
+      0.3 will do all the same stuff, except for fetching info (i.e. auto-converting mix names to numerical IDs).
+      
+      Both can be found under "other versions" here: 
+     
+      http://wordpress.org/extend/plugins/8tracks-shortcode/download/
+
+
 == Changelog ==
 
-= 0.5 =
+= 0.7 =
+Replaced cURL with Wordpress' internal http API.
+Removed unused 'url' value from 8tracks_shortcode array.
+
+= 0.6 =
+Fixed typo.
 Added some code to convert all URL values to the numerical id style link to the same mix.  
 
 

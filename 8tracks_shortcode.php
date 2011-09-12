@@ -2,9 +2,9 @@
 
 /*
 Plugin Name: 8tracks Shortcode Plugin
-Plugin URI: http://www.shh-listen.com/8tracks_shortcode/8tracks_shortcode.zip
+Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.5
+Version: 0.7
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -42,34 +42,25 @@ function eighttracks_shortcode( $atts, $content) {
 			'height' => '',
 			'width' => '',
 			'playops' => '',
-			'url' => '',
 			), $atts ) ); 
 
 
-//Ok, here's where we convert our 8tracks URL from canonical to numerical
-//$foo is the file we want to parse.		
-$foo = '' . $content . '.' .xml .'';
+//Ok, here's where we convert our 8tracks URL from canonical to numerical,
+//and then go and fetch the mix' xml file.		
+$the_body = wp_remote_retrieve_body( wp_remote_get('' . $content . '.' .xml .'') );;
 
-//We use curl to go and get it, piping the result to $output.
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $foo);
-curl_setopt($ch, CURLOPT_HEADER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-$output = curl_exec($ch);
-curl_close($ch);
 
 //Now, we pump our XML structure into $xml.
-$xml = new SimpleXMLElement($output);
+$xml = new SimpleXMLElement($the_body);
 
 
 			if ( $height == '' ) {
-					if (!$height || $height == '') $height = '250';
+				if (!$height || $height == '') $height = '250';
                       } 
               
 			if ( $width == '' ) {
-                    if (!$width || $width == '') $width =  '300';
-              }
+                   	        if (!$width || $width == '') $width =  '300';
+                      }
 
 //See those 'strip_tags($xml->mix->id)'? That's how we insert the mix ID into our constructed URL.  Awesomeness follows.
 			
