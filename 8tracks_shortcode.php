@@ -42,7 +42,7 @@ function eighttracks_shortcode( $atts, $content) {
 			'height' => '',
 			'width' => '',
 			'playops' => '',
-			'url' => '';
+			'url' => '',
 			), $atts ) ); 
 
 
