@@ -75,6 +75,11 @@ Removed unused 'url' value from 8tracks_shortcode array.
 Fixed typo.
 Added some code to convert all URL values to the numerical id style link to the same mix.  
 
+= 0.5 =
+Bypassed.
+
+= 0.4 =
+Bypassed.
 
 = 0.3 =
 Added the "playops" parameter, which allows for shuffling and autoplaying.
