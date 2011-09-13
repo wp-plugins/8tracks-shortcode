@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 0.7
+Stable tag: 0.75
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -13,7 +13,7 @@ Much like other Wordpress shortcodes do for YouTube or Vimeo, this plugin allows
 
 == Usage ==
 
-The syntax is: [8tracks]URL[/8tracks]
+The syntax is: [8tracks url=""]
 
 URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
@@ -28,7 +28,7 @@ You can also add the 'height', 'width', and 'playops' parameters to the shortcod
 
 This would look like: 
 
-	[8tracks height="" width="" playops=""]URL[/8tracks]
+	[8tracks url="" height="" width="" playops=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 
@@ -48,7 +48,7 @@ This would look like:
 That's it!  Enjoy!
 
 
-NOTE: 0.7 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch information from 8tracks.
+NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch information from 8tracks.
       If you'd rather use cURL, 0.6 is the version for you!
       
       0.3 will do all the same stuff, except for fetching info 
@@ -60,6 +60,12 @@ NOTE: 0.7 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch information
 
 
 == Changelog ==
+
+= 0.75 =
+Modified syntax as some mix titles with special characters weren't working when passed as $content.
+Because of this, the 'url' parameter is back in and $content is out.
+This will require a slight adjustment to any embedded mixes (see new syntax at top).
+
 
 = 0.7 =
 Replaced cURL with Wordpress' internal http API.

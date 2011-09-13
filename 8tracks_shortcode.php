@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.7
+Version: 0.75
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -26,7 +26,7 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-// Usage: [8tracks height="some value" width="some value" playops="some value(s)"]URL goes here[/8tracks]
+// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)"]
 
 // Note:    height, width, and playops are optional, URL is not.
 // height:  Pick a number, any number.  Standard is 250.
@@ -42,12 +42,13 @@ function eighttracks_shortcode( $atts, $content) {
 			'height' => '',
 			'width' => '',
 			'playops' => '',
+			'url' => '';
 			), $atts ) ); 
 
 
 //Ok, here's where we convert our 8tracks URL from canonical to numerical,
 //and then go and fetch the mix' xml file.		
-$the_body = wp_remote_retrieve_body( wp_remote_get('' . $content . '.' .xml .'') );;
+$the_body = wp_remote_retrieve_body( wp_remote_get('' . $url . '.' .xml .'') );;
 
 
 //Now, we pump our XML structure into $xml.
