@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.75
+Version: 0.8
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
