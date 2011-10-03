@@ -61,6 +61,9 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
 
 == Changelog ==
 
+= 0.9 =
+Lots of excellent security checking, courtesy of Justin S, developer at wordpress.com
+
 = 0.82 =
 Added some extra security checks on user-supplies URLs.
 
