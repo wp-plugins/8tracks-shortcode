@@ -62,10 +62,10 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
 == Changelog ==
 
 = 0.9 =
-Lots of excellent security checking, courtesy of Justin S, developer at wordpress.com
+Lots of excellent security checking, courtesy of Justin S, developer at WordPress.com
 
 = 0.82 =
-Added some extra security checks on user-supplies URLs.
+Added some extra security checks on user-supplied URLs.
 
 = 0.75 =
 Modified syntax as some mix titles with special characters weren't working when passed as $content.
