@@ -26,7 +26,7 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/*  A huge thanks goes to Justin S, Wordpress.com Developer, for his enormous assistance with the plugin!
+/*  A huge thanks goes to Justin S, WordPress.com Developer, for his enormous assistance with the plugin!
 */
 
 // Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)"]

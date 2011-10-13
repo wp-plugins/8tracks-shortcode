@@ -9,7 +9,7 @@ Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
 == Description ==
 
-Much like other Wordpress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com via a shortcode.  
+Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com via a shortcode.  
 
 == Usage ==
 
