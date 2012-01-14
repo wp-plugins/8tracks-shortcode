@@ -2,8 +2,8 @@
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 0.9
+Tested up to: 3.3.1
+Stable tag: 0.91
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
