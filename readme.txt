@@ -2,7 +2,7 @@
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
-Tested up to: 3.2.1
+Tested up to: 3.3.1
 Stable tag: trunk
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
