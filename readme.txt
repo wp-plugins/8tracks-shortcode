@@ -2,8 +2,8 @@
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 0.9
+Tested up to: 3.3.1
+Stable tag: 0.95
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -60,6 +60,10 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
 
 
 == Changelog ==
+
+= 0.95 =
+Updated the plugin to append an API Key to requests for xml data from 8tracks (in keeping with their new key requirement).  
+This should resolve the "blank mix" problem, and let the rock (or hip hop/dubstep/smooth jazz) continue!
 
 = 0.9 =
 Lots of excellent security checking, courtesy of Justin S, developer at WordPress.com
