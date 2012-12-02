@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.95
+Version: 0.96
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -29,12 +29,12 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 /*  A huge thanks goes to Justin S, WordPress.com Developer, for his enormous assistance with the plugin!
 */
 
-// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)"]
+// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" useflash="yes|no"]
 
-// Note:    height, width, and playops are optional, URL is not.
-// height:  Pick a number, any number.  Standard is 250.
-// width:   Yep, pick a number.  Standard is 300.
-// playops: Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
+// Note:     height, width, and playops are optional, URL is not.
+// height:   Pick a number, any number.  Standard is 250.
+// width:    Yep, pick a number.  Standard is 300.
+// playops:  Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 
 
 
@@ -83,15 +83,14 @@ function eighttracks_shortcode( $atts, $content) {
 		return '<!-- invalid xml -->';
 	}
 
-	$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
-	$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
-	$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-	$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'"></param>';
-	$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-	$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '" ';
-	$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
-	$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
-	return $output;
-}
+
+		$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'" ';
+		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+		$output .= ' <p class="_8t_embed_p" style="font-size: 11px; line-height: 12px;">';
+		$output .= '<a href="http://8tracks.com' . strval($xml->mix->path) .'">' . strval($xml->mix->name) . '</a> from ';
+		$output .= '<a href="http://8tracks.com/' . strval($xml->mix->user->slug) . '">' . strval($xml->mix->user->login) . '</a> on ';
+		$output .= '<a href="http://8tracks.com">8tracks Radio</a>.';
+		return $output;
+
 
 ?>
