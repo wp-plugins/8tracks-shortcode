@@ -61,6 +61,10 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
 
 == Changelog ==
 
+= 0.96 =
+This version is the first pass at using 8tracks' HTML5 player (player_v3_universal) rather than Flash.
+If you find any bugs, please let me know.  I'd love to get us away from Flash for good, one day. :)
+
 = 0.95 =
 Updated the plugin to append an API Key to requests for xml data from 8tracks (in keeping with their new key requirement).  
 This should resolve the "blank mix" problem, and let the rock (or hip hop/dubstep/smooth jazz) continue!
