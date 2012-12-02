@@ -11,6 +11,9 @@ Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
 Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com via a shortcode.  
 
+Dec 2012: Hey! I'm testing a new version that uses the HTML5 player.  Want to help?  Grab it here: http://downloads.wordpress.org/plugin/8tracks-shortcode.zip
+Let me know how it goes!
+
 == Usage ==
 
 The syntax is: [8tracks url=""]
