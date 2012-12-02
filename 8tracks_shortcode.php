@@ -91,6 +91,6 @@ function eighttracks_shortcode( $atts, $content) {
 		$output .= '<a href="http://8tracks.com/' . strval($xml->mix->user->slug) . '">' . strval($xml->mix->user->login) . '</a> on ';
 		$output .= '<a href="http://8tracks.com">8tracks Radio</a>.';
 		return $output;
-
+}
 
 ?>
