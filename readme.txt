@@ -24,14 +24,17 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 
 Parameters:
 	
-You can also add the 'height', 'width', and 'playops' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash,' and 'playops' parameters to the shortcode.
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops=""]
+	[8tracks url="" height="" width="" playops="" flash=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 
+	Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
+	whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
+	
 	Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
 		These shuffle your mix, autostart your mix, or both.
 		
@@ -60,6 +63,10 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
 
 
 == Changelog ==
+
+= 0.97 =
+Added an option to allow the user to specify whether s/he would like to use Flash or HTML5 to play mixes.
+This will be the release version, if no bugs are found.
 
 = 0.96 =
 This version is the first pass at using 8tracks' HTML5 player (player_v3_universal) rather than Flash.
