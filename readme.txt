@@ -73,7 +73,9 @@ That's it.  You will now default to Flash instead of HTML5.
 = Is there any practical reason to change this? = 
 
 Some themes render the "<iframe>" that the HTML5 player uses strangely, and then nothing plays.  In these cases,
-fallback to Flash is the preferred option.  Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
+fallback to Flash is the preferred option.  Additionally, Flash is conspicuously absent on many Apple products.  HTML5 is not. :)
+
+Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Changelog ==
 
