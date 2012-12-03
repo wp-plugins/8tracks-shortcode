@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.4.1
-Stable tag: 0.95
+Stable tag: 0.97
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -61,6 +61,19 @@ NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch informatio
      
       http://wordpress.org/extend/plugins/8tracks-shortcode/download/
 
+== Frequently Asked Questions ==
+
+= I don't want to use HTML5, and I don't want to say flash="yes" in every single shortcode.  What can I do?
+
+I hear you.  Change is hard.  From your dashboard, go to plugins > editor > 8tracks-shortcode > 8tracks-shortcode.php.
+Now, search for "'flash' => ''" and replace it with "'flash' => 'yes'". (Ignore the double quotation marks.)
+
+That's it.  You will now default to Flash instead of HTML5.
+
+= Is there any practical reason to change this? = 
+
+Some themes render the <iframe> that the HTML5 player uses strangely, and then nothing plays.  In these cases,
+fallback to Flash is the preferred option.  Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Changelog ==
 
