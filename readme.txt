@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 0.97
+Stable tag: 0.98
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -51,15 +51,6 @@ This would look like:
 That's it!  Enjoy!
 
 
-NOTE: 0.75 uses wp_remote_retrieve_body (from WP's HTTP API) to fetch information from 8tracks.
-      If you'd rather use cURL, 0.6 is the version for you!
-      
-      0.3 will do all the same stuff, except for fetching info 
-	  (i.e. auto-converting mix names to numerical IDs).
-      
-      Both can be found under "other versions" here: 
-     
-      http://wordpress.org/extend/plugins/8tracks-shortcode/download/
 
 == Frequently Asked Questions ==
 
@@ -80,6 +71,9 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Changelog ==
+
+= 0.98 =
+Fixed a typo that would prevent $playops from working in the HTML5 player.  (Thanks, Justin S. of WordPress for catching it!)
 
 = 0.97 =
 Added an option to allow the user to specify whether s/he would like to use Flash or HTML5 to play mixes.
