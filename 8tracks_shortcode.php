@@ -100,7 +100,7 @@ if ($flash=="yes") {
 	$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 	$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
 } else {
-	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'" ';
+	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
 	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
 //	$output .= ' <p class="_8t_embed_p" style="font-size: 11px; line-height: 12px;">';
 //	$output .= '<a href="http://8tracks.com' . strval($xml->mix->path) .'">' . strval($xml->mix->name) . '</a> from ';
