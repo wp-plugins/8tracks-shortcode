@@ -37,7 +37,27 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 // playops: Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 // flash: Can be set to "yes" to use the Flash player for your mixes, or left empty to use the new, HTML5 player.
 
+//Begin Custom Editor Button
+function tcustom_addbuttons() {
+	if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
+		return;
 
+	if ( get_user_option('rich_editing') == 'true') {
+		add_filter("mce_external_plugins", "add_tcustom_tinymce_plugin");
+		add_filter('mce_buttons', 'register_tcustom_button');
+	}
+}
+function register_tcustom_button($buttons) {
+	array_push($buttons, "|", "example");
+	return $buttons;
+} 
+function add_tcustom_tinymce_plugin($plugin_array) {
+	$plugin_array['example'] = WP_PLUGIN_URL.'/8tracks-shortcode/8tracks.js';
+	return $plugin_array;
+}
+// init process for button control
+add_action('init', 'tcustom_addbuttons');
+//End Custom Editor Button
 
 add_shortcode( "8tracks", "eighttracks_shortcode" );
 

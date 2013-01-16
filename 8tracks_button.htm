@@ -1,0 +1,84 @@
+<head>
+	<title>Create 8tracks Shortcode</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript">
+		var eighttracks = {
+	e: '',
+	init: function(e) {
+		eighttracks.e = e;
+		tinyMCEPopup.resizeToInnerSize();
+	},
+	insert: function createeighttracksShortcode(e) {
+		//Create eighttracks Shortcode
+		var url = $('#eighttracksURL').val();
+		var width = $('#eighttracksWidth').val();
+		var height = $('#eighttracksHeight').val();
+		var flash = $('#eighttracksFlash').val();
+		var playops = $('#eighttracksPlayops').val();
+
+		var output = '[8tracks ';
+
+		if(url) {
+			output += 'url="'+url+'" ';
+		}
+		if(width) {
+			output += 'width="'+width+'" ';
+		}
+		if(height) {
+			output += 'height="'+height+'" ';
+		}
+		if(flash) {
+			output += 'flash="'+flash+'" ';
+		}
+		if(playops) {
+			output += 'playops="'+playops+'" ';
+		}		
+		output += ']';
+		
+		tinyMCEPopup.execCommand('mceReplaceContent', false, output);
+		
+		tinyMCEPopup.close();
+		
+	}
+
+}
+
+tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
+	</script>
+</head>
+
+<body>
+<form id="eighttracksShortcode">
+	<p>
+		<label for="eighttracksURL">URL for your mix:</label><br/>
+		<input id="eighttracksURL" type="text" value="" />
+	</p>
+	<p>
+		<label for="eighttracksWidth">Width of your mix:</label><br/>
+		<input id="eighttracksWidth" type="text" value="" />
+	</p>
+	<p>
+		<label for="eighttracksHeight">Height of your mix:</label><br/>
+		<input id="eighttracksHeight" type="text" value="" />
+	</p>
+	<p>
+		<label for="eighttracksFlash">Flash? (Optional, answer "yes" for flash")</label><br />
+		<input id="eighttracksFlash" type="text" value="" />
+	</p>
+	<p>
+		<label for="eighttracksPlayops">Player Options</label><br />
+		<select name="eighttracksPlayops" id="eighttracksPlayops">
+		<option value="">None</option>
+		<option value="shuffle">Shuffle</option>
+		<option value="autoplay">Autoplay</option>
+		<option value="shuffle+autoplay">Shuffle and Autoplay</option>
+		</select>
+	</p>
+	<p><a href="javascript:eighttracks.insert(eighttracks.e)">Create Shortcode</a></p>
+</form>
+</body>
+
+</html>
+
+
