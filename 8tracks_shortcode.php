@@ -172,7 +172,7 @@ function eighttracks_widget_display($args=array(), $params=array()) {
     echo '<div class="textwidget">'.stripslashes(nl2br($description));
     if ($eighttracksurl != '') {
 
-		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.stripslashes($eighttracksheight).'" width="'.stripslashes($eighttrackswidth).'" flash="'.($eighttracksflash).'" "]');
+		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.stripslashes($eighttracksflash).'" "]');
     }
     echo '</div>';
 	echo stripslashes($args['after_widget']);
