@@ -100,9 +100,9 @@ function eighttracks_shortcode( $atts, $content) {
 	if (empty($tags)) {
 	$the_body = wp_remote_get( esc_url($url) . '.xml' .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 } else {
-	$badchars = array('-', ' ', ',', ', ');
-	$goodchars = array('\\', '_', '+', '+');
-	$the_body = wp_remote_get ('http://8tracks.com/explore/' . str_replace($badchars, $goodchars, $tags) .'.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+	$badchars = array(' ', ',', ', ');
+	$goodchars = array('+', '%2B', '%2B');
+	$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'&api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 
 }
 	if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
