@@ -72,6 +72,9 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Changelog ==
 
+= 0.99 =
+Added a widget for placing 8tracks mixes in sidebars and footers.  Also added a button to the tinymce editor which will help with adding mixes to your posts.
+
 = 0.98 =
 Fixed a typo that would prevent $playops from working in the HTML5 player.  (Thanks, Justin S. of WordPress for catching it!)
 
