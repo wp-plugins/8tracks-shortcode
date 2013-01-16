@@ -13,7 +13,7 @@ Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows
 
 == Usage ==
 
-The syntax is: [8tracks url=""]
+The syntax is: [8tracks url=""] or [8tracks tags="some, tags, here"]
 
 URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
@@ -24,11 +24,11 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash,' and 'playops' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash,' 'playops', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops="" flash=""]
+	[8tracks url="" height="" width="" playops="" flash="" tags=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 
@@ -40,7 +40,9 @@ This would look like:
 		
 		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
 		It's a randomized mix, but you can still exit and resume where you were.
-
+	
+	NOTE: url and tags are mutually exclusive. This should be fairly straightforward, as tags
+	allows you to search for random mixes, and url specifies a particular mix.
 
 == Installation ==
 

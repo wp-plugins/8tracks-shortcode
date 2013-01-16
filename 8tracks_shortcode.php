@@ -29,13 +29,14 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 /*  A huge thanks goes to Justin S, WordPress.com Developer, for his enormous assistance with the plugin!
 */
 
-// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)"]
+// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres"]
 
 // Note:    height, width, and playops are optional, URL is not.
 // height:  Pick a number, any number.  Standard is 250.
 // width:   Yep, pick a number.  Standard is 300.
 // playops: Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 // flash: Can be set to "yes" to use the Flash player for your mixes, or left empty to use the new, HTML5 player.
+// tags: Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
 
 //Begin Custom Editor Button
 function tcustom_addbuttons() {
