@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.98
+Version: 0.99
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -102,12 +102,81 @@ if ($flash=="yes") {
 } else {
 	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
 	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
-//	$output .= ' <p class="_8t_embed_p" style="font-size: 11px; line-height: 12px;">';
-//	$output .= '<a href="http://8tracks.com' . strval($xml->mix->path) .'">' . strval($xml->mix->name) . '</a> from ';
-//	$output .= '<a href="http://8tracks.com/' . strval($xml->mix->user->slug) . '">' . strval($xml->mix->user->login) . '</a> on ';
-//	$output .= '<a href="http://8tracks.com">8tracks Radio</a>.';
+
 }		
 return $output;
 }
+wp_register_sidebar_widget(
+    'eighttracks_widget',   
+    '8Tracks',
+    'eighttracks_widget_display',
+    array(               
+        'description' => 'Insert 8Tracks mixes as a widget'
+    )
+);
 
+wp_register_widget_control(
+	'eighttracks_widget',		// id
+	'eighttracks_widget',		// name
+	'eighttracks_widget_control'	// callback function
+);
+
+function eighttracks_widget_control($args=array(), $params=array()) {
+    //the form is submitted, save into database
+    if (isset($_POST['submitted'])) {
+    	update_option('eighttracks_widget_title', $_POST['widgettitle']);
+    	update_option('eighttracks_widget_eighttracksurl', $_POST['eighttracksurl']);
+		update_option('eighttracks_widget_eighttracksheight', $_POST['eighttracksheight']);
+		update_option('eighttracks_widget_eighttrackswidth', $_POST['eighttrackswidth']);
+		update_option('eighttracks_widget_eighttracksflash', $_POST['eighttracksflash']);
+    }
+    //load options
+    $widgettitle = get_option('eighttracks_widget_title');
+    $eighttracksurl = get_option('eighttracks_widget_eighttracksurl');
+	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
+	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
+	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
+    ?>
+    Widget Title:<br />
+    <input type="text" class="widefat" name="widgettitle" value="<?php echo stripslashes($widgettitle); ?>" />
+    <br /><br />
+    8tracks Mix URL:<br />
+    <input type="text" class="widefat" name="eighttracksurl" value="<?php echo stripslashes($eighttracksurl); ?>" />
+    <br /><br />
+	Mix Height:<br />
+	<input type="text" class="widefat" name="eighttracksheight" value="<?php echo intval($eighttracksheight); ?>" />
+	<br /><br />
+	Mix Width:<br />
+	<input type="text" class="widefat" name="eighttrackswidth" value="<?php echo intval($eighttrackswidth); ?>" />
+	<br /><br />
+	Use Flash? ("yes" or "no" (default))<br />
+	<input type="text" class="widefat" name="eighttracksflash" value="<?php echo stripslashes($eighttracksflash); ?>" />
+	<br />
+    <input type="hidden" name="submitted" value="1" />
+    <?php
+}
+
+function eighttracks_widget_display($args=array(), $params=array()) {
+    //load options
+    $widgettitle = get_option('eighttracks_widget_title');
+    $description = get_option('eighttracks_widget_description');
+    $eighttracksurl = get_option('eighttracks_widget_eighttracksurl');
+	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
+	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
+	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
+    //widget output
+    echo stripslashes($args['before_widget']);
+    echo stripslashes($args['before_title']);
+    echo stripslashes($widgettitle);
+    echo stripslashes($args['after_title']);
+    echo '<div class="textwidget">'.stripslashes(nl2br($description));
+    if ($eighttracksurl != '') {
+
+		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.stripslashes($eighttracksheight).'" width="'.stripslashes($eighttrackswidth).'" flash="'.($eighttracksflash).'" "]');
+    }
+    echo '</div>';
+	echo stripslashes($args['after_widget']);
+
+}
+  
 ?>
