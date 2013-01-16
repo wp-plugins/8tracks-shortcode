@@ -169,6 +169,7 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 		update_option('eighttracks_widget_eighttracksheight', $_POST['eighttracksheight']);
 		update_option('eighttracks_widget_eighttrackswidth', $_POST['eighttrackswidth']);
 		update_option('eighttracks_widget_eighttracksflash', $_POST['eighttracksflash']);
+		update_option('eighttracks_widget_eighttrackstags', $_POST['eighttrackstags']);
     }
     //load options
     $widgettitle = get_option('eighttracks_widget_title');
@@ -176,10 +177,14 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
 	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
 	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
+	$eighttrackstags = get_option('eighttracks_widget_eighttrackstags');
     ?>
     Widget Title:<br />
     <input type="text" class="widefat" name="widgettitle" value="<?php echo stripslashes($widgettitle); ?>" />
     <br /><br />
+	Want a random mix? Give me a comma-separated list of tags:<br />
+	<input type="text" class="widefat" name="eighttrackstags" value="<?php echo stripslashes($eighttrackstags); ?>" />
+	<br /><br />
     8tracks Mix URL:<br />
     <input type="text" class="widefat" name="eighttracksurl" value="<?php echo stripslashes($eighttracksurl); ?>" />
     <br /><br />
@@ -204,15 +209,16 @@ function eighttracks_widget_display($args=array(), $params=array()) {
 	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
 	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
 	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
+	$eighttrackstags = get_option('eighttracks_widget_eighttrackstags');
     //widget output
     echo stripslashes($args['before_widget']);
     echo stripslashes($args['before_title']);
     echo stripslashes($widgettitle);
     echo stripslashes($args['after_title']);
     echo '<div class="textwidget">'.stripslashes(nl2br($description));
-    if ($eighttracksurl != '') {
+    if ($eighttracksurl != '' or $eighttrackstags != '') {
 
-		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.stripslashes($eighttracksflash).'" "]');
+		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.stripslashes($eighttracksflash).'" tags="'.stripslashes($eighttrackstags).'"]');
     }
     echo '</div>';
 	echo stripslashes($args['after_widget']);
