@@ -72,6 +72,10 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Changelog ==
 
+= 1.0 =
+You can now have the shortcode display random mixes by specifying tags.  Just add a comma-separated list of tags like this: tags = "indie, rock, awesome"
+
+
 = 0.99 =
 Added a widget for placing 8tracks mixes in sidebars and footers.  Also added a button to the tinymce editor which will help with adding mixes to your posts.
 

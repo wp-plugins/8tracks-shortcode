@@ -68,6 +68,7 @@ function eighttracks_shortcode( $atts, $content) {
 			'playops' => '',
 			'url' => '',
 			'flash' => '',
+			'tags' => '',
 			), $atts ) ); 
 
 // Make sure that a user can only enter a whitelisted set of options.
@@ -83,10 +84,11 @@ function eighttracks_shortcode( $atts, $content) {
 		$flash="no";
 
 	// Make sure the URL we are loading is from 8tracks.com
+	if (!empty($url)) {
 	$url_bits = parse_url( $url );
 	if ( '8tracks.com' != $url_bits['host'] )
 		return '';
-
+}
 	if ( 200 > $width )
 		$width = 300;
 	if ( 200 > $height )
@@ -94,8 +96,14 @@ function eighttracks_shortcode( $atts, $content) {
 
 //Ok, here's where we convert our 8tracks URL from canonical to numerical,
 	//and then go and fetch the mix' xml file.		
+	if (empty($tags)) {
 	$the_body = wp_remote_get( esc_url($url) . '.xml' .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+} else {
+	$badchars = array('-', ' ', ',', ', ');
+	$goodchars = array('\\', '_', '+', '+');
+	$the_body = wp_remote_get ('http://8tracks.com/explore/' . str_replace($badchars, $goodchars, $tags) .'.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 
+}
 	if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
 		return '';
 
@@ -108,9 +116,21 @@ function eighttracks_shortcode( $atts, $content) {
 		return '<!-- invalid xml -->';
 	}
 
-
-		
-if ($flash=="yes") {
+if ($flash=="yes" && (!empty($tags))) {
+	$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
+	$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
+	$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
+	$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops .'"></param>';
+	$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
+	$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops . '" ';
+	$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
+	$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
+}
+else if ($flash=="no" && (!empty($tags))) {
+	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
+	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+} 		
+else if ($flash=="yes" && $tags=="") {
 	$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
 	$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
 	$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
@@ -119,10 +139,10 @@ if ($flash=="yes") {
 	$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '" ';
 	$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 	$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
-} else {
+} 
+else if ($flash=="no" && $tags=="") {
 	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
 	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
-
 }		
 return $output;
 }

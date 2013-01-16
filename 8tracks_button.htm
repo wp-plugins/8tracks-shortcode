@@ -16,7 +16,7 @@
 		var height = $('#eighttracksHeight').val();
 		var flash = $('#eighttracksFlash').val();
 		var playops = $('#eighttracksPlayops').val();
-
+		var tags = $('#eighttracksTags').val();
 		var output = '[8tracks ';
 
 		if(url) {
@@ -27,6 +27,9 @@
 		}
 		if(height) {
 			output += 'height="'+height+'" ';
+		}
+		if(tags) {
+			output += 'tags="'+tags+'" ';
 		}
 		if(flash) {
 			output += 'flash="'+flash+'" ';
@@ -51,6 +54,12 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 <body>
 <form id="eighttracksShortcode">
 	<p>
+		<label for="eighttracksTags">Just want a random mix? Insert a comma-separated list of tags here (Example: indie, rock):</label><br /><br />
+		<input id="eighttracksTags" type="text" value="" />
+	</p>
+	<hr>
+	<p>
+		<p>Rather have something specific? Fill these in:</p>
 		<label for="eighttracksURL">URL for your mix:</label><br/>
 		<input id="eighttracksURL" type="text" value="" />
 	</p>
@@ -62,7 +71,9 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		<label for="eighttracksHeight">Height of your mix:</label><br/>
 		<input id="eighttracksHeight" type="text" value="" />
 	</p>
+	<hr>
 	<p>
+		<p>Some options for your mix:</p>
 		<label for="eighttracksFlash">Flash? (Optional, answer "yes" for flash")</label><br />
 		<input id="eighttracksFlash" type="text" value="" />
 	</p>
@@ -75,6 +86,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		<option value="shuffle+autoplay">Shuffle and Autoplay</option>
 		</select>
 	</p>
+	<hr>
 	<p><a href="javascript:eighttracks.insert(eighttracks.e)">Create Shortcode</a></p>
 </form>
 </body>
