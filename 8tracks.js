@@ -4,8 +4,8 @@
 			ed.addCommand('example', function() {
 				ed.windowManager.open({
 					file : url + '/8tracks_button.htm',
-					width : 550 + parseInt(ed.getLang('example.delta_width', 0)),
-					height : 550 + parseInt(ed.getLang('example.delta_height', 0)),
+					width : 570 + parseInt(ed.getLang('example.delta_width', 0)),
+					height : 570 + parseInt(ed.getLang('example.delta_height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url

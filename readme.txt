@@ -24,13 +24,14 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash,' 'playops', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'collection', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops="" flash="" tags=""]
+	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" collection=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
+	Height and Width for Collections defaults to 500 and 500.
 
 	Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
 	whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
@@ -75,8 +76,7 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 == Changelog ==
 
 = 1.0 =
-You can now have the shortcode display random mixes by specifying tags.  Just add a comma-separated list of tags like this: tags = "indie, rock, awesome"
-
+You can now have the shortcode display random mixes by specifying tags, artists, or a specific dj.  These features have also been added to the widget, and the button in the post editor.  Support has also been added for the 8tracks' new collection embeds (Example: http://8tracks.com/mix_sets/collection:645:favorite-artwork/player).
 
 = 0.99 =
 Added a widget for placing 8tracks mixes in sidebars and footers.  Also added a button to the tinymce editor which will help with adding mixes to your posts.

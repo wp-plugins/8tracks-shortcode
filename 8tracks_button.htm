@@ -17,6 +17,11 @@
 		var flash = $('#eighttracksFlash').val();
 		var playops = $('#eighttracksPlayops').val();
 		var tags = $('#eighttracksTags').val();
+		var artist = $('#eighttracksArtist').val();
+		var dj = $('#eighttracksDJ').val();
+		var collection = $('#eighttracksCollection').val();
+		var perpage = $('#eighttracksPerpage').val();
+		var sort = $('#eighttracksSort').val();
 		var output = '[8tracks ';
 
 		if(url) {
@@ -31,12 +36,27 @@
 		if(tags) {
 			output += 'tags="'+tags+'" ';
 		}
+		if(artist) {
+			output += 'artist="'+artist+'" ';
+		}
+		if(dj) {
+			output += 'dj="'+dj+'" ';
+		}
 		if(flash) {
 			output += 'flash="'+flash+'" ';
 		}
 		if(playops) {
 			output += 'playops="'+playops+'" ';
 		}		
+		if(collection) {
+			output += 'collection="'+collection+'" ';
+		}
+		if(perpage) {
+			output += 'perpage="'+perpage+'" ';
+		}
+		if(sort) {
+			output += 'sort="'+sort+'" ';
+		}
 		output += ']';
 		
 		tinyMCEPopup.execCommand('mceReplaceContent', false, output);
@@ -53,44 +73,77 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 <body>
 <form id="eighttracksShortcode">
-	<p>
-		<label for="eighttracksTags">Just want a random mix? Insert a comma-separated list of tags here (Example: indie, rock):</label><br /><br />
-		<input id="eighttracksTags" type="text" value="" />
-	</p>
+	<p>Just want a random mix? Insert a comma-separated list of one of these</p>
+	<table>
+	   <tr>
+	   <td><label for="eighttracksTags">Tags:</label></td>
+	   <td><label for="eighttracksArtist">Artist:</label></td>
+	   </tr>
+	   <tr>
+       <td><input id="eighttracksTags" type="text" value="" /></td>
+       <td><input id="eighttracksArtist" type="text" value="" /></td>
+       </tr>
+       <tr>
+	   <td><label for="eighttracksCollection">Display as collection?</label>
+		   <select name="eighttracksCollection" id="eighttracksCollection">
+		   <option value="no">No</option>
+		   <option value="yes">Yes</option>
+		   </select>
+		 </td>
+	     <td>
+			<label for="eighttracksPerpage">Mixes per page? (Default 4)</label>
+			<input id="eighttracksPerpage" type="number" value="" />
+		 </td>
+		 <td><label for="eighttracksSort">Collection Type</label>
+		     <select name="eighttracksSort" id="eighttracksSort">
+		     <option value="">None</option>
+		     <option value="recent">New</option>
+		     <option value="hot">Trending</option>
+		     <option value="popular">Popular</option>
+		     </select></td>
+		</tr>
+	</table>
 	<hr>
-	<p>
-		<p>Rather have something specific? Fill these in:</p>
-		<label for="eighttracksURL">URL for your mix:</label><br/>
-		<input id="eighttracksURL" type="text" value="" />
-	</p>
-	<p>
-		<label for="eighttracksWidth">Width of your mix:</label><br/>
-		<input id="eighttracksWidth" type="text" value="" />
-	</p>
-	<p>
-		<label for="eighttracksHeight">Height of your mix:</label><br/>
-		<input id="eighttracksHeight" type="text" value="" />
-	</p>
+	<p>Rather have something specific?</p>
+	<table>
+    <tr>
+	<td><label for="eighttracksURL">URL for your mix:</label>
+	<td><label for="eighttracksDJ">Specific DJ:</label></td>
+	</tr>
+	<tr>
+	<td><input id="eighttracksURL" type="text" value="" /></td>
+	<td><input id="eighttracksDJ" type="text" value="" /></td>
+	</tr>
+	</table>
 	<hr>
-	<p>
-		<p>Some options for your mix:</p>
-		<label for="eighttracksFlash">Flash? (Optional, answer "yes" for flash")</label><br />
-		<input id="eighttracksFlash" type="text" value="" />
-	</p>
-	<p>
-		<label for="eighttracksPlayops">Player Options</label><br />
-		<select name="eighttracksPlayops" id="eighttracksPlayops">
+	<p>Some options for your mix:</p>
+	<table>
+	<tr>
+	<td><label for="eighttracksWidth">Width:</label></td>
+	<td><label for="eighttracksHeight">Height:</label></td>
+	<td><label for="eighttracksPlayops">Player Options</label><br /></td>
+	<td><label for="eighttracksFlash">Flash?</label><br /></td>	
+	</tr>
+	<tr>
+	<td><input id="eighttracksWidth" type="number" value="" /></td>
+	<td><input id="eighttracksHeight" type="number" value="" /></td>
+	<td><select name="eighttracksPlayops" id="eighttracksPlayops">
 		<option value="">None</option>
 		<option value="shuffle">Shuffle</option>
 		<option value="autoplay">Autoplay</option>
 		<option value="shuffle+autoplay">Shuffle and Autoplay</option>
 		</select>
-	</p>
+	</td>
+	<td><select name="eighttracksFlash" id="eighttracksFlash">
+		<option value="no">No</option>
+		<option value="yes">Yes</option>
+		</select>
+		</td>
+	</tr>
+	</table>
 	<hr>
 	<p><a href="javascript:eighttracks.insert(eighttracks.e)">Create Shortcode</a></p>
 </form>
 </body>
 
 </html>
-
-
