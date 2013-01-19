@@ -305,33 +305,33 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
     ?>
     Widget Title:<br />
-    <input type="text" class="widefat" name="widgettitle" value="<?php echo stripslashes($widgettitle); ?>" />
+    <input type="text" class="widefat" name="widgettitle" value="<?php echo ($widgettitle); ?>" />
     <br /><br />
 	<b>Random mix?</b> <br /><br />
 	Tag(s) (Example: a, b, c):
-	<input type="text" class="widefat" name="eighttrackstags" value="<?php echo stripslashes($eighttrackstags); ?>" />
+	<input type="text" class="widefat" name="eighttrackstags" value="<?php echo ($eighttrackstags); ?>" />
 	<br />
 	Artist:
-	<input type="text" class="widefat" name="eighttracksartist" value="<?php echo stripslashes($eighttracksartist); ?>" />
+	<input type="text" class="widefat" name="eighttracksartist" value="<?php echo ($eighttracksartist); ?>" />
 	<br />
 	<hr>
 	<b>Specific Mix?</b><br /><br />
     8tracks Mix URL:<br />
-    <input type="text" class="widefat" name="eighttracksurl" value="<?php echo stripslashes($eighttracksurl); ?>" />
+    <input type="text" class="widefat" name="eighttracksurl" value="<?php echo ($eighttracksurl); ?>" />
     <br /><br />
 	Specific DJ:<br />
-	<input type="text" class="widefat" name="eighttracksdj" value="<?php echo stripslashes($eighttracksdj); ?>" />
+	<input type="text" class="widefat" name="eighttracksdj" value="<?php echo ($eighttracksdj); ?>" />
 	<br />
 	<hr>
 	Mix Options:<br />
 	Display as Collection? (yes/no)
-	<input type="text" class="widefat" name="eighttrackscollection" value="<?php echo stripslashes($eighttrackscollection); ?>" />
+	<input type="text" class="widefat" name="eighttrackscollection" value="<?php echo ($eighttrackscollection); ?>" />
 	<br />
 	Mixes Per Collection Page:
-	<input type="text" class="widefat" name="eighttracksperpage" value="<?php echo stripslashes($eighttracksperpage); ?>" />
+	<input type="text" class="widefat" name="eighttracksperpage" value="<?php echo ($eighttracksperpage); ?>" />
 	<br />
 	List Type (Optional: recent, hot, popular):
-	<input type="text" class="widefat" name="eighttrackssort" value="<?php echo stripslashes($eighttrackssort); ?>" />
+	<input type="text" class="widefat" name="eighttrackssort" value="<?php echo ($eighttrackssort); ?>" />
 	<br />
 	Mix Height:<br />
 	<input type="text" class="widefat" name="eighttracksheight" value="<?php echo intval($eighttracksheight); ?>" />
@@ -340,7 +340,7 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 	<input type="text" class="widefat" name="eighttrackswidth" value="<?php echo intval($eighttrackswidth); ?>" />
 	<br /><br />
 	Use Flash? (yes/no)<br />
-	<input type="text" class="widefat" name="eighttracksflash" value="<?php echo stripslashes($eighttracksflash); ?>" />
+	<input type="text" class="widefat" name="eighttracksflash" value="<?php echo ($eighttracksflash); ?>" />
 	<br />
     <input type="hidden" name="submitted" value="1" />
     <?php
@@ -363,17 +363,17 @@ function eighttracks_widget_display($args=array(), $params=array()) {
 	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
 
     //widget output
-    echo stripslashes($args['before_widget']);
-    echo stripslashes($args['before_title']);
-    echo stripslashes($widgettitle);
-    echo stripslashes($args['after_title']);
-    echo '<div class="textwidget">'.stripslashes(nl2br($description));
+    echo ($args['before_widget']);
+    echo ($args['before_title']);
+    echo ($widgettitle);
+    echo ($args['after_title']);
+    echo '<div class="textwidget">'.(nl2br($description));
     if ($eighttracksurl != '' or $eighttrackstags != '' or $eighttracksartist != '' or $eighttracksdj != '') {
 
-		echo do_shortcode('[8tracks url="'.stripslashes($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.stripslashes($eighttracksflash).'" tags="'.str_replace($badchars, $goodchars, $eighttrackstags).'" artist="'.str_replace($badchars, $goodchars, $eighttracksartist).'" dj="'.str_replace($badchars, $goodchars, $eighttracksdj).'" collection="'. ($eighttrackscollection) .'" sort="' . ($eighttrackssort) . '" perpage="' . intval($eighttracksperpage) . '"]');
+		echo do_shortcode('[8tracks url="'.($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.($eighttracksflash).'" tags="'.str_replace($badchars, $goodchars, $eighttrackstags).'" artist="'.str_replace($badchars, $goodchars, $eighttracksartist).'" dj="'.str_replace($badchars, $goodchars, $eighttracksdj).'" collection="'. ($eighttrackscollection) .'" sort="' . ($eighttrackssort) . '" perpage="' . intval($eighttracksperpage) . '"]');
     }
     echo '</div>';
-	echo stripslashes($args['after_widget']);
+	echo ($args['after_widget']);
 
 }
   
