@@ -151,20 +151,24 @@ function eighttracks_shortcode( $atts, $content) {
 	
 //Ok, here's where we convert our 8tracks URL from canonical to numerical, and then go and fetch the mix' xml file.		
 
+	//The basic URL method:
 	if (!empty($url)) {
 		$the_body = wp_remote_get( esc_url($url) . '.xml' .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+	//Here follow mixes where tags, artist, or dj are specified and collection is turned off.
 	} else if (!empty($tags) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if (!empty($artist) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if (!empty($dj) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+	//Here follow mixes where tags, artist, or dj are specified and collection is turned on.
 	} else if ((!empty($tags)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if ((!empty($artist)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if ((!empty($dj)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+	//This handles mixes where sort is set, but collection is off.
 	} else if ((!empty($sort)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 }
