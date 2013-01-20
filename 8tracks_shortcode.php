@@ -40,6 +40,7 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 // artist: Use this if you want to search for mixes with a given artist.
 // dj: Use this to specify a particular user/dj on 8tracks.
 // collection: Set this to "yes" to embed the collection player, which will give you a set of mixes matching your tags or artist.
+// mixset: This value is for mixes that are found on the 8tracks site.  (Example: collection:645:favorite-artwork)
 // perpage: Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
 // sort: Can be combined with tags or artist, or stand-alone. Options are "recent", "hot", or "popular".
 
@@ -78,6 +79,7 @@ function eighttracks_shortcode( $atts, $content) {
 			'artist' => '',
 			'dj' => '',
 			'collection' => '',
+			'mixset' => '',
 			'perpage' => '',
 			'sort' => '',
 			), $atts ) ); 
@@ -144,6 +146,20 @@ function eighttracks_shortcode( $atts, $content) {
 		$dj = ($djxml->user->id);
 		}
 	}
+	
+//A little extra work to make the 8track mix sets work properly:
+	
+	if (!empty($mixset)) {
+		$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		//Handle Errors in case MIXSET returns 404.
+		if ( is_wp_error( $mixset_body ) || $mixset_body['response']['code'] != '200' ) {
+		return '';
+		} else {
+		//Convert the canonical mixset name to its numerical equivalent.
+		$mixsetxml = new SimpleXMLElement( $mixset_body['body'] );
+		$mixset = ($mixsetxml->id);
+		}
+	}
 
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
 	$badchars = array(' ', '.', ',', ', ');
@@ -171,7 +187,10 @@ function eighttracks_shortcode( $atts, $content) {
 	//This handles mixes where sort is set, but collection is off.
 	} else if ((!empty($sort)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-}
+	//This handles mix sets found on the 8tracks site.
+	} else if (!empty($mixset)) {
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+	}
 
 //Error handling for URL processing.
 	if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
@@ -186,7 +205,7 @@ function eighttracks_shortcode( $atts, $content) {
 		return '<!-- invalid xml -->';
 	}
 	
-//Collection Output (HTML5 only)
+//User-Constructed Collection Output (HTML5 only)
 if ($collection=="yes" && (!empty($tags))) {
 	$output = '<iframe src="http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '" ';
 	$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
@@ -204,7 +223,12 @@ if ($collection=="yes" && (!empty($tags))) {
 	$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
 	$output .= 'border="0" style="border: 0px none;"></iframe>';
 }
-
+//Collections from 8tracks site
+  else if (!empty($mixset)) {
+	$output = '<iframe src="http://8tracks.com/mix_sets/' . intval($mixset) . '/player?per_page=' . intval($perpage) . '" ';
+	$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
+	$output .= 'border="0" style="border: 0px none;"></iframe>';
+}
 //Output mixes where tags, artist, or dj is requested, and Flash is turned on.
   else if ($flash=="yes" && (!empty($tags))) {
 	$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
@@ -297,6 +321,7 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 		update_option('eighttracks_widget_eighttracksartist', $_POST['eighttracksartist']);
 		update_option('eighttracks_widget_eighttracksdj', $_POST['eighttracksdj']);
 		update_option('eighttracks_widget_eighttrackscollection', $_POST['eighttrackscollection']);
+		update_option('eighttracks_widget_eighttracksmixset', $_POST['eighttracksmixset']);
 		update_option('eighttracks_widget_eighttrackssort', $_POST['eighttrackssort']);
 		update_option('eighttracks_widget_eighttracksperpage', $_POST['eighttracksperpage']);
     }
@@ -310,6 +335,7 @@ function eighttracks_widget_control($args=array(), $params=array()) {
 	$eighttracksartist = get_option('eighttracks_widget_eighttracksartist');
 	$eighttracksdj = get_option('eighttracks_widget_eighttracksdj');
 	$eighttrackscollection = get_option('eighttracks_widget_eighttrackscollection');
+	$eighttracksmixset = get_option('eighttracks_widget_eighttracksmixset');
 	$eighttrackssort = get_option('eighttracks_widget_eighttrackssort');
 	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
     ?>
@@ -330,6 +356,9 @@ function eighttracks_widget_control($args=array(), $params=array()) {
     <br /><br />
 	Specific DJ:<br />
 	<input type="text" class="widefat" name="eighttracksdj" value="<?php echo ($eighttracksdj); ?>" />
+	<br />
+	Specific Collection:<br />
+	<input type="text" class="widefat" name="eighttracksmixset" value="<?php echo ($eighttracksmixset); ?>" />
 	<br />
 	<hr>
 	Mix Options:<br />
@@ -368,6 +397,7 @@ function eighttracks_widget_display($args=array(), $params=array()) {
 	$eighttracksartist = get_option('eighttracks_widget_eighttracksartist');
 	$eighttracksdj = get_option('eighttracks_widget_eighttracksdj');
 	$eighttrackscollection = get_option('eighttracks_widget_eighttrackscollection');
+	$eighttracksmixset = get_option('eighttracks_widget_eighttracksmixset');
 	$eighttrackssort = get_option('eighttracks_widget_eighttrackssort');
 	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
 
@@ -377,9 +407,9 @@ function eighttracks_widget_display($args=array(), $params=array()) {
     echo ($widgettitle);
     echo ($args['after_title']);
     echo '<div class="textwidget">'.(nl2br($description));
-    if ($eighttracksurl != '' or $eighttrackstags != '' or $eighttracksartist != '' or $eighttracksdj != '') {
+    if ($eighttracksurl != '' or $eighttrackstags != '' or $eighttracksartist != '' or $eighttracksdj != '' or $eighttracksmixset != '') {
 
-		echo do_shortcode('[8tracks url="'.($eighttracksurl).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.($eighttracksflash).'" tags="'.str_replace($badchars, $goodchars, $eighttrackstags).'" artist="'.str_replace($badchars, $goodchars, $eighttracksartist).'" dj="'.str_replace($badchars, $goodchars, $eighttracksdj).'" collection="'. ($eighttrackscollection) .'" sort="' . ($eighttrackssort) . '" perpage="' . intval($eighttracksperpage) . '"]');
+		echo do_shortcode('[8tracks url="'.($eighttracksurl).'" mixset="'.($eighttracksmixset).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.($eighttracksflash).'" tags="'.str_replace($badchars, $goodchars, $eighttrackstags).'" artist="'.str_replace($badchars, $goodchars, $eighttracksartist).'" dj="'.str_replace($badchars, $goodchars, $eighttracksdj).'" collection="'. ($eighttrackscollection) .'" sort="' . ($eighttrackssort) . '" perpage="' . intval($eighttracksperpage) . '"]');
     }
     echo '</div>';
 	echo ($args['after_widget']);

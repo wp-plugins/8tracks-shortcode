@@ -20,6 +20,7 @@
 		var artist = $('#eighttracksArtist').val();
 		var dj = $('#eighttracksDJ').val();
 		var collection = $('#eighttracksCollection').val();
+		var mixset = $('#eighttracksMixset').val();
 		var perpage = $('#eighttracksPerpage').val();
 		var sort = $('#eighttracksSort').val();
 		var output = '[8tracks ';
@@ -50,6 +51,9 @@
 		}		
 		if(collection) {
 			output += 'collection="'+collection+'" ';
+		}
+		if(mixset) {
+			output += 'mixset="'+mixset+'" ';
 		}
 		if(perpage) {
 			output += 'perpage="'+perpage+'" ';
@@ -109,10 +113,12 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
     <tr>
 	<td><label for="eighttracksURL">URL for your mix:</label>
 	<td><label for="eighttracksDJ">Specific DJ/Username:</label></td>
+	<td><label for=eighttracksMixset">Specific Collection:</label></td>
 	</tr>
 	<tr>
 	<td><input id="eighttracksURL" type="text" value="" /></td>
 	<td><input id="eighttracksDJ" type="text" value="" /></td>
+	<td><input id="eighttracksMixset" type="text" value="" /></td>
 	</tr>
 	</table>
 	<hr>
