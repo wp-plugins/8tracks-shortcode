@@ -134,12 +134,17 @@ function eighttracks_shortcode( $atts, $content) {
 //We need to do a little extra work to get the correct value when $dj is specified:
 
 	if (!empty($dj)) {
-		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );	
+		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		//Handle Errors in case DJ returns 404.
+		if ( is_wp_error( $dj_body ) || $dj_body['response']['code'] != '200' ) {
+		return '';
+		} else {
+		//Convert the canonical DJ name given by the user to its numerical equivalent.
 		$djxml = new SimpleXMLElement( $dj_body['body'] );	
 		$dj = ($djxml->user->id);
-}
+		}
+	}
 
-	
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
 	$badchars = array(' ', '.', ',', ', ');
 	$goodchars = array('_', '%5E', '%2B', '%2B');
