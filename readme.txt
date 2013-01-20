@@ -13,7 +13,19 @@ Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows
 
 == Usage ==
 
-The syntax is: [8tracks url=""] or [8tracks tags="some, tags, here"]
+Some useful syntax examples: 
+
+A Specific Mix [8tracks url=""]
+A Specific DJ [8tracks dj="some username"]
+A Specific Collection [8tracks mixset="collection:645:favorite-artwork"]
+
+Random Mix from Tags [8tracks tags="some, tags, here"]
+Random Mix By Artist [8tracks artist="some artist"]
+Random Mix from 8tracks' Charts [8tracks sort="recent, hot, popular"]
+
+You can also add 'collection="yes"' (ignore single quotes) to any of the above 
+where url is empty, and this will create a collection embed for you.
+
 
 URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
@@ -24,11 +36,11 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'collection', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'collection', 'mixset', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" collection=""]
+	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" collection="" mixset=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 	Height and Width for Collections defaults to 500 and 500.
