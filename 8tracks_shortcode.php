@@ -82,6 +82,7 @@ function eighttracks_shortcode( $atts, $content) {
 			'mixset' => '',
 			'perpage' => '',
 			'sort' => '',
+			'lists' => '',
 			), $atts ) ); 
 
 // Make sure that a user can only enter a whitelisted set of playops.
@@ -136,7 +137,17 @@ function eighttracks_shortcode( $atts, $content) {
 	);
 	if ( !in_array( $sort, $allowed_sorts ) )
 		$sort = '';
-		
+
+// Let's make sure our list settings are valid.
+	$allowed_lists = array(
+		'liked',
+		'listen_later',
+		'listened',
+		'recommended',
+	);
+	if ( !in_array( $lists, $allowed_lists ) )
+		$lists = '';
+
 //We need to do a little extra work to get the correct value when $dj is specified:
 
 	if (!empty($dj)) {
@@ -153,6 +164,14 @@ function eighttracks_shortcode( $atts, $content) {
 		$djxml = new SimpleXMLElement( $dj_body['body'] );	
 		$dj = ($djxml->user->id);
 		}
+	}
+
+//Let's combine our $lists value with our numerical $dj value and make a new $mixset value.
+
+	if ((!empty($lists)) && (!empty($dj))) {
+		$collection = "yes";
+		$newlist = '' . ($lists) . ':' . ($dj) . '';
+		$mixset = $newlist;
 	}
 	
 //A little extra work to make the 8track mix sets work properly:
@@ -187,14 +206,14 @@ function eighttracks_shortcode( $atts, $content) {
 		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if (!empty($artist) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-	} else if (!empty($dj) && (empty($collection))) {
+	} else if (!empty($dj) && (empty($lists)) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	//Here follow mixes where tags, artist, or dj are specified and collection is turned on.
 	} else if ((!empty($tags)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if ((!empty($artist)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-	} else if ((!empty($dj)) && (!empty($collection))) {
+	} else if ((!empty($dj)) && (!empty($collection)) && (empty($lists))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	//This handles mixes where sort is set, but collection is off.
 	} else if ((!empty($sort)) && (!empty($collection))) {
@@ -226,7 +245,7 @@ if ($collection=="yes" && (!empty($tags))) {
 	$output = '<iframe src="http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '" ';
 	$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
 	$output .= 'border="0" style="border: 0px none;"></iframe>';
-} else if ($collection=="yes" && (!empty($dj))) {
+} else if ($collection=="yes" && ((!empty($dj)) && (empty($lists)))) {
 	$output = '<iframe src="http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '" ';
 	$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
 	$output .= 'border="0" style="border: 0px none;"></iframe>';
@@ -260,7 +279,7 @@ if ($collection=="yes" && (!empty($tags))) {
 	$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops . '" ';
 	$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 	$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>'; 
-} else if ($flash=="yes" && (!empty($dj))) {
+} else if ($flash=="yes" && ((!empty($dj)) && (empty($lists)))) {
 	$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
 	$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
 	$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
@@ -278,7 +297,7 @@ if ($collection=="yes" && (!empty($tags))) {
 } else if ($flash=="no" && (!empty($artist))) {
 	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
 	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
-} else if ($flash=="no" && (!empty($dj))) {
+} else if ($flash=="no" && ((!empty($dj)) && (empty($lists)))) {
 	$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
 	$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
 }

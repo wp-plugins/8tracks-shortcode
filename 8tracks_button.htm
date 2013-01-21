@@ -23,6 +23,7 @@
 		var mixset = $('#eighttracksMixset').val();
 		var perpage = $('#eighttracksPerpage').val();
 		var sort = $('#eighttracksSort').val();
+		var lists = $('#eighttracksList').val();
 		var output = '[8tracks ';
 
 		if(url) {
@@ -61,6 +62,10 @@
 		if(sort) {
 			output += 'sort="'+sort+'" ';
 		}
+		if(lists) {
+			output += 'lists="'+lists+'" ';
+		}
+		
 		output += ']';
 		
 		tinyMCEPopup.execCommand('mceReplaceContent', false, output);
@@ -94,15 +99,15 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksArtist">Artist:</label></td>
-	   <td><label for="eighttracksDJ">Specific DJ/Username:</label></td>       
+	   <td><label for=eighttracksMixset">Specific Collection:</label></td>       
 	   </tr>
 	   <tr>
        <td><input id="eighttracksArtist" type="text" value="" /></td>
-	   <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
+	   <td><input id="eighttracksMixset" type="text" value="" size="50%"/></td>
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksCollection">Display as collection?</label></td>
-	   <td><label for=eighttracksMixset">Specific Collection:</label></td>   
+	   <td><label for="eighttracksDJ">Specific DJ/Username:</label></td>   
 	   </tr>
 	   <tr>
 	   <td><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
@@ -110,10 +115,11 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		   <option value="yes">Yes</option>
 		   </select>
 	  </td>
-	  <td><input id="eighttracksMixset" type="text" value="" size="50%"/></td>
+	  <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
 	  </tr>
 	  <tr>
-	  <td><label for="eighttracksSort">Sort By:</label>
+	  <td><label for="eighttracksSort">Sort By:</label></td>
+	  <td><label for="eighttracksList">Common DJ/User Lists</label></td>
       </tr>
 	  <tr>
 	  <td><select name="eighttracksSort" id="eighttracksSort" style="width: 75%;">
@@ -121,6 +127,13 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		     <option value="recent">New</option>
 		     <option value="hot">Trending</option>
 		     <option value="popular">Popular</option>
+		     </select></td>
+	  <td><select name="eighttracksList" id="eighttracksList" style="width: 50%;">
+			 <option value="">None</option>
+		     <option value="liked">Liked</option>
+		     <option value="listen_later">Listen Later</option>
+		     <option value="listened">History</option>
+			 <option value="recommended">Recommended</option>
 		     </select></td>
 	  </tr>
 	  <tr>
