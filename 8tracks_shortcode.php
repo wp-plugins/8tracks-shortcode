@@ -10,7 +10,7 @@ Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 */
 
-/*  Copyright 2011-13  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
+/*  Copyright 2011  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -101,6 +101,10 @@ function eighttracks_shortcode( $atts, $content) {
 	if (!isset( $collection['yes'] ))
 		$collection="no";
 
+// Ensure that specific collections are displayed as collections.
+	if (!empty( $mixset )) 
+		$collection="yes";
+
 // Make sure the URL we are loading is from 8tracks.com
 	if (!empty($url)) {
 	$url_bits = parse_url( $url );
@@ -150,11 +154,11 @@ function eighttracks_shortcode( $atts, $content) {
 //A little extra work to make the 8track mix sets work properly:
 	
 	if (!empty($mixset)) {
-		if (strpos($mixset,"http://8tracks.com/mix_sets") =="true")
+		if (strpos($mixset,"http://8tracks.com/mix_sets") =="true") {
 				$mixset_body = wp_remote_get ('' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-		else  
-			$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-		}
+		} else {
+			$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) .'.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		} 
 		//Handle Errors in case MIXSET returns 404.
 		if ( is_wp_error( $mixset_body ) || $mixset_body['response']['code'] != '200' ) {
 		return '';
@@ -163,7 +167,7 @@ function eighttracks_shortcode( $atts, $content) {
 		$mixsetxml = new SimpleXMLElement( $mixset_body['body'] );
 		$mixset = ($mixsetxml->id);
 		}
-	
+	}
 
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
 	$badchars = array(' ', '.', ',', ', ');
