@@ -70,8 +70,8 @@ add_shortcode( "8tracks", "eighttracks_shortcode" );
 
 function eighttracks_shortcode( $atts, $content) {
 			extract( shortcode_atts ( array(
-			'height' => 250,
-			'width' => 300,
+			'height' => '',
+			'width' => '',
 			'playops' => '',
 			'url' => '',
 			'flash' => '',
@@ -112,16 +112,16 @@ function eighttracks_shortcode( $atts, $content) {
 		return '';
 }
 
-//Make sure the mix is of an appropriate size, if no width and height are set.
-	if ( 200 > $width )
+//Make sure the specific mix is of an appropriate size, if no width and height are set.
+	if (empty($width) && $collection=="no")
 		$width = 300;
-	if ( 200 > $height )
+	if (empty($height) && $collection=="no")
 		$height = 250;
 
 //Make sure the collection is of an appropriate size, if no width and height are set.
-	if ($collection=="yes" && ( 500 > $width))
+	if ($collection=="yes" && (empty($width)))
 		$width = 500;
-	if ($collection=="yes" && ( 500 > $height))
+	if ($collection=="yes" && (empty($height)))
 		$height = 500;
 
 //Specify a default number of mixes (4) per page of the collection.
@@ -302,130 +302,7 @@ if ($collection=="yes" && (!empty($tags))) {
 return $output;
 }
 
-//Begin Widget Code
+//Include Widget Code
 
-wp_register_sidebar_widget(
-    'eighttracks_widget',   
-    '8Tracks',
-    'eighttracks_widget_display',
-    array(               
-        'description' => 'Insert 8Tracks mixes as a widget'
-    )
-);
-
-wp_register_widget_control(
-	'eighttracks_widget',		// id
-	'eighttracks_widget',		// name
-	'eighttracks_widget_control'	// callback function
-);
-
-//These are the Widget Options
-
-function eighttracks_widget_control($args=array(), $params=array()) {
-    //the form is submitted, save into database
-    if (isset($_POST['submitted'])) {
-    	update_option('eighttracks_widget_title', $_POST['widgettitle']);
-    	update_option('eighttracks_widget_eighttracksurl', $_POST['eighttracksurl']);
-		update_option('eighttracks_widget_eighttracksheight', $_POST['eighttracksheight']);
-		update_option('eighttracks_widget_eighttrackswidth', $_POST['eighttrackswidth']);
-		update_option('eighttracks_widget_eighttracksflash', $_POST['eighttracksflash']);
-		update_option('eighttracks_widget_eighttrackstags', $_POST['eighttrackstags']);
-		update_option('eighttracks_widget_eighttracksartist', $_POST['eighttracksartist']);
-		update_option('eighttracks_widget_eighttracksdj', $_POST['eighttracksdj']);
-		update_option('eighttracks_widget_eighttrackscollection', $_POST['eighttrackscollection']);
-		update_option('eighttracks_widget_eighttracksmixset', $_POST['eighttracksmixset']);
-		update_option('eighttracks_widget_eighttrackssort', $_POST['eighttrackssort']);
-		update_option('eighttracks_widget_eighttracksperpage', $_POST['eighttracksperpage']);
-    }
-    //load options
-    $widgettitle = get_option('eighttracks_widget_title');
-    $eighttracksurl = get_option('eighttracks_widget_eighttracksurl');
-	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
-	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
-	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
-	$eighttrackstags = get_option('eighttracks_widget_eighttrackstags');
-	$eighttracksartist = get_option('eighttracks_widget_eighttracksartist');
-	$eighttracksdj = get_option('eighttracks_widget_eighttracksdj');
-	$eighttrackscollection = get_option('eighttracks_widget_eighttrackscollection');
-	$eighttracksmixset = get_option('eighttracks_widget_eighttracksmixset');
-	$eighttrackssort = get_option('eighttracks_widget_eighttrackssort');
-	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
-    ?>
-    Widget Title:<br />
-    <input type="text" class="widefat" name="widgettitle" value="<?php echo ($widgettitle); ?>" />
-    <br /><br />
-	<b>Random mix?</b> <br /><br />
-	Tag(s) (Example: a, b, c):
-	<input type="text" class="widefat" name="eighttrackstags" value="<?php echo ($eighttrackstags); ?>" />
-	<br />
-	Artist:
-	<input type="text" class="widefat" name="eighttracksartist" value="<?php echo ($eighttracksartist); ?>" />
-	<br />
-	<hr>
-	<b>Specific Mix?</b><br /><br />
-    8tracks Mix URL:<br />
-    <input type="text" class="widefat" name="eighttracksurl" value="<?php echo ($eighttracksurl); ?>" />
-    <br /><br />
-	Specific DJ:<br />
-	<input type="text" class="widefat" name="eighttracksdj" value="<?php echo ($eighttracksdj); ?>" />
-	<br />
-	Specific Collection:<br />
-	<input type="text" class="widefat" name="eighttracksmixset" value="<?php echo ($eighttracksmixset); ?>" />
-	<br />
-	<hr>
-	Mix Options:<br />
-	Display as Collection? (yes/no)
-	<input type="text" class="widefat" name="eighttrackscollection" value="<?php echo ($eighttrackscollection); ?>" />
-	<br />
-	Mixes Per Collection Page:
-	<input type="text" class="widefat" name="eighttracksperpage" value="<?php echo ($eighttracksperpage); ?>" />
-	<br />
-	List Type (Optional: recent, hot, popular):
-	<input type="text" class="widefat" name="eighttrackssort" value="<?php echo ($eighttrackssort); ?>" />
-	<br />
-	Mix Height:<br />
-	<input type="text" class="widefat" name="eighttracksheight" value="<?php echo intval($eighttracksheight); ?>" />
-	<br /><br />
-	Mix Width:<br />
-	<input type="text" class="widefat" name="eighttrackswidth" value="<?php echo intval($eighttrackswidth); ?>" />
-	<br /><br />
-	Use Flash? (yes/no)<br />
-	<input type="text" class="widefat" name="eighttracksflash" value="<?php echo ($eighttracksflash); ?>" />
-	<br />
-    <input type="hidden" name="submitted" value="1" />
-    <?php
-}
-
-//This controls the Widget Output.
-function eighttracks_widget_display($args=array(), $params=array()) {
-    //load options
-    $widgettitle = get_option('eighttracks_widget_title');
-    $description = get_option('eighttracks_widget_description');
-    $eighttracksurl = get_option('eighttracks_widget_eighttracksurl');
-	$eighttracksheight = get_option('eighttracks_widget_eighttracksheight');
-	$eighttrackswidth = get_option('eighttracks_widget_eighttrackswidth');
-	$eighttracksflash = get_option('eighttracks_widget_eighttracksflash');
-	$eighttrackstags = get_option('eighttracks_widget_eighttrackstags');
-	$eighttracksartist = get_option('eighttracks_widget_eighttracksartist');
-	$eighttracksdj = get_option('eighttracks_widget_eighttracksdj');
-	$eighttrackscollection = get_option('eighttracks_widget_eighttrackscollection');
-	$eighttracksmixset = get_option('eighttracks_widget_eighttracksmixset');
-	$eighttrackssort = get_option('eighttracks_widget_eighttrackssort');
-	$eighttracksperpage = get_option('eighttracks_widget_eighttracksperpage');
-
-    //widget output
-    echo ($args['before_widget']);
-    echo ($args['before_title']);
-    echo ($widgettitle);
-    echo ($args['after_title']);
-    echo '<div class="textwidget">'.(nl2br($description));
-    if ($eighttracksurl != '' or $eighttrackstags != '' or $eighttracksartist != '' or $eighttracksdj != '' or $eighttracksmixset != '') {
-
-		echo do_shortcode('[8tracks url="'.($eighttracksurl).'" mixset="'.($eighttracksmixset).'" height="'.intval($eighttracksheight).'" width="'.intval($eighttrackswidth).'" flash="'.($eighttracksflash).'" tags="'.str_replace($badchars, $goodchars, $eighttrackstags).'" artist="'.str_replace($badchars, $goodchars, $eighttracksartist).'" dj="'.str_replace($badchars, $goodchars, $eighttracksdj).'" collection="'. ($eighttrackscollection) .'" sort="' . ($eighttrackssort) . '" perpage="' . intval($eighttracksperpage) . '"]');
-    }
-    echo '</div>';
-	echo ($args['after_widget']);
-
-}
-  
+include_once dirname( __FILE__ ) . '/widget.php';
 ?>
