@@ -82,21 +82,20 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	   <tr>
 	   <td><label for="eighttracksTags">Tags (comma separated):</label></td>
 	   <td><label for="eighttracksArtist">Artist:</label></td>
+	   <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
 	   </tr>
 	   <tr>
        <td><input id="eighttracksTags" type="text" value="" /></td>
        <td><input id="eighttracksArtist" type="text" value="" /></td>
+	   <td><input id="eighttracksPerpage" type="number" value="" /></td>
        </tr>
+	   <tr><td></td></tr>
        <tr>
 	   <td><label for="eighttracksCollection">Display as collection?</label>
 		   <select name="eighttracksCollection" id="eighttracksCollection">
 		   <option value="no">No</option>
 		   <option value="yes">Yes</option>
 		   </select>
-		 </td>
-	     <td>
-			<label for="eighttracksPerpage">Mixes per page? (Default 4)</label>
-			<input id="eighttracksPerpage" type="number" value="" />
 		 </td>
 		 <td><label for="eighttracksSort">Collection Type</label>
 		     <select name="eighttracksSort" id="eighttracksSort">
@@ -105,6 +104,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		     <option value="hot">Trending</option>
 		     <option value="popular">Popular</option>
 		     </select></td>
+
 		</tr>
 	</table>
 	<hr>
