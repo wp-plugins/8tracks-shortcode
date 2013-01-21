@@ -98,31 +98,36 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	   </tr>
 	   <tr>
        <td><input id="eighttracksArtist" type="text" value="" /></td>
-	   <td><input id="eighttracksDJ" type="text" value="" /></td>
+	   <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksCollection">Display as collection?</label></td>
 	   <td><label for=eighttracksMixset">Specific Collection:</label></td>   
 	   </tr>
 	   <tr>
-	   <td><select name="eighttracksCollection" id="eighttracksCollection">
+	   <td><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
 		   <option value="">No</option>
 		   <option value="yes">Yes</option>
 		   </select>
 	  </td>
-	  <td><input id="eighttracksMixset" type="text" value="" /></td>
+	  <td><input id="eighttracksMixset" type="text" value="" size="50%"/></td>
 	  </tr>
 	  <tr>
-	  <td><label for="eighttracksSort">Collection Type</label>
-	  <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
+	  <td><label for="eighttracksSort">Meta Options</label>
       </tr>
 	  <tr>
-	  <td><select name="eighttracksSort" id="eighttracksSort">
+	  <td><select name="eighttracksSort" id="eighttracksSort" style="width: 75%;">
 		     <option value="">None</option>
 		     <option value="recent">New</option>
 		     <option value="hot">Trending</option>
 		     <option value="popular">Popular</option>
 		     </select></td>
+	  </tr>
+	  <tr>
+	  <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
+	  <td></td>
+	  </tr>
+	  <tr>
 	  <td><input id="eighttracksPerpage" type="number" value="" /></td>
 	  </tr>
 	</table>
