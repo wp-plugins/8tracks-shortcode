@@ -77,52 +77,58 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 <body>
 <form id="eighttracksShortcode">
-	<p>Just want a random mix?</p>
-	<table>
+	
+	<table width="100%">
+	   <tr>
+	   <td width="50%"><h4>Just want a random mix?</h4></td>
+	   <td><h4>Rather have something specific?</h4></td>
+	   </tr>
+	   <tr><td></td><tr>
 	   <tr>
 	   <td><label for="eighttracksTags">Tags (comma separated):</label></td>
-	   <td><label for="eighttracksArtist">Artist:</label></td>
-	   <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
+	   <td><label for="eighttracksURL">URL for your mix:</label></td>
 	   </tr>
 	   <tr>
-       <td><input id="eighttracksTags" type="text" value="" /></td>
+	   <td><input id="eighttracksTags" type="text" value="" /></td>
+	   <td><input id="eighttracksURL" type="text" value="" size="50%"/></td>
+	   </tr>
+	   <tr>
+	   <td><label for="eighttracksArtist">Artist:</label></td>
+	   <td><label for="eighttracksDJ">Specific DJ/Username:</label></td>       
+	   </tr>
+	   <tr>
        <td><input id="eighttracksArtist" type="text" value="" /></td>
-	   <td><input id="eighttracksPerpage" type="number" value="" /></td>
-       </tr>
-	   <tr><td></td></tr>
-       <tr>
-	   <td><label for="eighttracksCollection">Display as collection?</label>
-		   <select name="eighttracksCollection" id="eighttracksCollection">
+	   <td><input id="eighttracksDJ" type="text" value="" /></td>
+	   </tr>
+	   <tr>
+	   <td><label for="eighttracksCollection">Display as collection?</label></td>
+	   <td><label for=eighttracksMixset">Specific Collection:</label></td>   
+	   </tr>
+	   <tr>
+	   <td><select name="eighttracksCollection" id="eighttracksCollection">
 		   <option value="no">No</option>
 		   <option value="yes">Yes</option>
 		   </select>
-		 </td>
-		 <td><label for="eighttracksSort">Collection Type</label>
-		     <select name="eighttracksSort" id="eighttracksSort">
+	  </td>
+	  <td><input id="eighttracksMixset" type="text" value="" /></td>
+	  </tr>
+	  <tr>
+	  <td><label for="eighttracksSort">Collection Type</label>
+	  <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
+      </tr>
+	  <tr>
+	  <td><select name="eighttracksSort" id="eighttracksSort">
 		     <option value="">None</option>
 		     <option value="recent">New</option>
 		     <option value="hot">Trending</option>
 		     <option value="popular">Popular</option>
 		     </select></td>
-
-		</tr>
+	  <td><input id="eighttracksPerpage" type="number" value="" /></td>
+	  </tr>
 	</table>
+<br />
 	<hr>
-	<p>Rather have something specific?</p>
-	<table>
-    <tr>
-	<td><label for="eighttracksURL">URL for your mix:</label>
-	<td><label for="eighttracksDJ">Specific DJ/Username:</label></td>
-	<td><label for=eighttracksMixset">Specific Collection:</label></td>
-	</tr>
-	<tr>
-	<td><input id="eighttracksURL" type="text" value="" /></td>
-	<td><input id="eighttracksDJ" type="text" value="" /></td>
-	<td><input id="eighttracksMixset" type="text" value="" /></td>
-	</tr>
-	</table>
-	<hr>
-	<p>Some options for your mix:</p>
+	<p><h4>Some options for your mix:</h4></p>
 	<table>
 	<tr>
 	<td><label for="eighttracksWidth">Width:</label></td>
