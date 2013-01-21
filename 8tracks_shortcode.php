@@ -140,7 +140,11 @@ function eighttracks_shortcode( $atts, $content) {
 //We need to do a little extra work to get the correct value when $dj is specified:
 
 	if (!empty($dj)) {
+		if (strpos($dj,"http://8tracks.com/") =="true") {
+		$dj_body = wp_remote_get ('' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		} else {
 		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		}
 		//Handle Errors in case DJ returns 404.
 		if ( is_wp_error( $dj_body ) || $dj_body['response']['code'] != '200' ) {
 		return '';
