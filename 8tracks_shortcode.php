@@ -182,7 +182,7 @@ function eighttracks_shortcode( $atts, $content) {
 		$mixset = $newlist;
 	}
 	
-//A little extra work to make the 8track mix sets work properly:
+//A little extra work to make the 8tracks mix sets work properly:
 	
 	if (!empty($mixset)) {
 		if (strpos($mixset,"http://8tracks.com/mix_sets") =="true") {
