@@ -99,35 +99,32 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksArtist">Artist:</label></td>
-	   <td><label for=eighttracksMixset">Specific Collection:</label></td>       
+	   <td><label for="eighttracksMixset">Specific Collection:</label></td>       
 	   </tr>
 	   <tr>
        <td><input id="eighttracksArtist" type="text" value="" /></td>
 	   <td><input id="eighttracksMixset" type="text" value="" size="50%"/></td>
 	   </tr>
 	   <tr>
-	   <td><label for="eighttracksCollection">Display as collection?</label></td>
+	   <td><label for="eighttracksSort">Sort By:</label></td>
 	   <td><label for="eighttracksDJ">Specific DJ/Username:</label></td>   
 	   </tr>
 	   <tr>
-	   <td><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
-		   <option value="">No</option>
-		   <option value="yes">Yes</option>
-		   </select>
-	  </td>
-	  <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
-	  </tr>
-	  <tr>
-	  <td><label for="eighttracksSort">Sort By:</label></td>
-	  <td><label for="eighttracksList">Common DJ/User Lists</label></td>
-      </tr>
-	  <tr>
-	  <td><select name="eighttracksSort" id="eighttracksSort" style="width: 75%;">
+	   <td><select name="eighttracksSort" id="eighttracksSort" style="width: 75%;">
 		     <option value="">None</option>
 		     <option value="recent">New</option>
 		     <option value="hot">Trending</option>
 		     <option value="popular">Popular</option>
-		     </select></td>
+		     </select>
+	  </td>
+	  <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
+	  </tr>
+	  <tr>
+	  <td></td>
+	  <td><label for="eighttracksList">Common DJ/User Lists</label></td>
+      </tr>
+	  <tr>
+	  <td></td>
 	  <td><select name="eighttracksList" id="eighttracksList" style="width: 50%;">
 			 <option value="">None</option>
 		     <option value="liked">Liked</option>
@@ -136,15 +133,21 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 			 <option value="recommended">Recommended</option>
 		     </select></td>
 	  </tr>
+	</table>
+	<br /><hr>
+	<table width="100%">
 	  <tr>
+	  <td width="35%"><label for="eighttracksCollection"><h4>Display above as collection?</h4></label></td>
 	  <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
-	  <td></td>
-	  </tr>
 	  <tr>
+	  <tr>
+	  <td width="35%"><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
+		   <option value="">No</option>
+		   <option value="yes">Yes</option>
+		   </select></td>
 	  <td><input id="eighttracksPerpage" type="number" value="" /></td>
 	  </tr>
-	</table>
-<br />
+	  </table>
 	<hr>
 	<p><h4>Some options for your mix:</h4></p>
 	<table>
