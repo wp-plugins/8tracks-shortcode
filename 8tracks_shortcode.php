@@ -10,7 +10,7 @@ Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 */
 
-/*  Copyright 2011  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
+/*  Copyright 2011-13  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as 
@@ -85,6 +85,28 @@ function eighttracks_shortcode( $atts, $content) {
 			'lists' => '',
 			), $atts ) ); 
 
+// Make sure collection has a value. Default is no.
+	if (!isset( $collection['yes'] )) 
+		$collection="no";
+
+//If Lists or Mixset are defined, you probably want a collection.
+	if ((!empty($lists)) || (!empty($mixset)))  
+		$collection = "yes";
+
+// Let's set some default mix size parameters.
+	if ((empty($width)) && (empty($height))) {
+		
+//Make sure the collection is of an appropriate size, if no width and height are set, and you haven't said you don't want a collection.
+		if (($collection=="yes")) {
+			$width = 500;
+			$height = 500;
+		//Make sure the specific mix is of an appropriate size, if no width and height are set.
+		} else if ($collection=="no") {
+			$width = 300;
+			$height = 250;
+		}
+	}
+
 // Make sure that a user can only enter a whitelisted set of playops.
 	$allowed_playops = array(
 		'shuffle',
@@ -98,32 +120,12 @@ function eighttracks_shortcode( $atts, $content) {
 	if (!isset( $flash['yes'] ))
 		$flash="no";
 
-// Make sure collection has a value. Default is no.
-	if (!isset( $collection['yes'] ))
-		$collection="no";
-
-// Ensure that specific collections are displayed as collections.
-	if (!empty( $mixset )) 
-		$collection="yes";
-
 // Make sure the URL we are loading is from 8tracks.com
 	if (!empty($url)) {
 	$url_bits = parse_url( $url );
 	if ( '8tracks.com' != $url_bits['host'] )
 		return '';
 }
-
-//Make sure the specific mix is of an appropriate size, if no width and height are set.
-	if (empty($width) && $collection=="no")
-		$width = 300;
-	if (empty($height) && $collection=="no")
-		$height = 250;
-
-//Make sure the collection is of an appropriate size, if no width and height are set.
-	if ($collection=="yes" && (empty($width)))
-		$width = 500;
-	if ($collection=="yes" && (empty($height)))
-		$height = 500;
 
 //Specify a default number of mixes (4) per page of the collection.
 	if ($collection=="yes" && (empty($perpage)))
@@ -138,7 +140,7 @@ function eighttracks_shortcode( $atts, $content) {
 	if ( !in_array( $sort, $allowed_sorts ) )
 		$sort = '';
 
-// Let's make sure our list settings are valid.
+//Make sure our list settings are valid.
 	$allowed_lists = array(
 		'liked',
 		'listen_later',
@@ -169,7 +171,6 @@ function eighttracks_shortcode( $atts, $content) {
 //Let's combine our $lists value with our numerical $dj value and make a new $mixset value.
 
 	if ((!empty($lists)) && (!empty($dj))) {
-		$collection = "yes";
 		$newlist = '' . ($lists) . ':' . ($dj) . '';
 		$mixset = $newlist;
 	}
@@ -208,6 +209,7 @@ function eighttracks_shortcode( $atts, $content) {
 		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if (!empty($dj) && (empty($lists)) && (empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+
 	//Here follow mixes where tags, artist, or dj are specified and collection is turned on.
 	} else if ((!empty($tags)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
@@ -215,9 +217,11 @@ function eighttracks_shortcode( $atts, $content) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 	} else if ((!empty($dj)) && (!empty($collection)) && (empty($lists))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+
 	//This handles mixes where sort is set, but collection is off.
 	} else if ((!empty($sort)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+
 	//This handles mix sets found on the 8tracks site.
 	} else if (!empty($mixset)) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
