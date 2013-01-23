@@ -246,9 +246,20 @@ function eighttracks_shortcode( $atts, $content) {
 } 	catch ( Exception $e ) {
 		return '<!-- invalid xml -->';
 }
-	
+//Let's display an error if the tag, artist, mixset, or dj search returns no mixes.
+
+	if ( ((!empty($artist))) && ((empty($xml->mixes->mix->id)) )) {
+		$output = '<p>Sorry, search not found.</p>';
+}	else if ( ((!empty($tags))) && ((empty($xml->mixes->mix->id)) )) {
+		$output = '<p>Sorry, search not found.</p>';
+}	else if ( ((!empty($dj))) && ((empty($djxml->user->id)) )) {
+		$output = '<p>Sorry, search not found.</p>';
+}	else if ( ((!empty($mixset))) && ((empty($mixsetxml->id)) )) {
+		$output = '<p>Sorry, search not found.</p>';
+}
+
 //User-Constructed Collection Output (HTML5 only)
-	if ($collection=="yes" && (!empty($tags))) {
+	else if ($collection=="yes" && (!empty($tags))) {
 		$output = '<iframe src="http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe>';
