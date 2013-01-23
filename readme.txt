@@ -85,6 +85,11 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
+== Upgrade Notice ==
+
+= 1.0 =
+This version is a major upgrade.  It introduces the ability to add collections, the ability to add 8tracks widgets, a tinymce button that allows for easy configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). 
+
 == Changelog ==
 
 = 1.0 =
