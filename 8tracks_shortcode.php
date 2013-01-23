@@ -44,6 +44,11 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 // perpage: Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
 // sort: Can be combined with tags or artist, or stand-alone. Options are "recent", "hot", or "popular".
 
+
+//Some useful global values for retrieving mixes.
+define( 'api_key', '?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+define( 'api_version', '&api_version=2' );
+
 //Begin Custom Editor Button
 function tcustom_addbuttons() {
 	if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
@@ -162,9 +167,9 @@ function eighttracks_shortcode( $atts, $content) {
 
 	if (!empty($dj)) {
 		if (strpos($dj,"http://8tracks.com/") =="true") {
-		$dj_body = wp_remote_get ('' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$dj_body = wp_remote_get ('' . ($dj) . '.xml' . (api_key) . '' . (api_version) . '' );
 }	else {
-		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml' . (api_key) . '' . (api_version) . '' );
 }
 		//Handle Errors in case DJ returns 404.
 	if ( is_wp_error( $dj_body ) || $dj_body['response']['code'] != '200' ) {
@@ -186,9 +191,9 @@ function eighttracks_shortcode( $atts, $content) {
 	
 	if (!empty($mixset)) {
 		if (strpos($mixset,"http://8tracks.com/mix_sets") =="true") {
-				$mixset_body = wp_remote_get ('' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+				$mixset_body = wp_remote_get ('' . ($mixset) . '.xml' . (api_key) . '' . (api_version) . '' );
 	} 	else {
-			$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) .'.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+			$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) .'.xml' . (api_key) . '' . (api_version) . '' );
 } 
 	//Handle Errors in case MIXSET returns 404.
 	if ( is_wp_error( $mixset_body ) || $mixset_body['response']['code'] != '200' ) {
@@ -207,31 +212,31 @@ function eighttracks_shortcode( $atts, $content) {
 
 	//The basic URL method:
 	if (!empty($url)) {
-		$the_body = wp_remote_get( esc_url($url) . '.xml' .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get( esc_url($url) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
 } 	
 //Here follow mixes where tags, artist, or dj are specified and collection is turned off.
 	else if (!empty($tags) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'' . (api_key) . '' . (api_version) . '' );
 } 	else if (!empty($artist) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'' . (api_key) . '' . (api_version) . '' );
 } 	else if (!empty($dj) && (empty($lists)) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'' . (api_key) . '' . (api_version) . '' );
 
 //Here follow mixes where tags, artist, or dj are specified and collection is turned on.
 } 	else if ((!empty($tags)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml' . (api_key) . '' . (api_version) . '' );
 } 	else if ((!empty($artist)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml' . (api_key) . '' . (api_version) . '' );
 } 	else if ((!empty($dj)) && (!empty($collection)) && (empty($lists))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' . (api_version) . '' );
 
 //This handles mixes where sort is set, but collection is off.
 } 	else if ((!empty($sort)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' . (api_version) . '' );
 
 //This handles mix sets found on the 8tracks site.
 } 	else if (!empty($mixset)) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml' . (api_key) . '' . (api_version) . '' );
 }
 
 //Error handling for URL processing.
