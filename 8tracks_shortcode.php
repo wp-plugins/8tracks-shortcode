@@ -55,11 +55,11 @@ function tcustom_addbuttons() {
 }}
 
 function register_tcustom_button($buttons) {
-	array_push($buttons, "|", "example");
+	array_push($buttons, "|", "eighttracks_button");
 	return $buttons;
 } 
 function add_tcustom_tinymce_plugin($plugin_array) {
-	$plugin_array['example'] = WP_PLUGIN_URL.'/8tracks-shortcode/8tracks.js';
+	$plugin_array['eighttracks_button'] = WP_PLUGIN_URL.'/8tracks-shortcode/8tracks.js';
 	return $plugin_array;
 }
 
