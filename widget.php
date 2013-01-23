@@ -74,7 +74,7 @@ class eighttracks_widget extends WP_Widget {
 	$sort	 	= strip_tags($instance['eighttracks_sort']);
 	
     ?>
-    Widget Title:<br />
+    <b>Widget Title:</b><br />
     <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr($title); ?>" />
     <br /><br />
 	<b>Random mix?</b> <br /><br />
@@ -91,21 +91,21 @@ class eighttracks_widget extends WP_Widget {
     <br /><br />
 	Specific DJ:<br />
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
-	<br />
+	<br /><br />
 	Specific Collection:<br />
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_mixset'); ?>" name="<?php echo $this->get_field_name('eighttracks_mixset'); ?>" value="<?php echo esc_attr($mixset); ?>" />
 	<br />
 	<hr>
-	Mix Options:<br />
+	<b>Mix Options:</b><br />
 	Display as Collection? (yes/no)
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_collection'); ?>" name="<?php echo $this->get_field_name('eighttracks_collection'); ?>" value="<?php echo esc_attr($collection); ?>" />
-	<br />
+	<br /><br />
 	Mixes Per Collection Page:
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_perpage'); ?>" name="<?php echo $this->get_field_name('eighttracks_perpage'); ?>" value="<?php echo esc_attr($perpage); ?>" />
-	<br />
+	<br /><br />
 	List Type (Optional: recent, hot, popular):
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_sort'); ?>" name="<?php echo $this->get_field_name('eighttracks_sort'); ?>" value="<?php echo esc_attr($sort); ?>" />
-	<br />
+	<br /><br />
 	Mix Height:<br />
 	<input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" />
 	<br /><br />
