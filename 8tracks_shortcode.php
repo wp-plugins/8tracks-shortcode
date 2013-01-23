@@ -265,28 +265,28 @@ function eighttracks_shortcode( $atts, $content) {
 
 //User-Constructed Collection Output (HTML5 only)
 	else if ($collection=="yes" && (!empty($tags))) {
-		$output = '<iframe src="http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe>';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	else if ($collection=="yes" && (!empty($artist))) {
-		$output = '<iframe src="http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe>';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	else if ($collection=="yes" && ((!empty($dj)) && (empty($lists)))) {
-		$output = '<iframe src="http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe>';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	else if ($collection=="yes" && (!empty($sort))) {
-		$output = '<iframe src="http://8tracks.com/mix_sets/all:' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/all:' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe>';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
 
 //Collections from 8tracks site
 	else if (!empty($mixset)) {
-		$output = '<iframe src="http://8tracks.com/mix_sets/' . intval($mixset) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($mixset) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe>';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
 
 //Output mixes where tags, artist, or dj is requested, and Flash is turned on.
@@ -321,14 +321,14 @@ function eighttracks_shortcode( $atts, $content) {
 
 //Output mixes where tags, artist, or dj is requested, and HTML5 is turned on.
 	else if ($flash=="no" && (!empty($tags))) {
-		$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
+		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 } 	else if ($flash=="no" && (!empty($artist))) {
-		$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
+		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 } 	else if ($flash=="no" && ((!empty($dj)) && (empty($lists)))) {
-		$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
+		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 }
  
 //Output a mix where URL is set and Flash is turned on.
@@ -345,10 +345,12 @@ function eighttracks_shortcode( $atts, $content) {
 
 //Output a mix where URL is set and HTML5 is turned on.
 	else {
-		$output = '<iframe src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe>';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
+		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 }		
-return $output;
+$output = apply_filters('eighttracks_shortcode', $output, $atts);
+if ( $output != '' )
+	return $output;
 }
 
 //Include Widget Code
