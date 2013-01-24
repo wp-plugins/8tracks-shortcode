@@ -31,16 +31,17 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 
 // Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no" perpage="some number"]
 
-// Note:    height, width, and playops are optional. You must specify either a URL, tags, or artist.
-// height:  Pick a number, any number.  Standard is 250.
-// width:   Yep, pick a number.  Standard is 300.
+// Note:    height, width, and playops are optional. You must specify either a URL, some tags, a dj, an artist, or a particular collection or mix set.
+// height:  Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
+// width:   Yep, pick a number.  Standard is 300 for single mixes, and 500 for collections.
 // playops: Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
-// flash: Can be set to "yes" to use the Flash player for your mixes, or left empty to use the new, HTML5 player.
+// flash: Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
 // tags: Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
 // artist: Use this if you want to search for mixes with a given artist.
 // dj: Use this to specify a particular user/dj on 8tracks.
-// collection: Set this to "yes" to embed the collection player, which will give you a set of mixes matching your tags or artist.
 // mixset: This value is for mixes that are found on the 8tracks site.  (Example: collection:645:favorite-artwork)
+
+// collection: Set this to "yes" to embed the collection player, which will give you a set of mixes matching your tags, artist, dj, or sort type (new, trending, popular).
 // perpage: Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
 // sort: Can be combined with tags or artist, or stand-alone. Options are "recent", "hot", or "popular".
 
