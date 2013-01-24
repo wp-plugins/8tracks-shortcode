@@ -69,6 +69,13 @@ That's it!  Enjoy!
 
 == Frequently Asked Questions ==
 
+= Can I customize the plugin's output? =
+
+Yes!  I've added a div around the iframes, which has this id: "tracks-div."  
+The iframe has a class also: "tracks-iframe."  
+
+Just add your custom css, and you're good to go!
+
 = I don't want to use HTML5, and I don't want to say flash="yes" in every single shortcode.  What can I do? =
 
 I hear you.  Change is hard.  From your dashboard, go to plugins > editor > 8tracks-shortcode > 8tracks-shortcode.php.
@@ -88,7 +95,7 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 == Upgrade Notice ==
 
 = 1.0 =
-This version is a major upgrade.  It introduces the ability to add collections, the ability to add 8tracks widgets, a tinymce button that allows for easy configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). 
+This version is a major upgrade.  It introduces the ability to add collections, the ability to add widgets, a tinymce button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see the FAQ).
 
 == Changelog ==
 
