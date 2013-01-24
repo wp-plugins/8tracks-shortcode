@@ -285,7 +285,7 @@ function eighttracks_shortcode( $atts, $content) {
 //Collections from 8tracks site
 	else if (!empty($mixset)) {
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($mixset) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
+		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
 
