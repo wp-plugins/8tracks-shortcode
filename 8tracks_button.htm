@@ -90,20 +90,20 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	   </tr>
 	   <tr><td></td><tr>
 	   <tr>
-	   <td><label for="eighttracksTags">Tags (comma separated):</label></td>
+	   <td><label for="eighttracksTags">Tags:</label></td>
 	   <td><label for="eighttracksURL">URL for your mix:</label></td>
 	   </tr>
 	   <tr>
-	   <td><input id="eighttracksTags" type="text" value="" /></td>
-	   <td><input id="eighttracksURL" type="text" value="" size="50%"/></td>
+	   <td><input id="eighttracksTags" type="text" value="" placeholder="a, b, c" /></td>
+	   <td><input id="eighttracksURL" type="text" value="" size="50%" placeholder="Copy the mix' url from the 8tracks site." /></td>
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksArtist">Artist:</label></td>
 	   <td><label for="eighttracksMixset">Specific Collection:</label></td>       
 	   </tr>
 	   <tr>
-       <td><input id="eighttracksArtist" type="text" value="" /></td>
-	   <td><input id="eighttracksMixset" type="text" value="" size="50%"/></td>
+       <td><input id="eighttracksArtist" type="text" value="" placeholder="One Artist Only" /></td>
+	   <td><input id="eighttracksMixset" type="text" value="" size="50%" placeholder="Copy the collection's url from the 8tracks site."/></td>
 	   </tr>
 	   <tr>
 	   <td><label for="eighttracksSort">Sort By:</label></td>
@@ -117,7 +117,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 		     <option value="popular">Popular</option>
 		     </select>
 	  </td>
-	  <td><input id="eighttracksDJ" type="text" value="" size="50%"/></td>
+	  <td><input id="eighttracksDJ" type="text" value="" size="50%" placeholder="Copy the user's url or name from the 8tracks site."/></td>
 	  </tr>
 	  <tr>
 	  <td></td>
@@ -138,14 +138,14 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	<table width="100%">
 	  <tr>
 	  <td width="35%"><label for="eighttracksCollection"><h4>Display above as collection?</h4></label></td>
-	  <td><label for="eighttracksPerpage">Mixes per page? (Default 4)</label></td>
+	  <td><label for="eighttracksPerpage">Mixes per page?</label></td>
 	  <tr>
 	  <tr>
 	  <td width="35%"><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
 		   <option value="">No</option>
 		   <option value="yes">Yes</option>
 		   </select></td>
-	  <td><input id="eighttracksPerpage" type="number" value="" /></td>
+	  <td><input id="eighttracksPerpage" type="number" value="" placeholder="Default is 4" /></td>
 	  </tr>
 	  </table>
 	<hr>
@@ -158,8 +158,8 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	<td><label for="eighttracksFlash">Flash?</label><br /></td>	
 	</tr>
 	<tr>
-	<td><input id="eighttracksWidth" type="number" value="" /></td>
-	<td><input id="eighttracksHeight" type="number" value="" /></td>
+	<td><input id="eighttracksWidth" type="number" value="" placeholder="Defaults: 300 / 500(coll.)" /></td>
+	<td><input id="eighttracksHeight" type="number" value="" placeholder="Defaults: 250 / 500(coll.)" /></td>
 	<td><select name="eighttracksPlayops" id="eighttracksPlayops">
 		<option value="">None</option>
 		<option value="shuffle">Shuffle</option>
