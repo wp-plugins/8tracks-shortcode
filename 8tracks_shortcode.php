@@ -231,7 +231,7 @@ function eighttracks_shortcode( $atts, $content) {
 } 	else if ((!empty($dj)) && (!empty($collection)) && (empty($lists))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' . (api_version) . '' );
 
-//This handles mixes where sort is set, but collection is off.
+//This handles collections where only sort is set.
 } 	else if ((!empty($sort)) && (!empty($collection))) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' . (api_version) . '' );
 
