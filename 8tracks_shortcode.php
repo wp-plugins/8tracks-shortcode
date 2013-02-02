@@ -172,7 +172,7 @@ function eighttracks_shortcode( $atts, $content) {
     if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)))) {
         $sort = ':' . ($sort) . '';
 }
-//Here, we create the smart id from tags, artist, and dj:
+//Here, we create the smart id from tags or artist:
     if (isset($tags)) 
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
     if (isset($artist))
@@ -182,7 +182,7 @@ function eighttracks_shortcode( $atts, $content) {
     if (isset($smart_id))  
         $smart_id = str_replace($badchars, $goodchars, $smart_id);
         
-//This handles mix sets found on the 8tracks site.
+//This handles collections made from smart_id, dj, or sort.
     if (!is_null($smart_id)) {
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
 }   
@@ -208,7 +208,8 @@ function eighttracks_shortcode( $atts, $content) {
 } 	catch ( Exception $e ) {
 		return '<!-- invalid xml -->';
 }
-    if ((!empty($smart_id)) && (empty($dj))) { //This is a collection.
+ //Collection processing:
+    if ((!empty($smart_id)) && (empty($dj))) {
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
