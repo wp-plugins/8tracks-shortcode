@@ -19,13 +19,9 @@ A Specific Mix [8tracks url=""]
 A Specific DJ [8tracks dj="some username"]
 A Specific Collection [8tracks mixset="collection:645:favorite-artwork"]
 
-Random Mix from Tags [8tracks tags="some, tags, here"]
-Random Mix By Artist [8tracks artist="some artist"]
-Random Mix from 8tracks' Charts [8tracks sort="recent, hot, popular"]
-
-You can also add 'collection="yes"' (ignore single quotes) to any of the above 
-where url is empty, and this will create a collection embed for you.
-
+Random Collection from Tags [8tracks tags="some, tags, here"]
+Random Collection by Artist [8tracks artist="some artist"]
+Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
 URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
@@ -36,11 +32,11 @@ or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-versi
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'collection', 'mixset', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'smart_id', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" collection="" mixset=""]
+	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" smart_id=""]
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 	Height and Width for Collections defaults to 500 and 500.
@@ -54,8 +50,8 @@ This would look like:
 		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
 		It's a randomized mix, but you can still exit and resume where you were.
 	
-	NOTE: url and tags are mutually exclusive. This should be fairly straightforward, as tags
-	allows you to search for random mixes, and url specifies a particular mix.
+	NOTE: url cannot be used with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
+	allow you to search for sets of mixes, and url specifies a particular mix.
 
 == Installation ==
 
@@ -84,6 +80,8 @@ Now, search for " 'flash' => '' " and replace it with " 'flash' => 'yes' ".
 (Ignore the double quotation marks.)
 
 That's it.  You will now default to Flash instead of HTML5.
+
+You should note that 8tracks is no longer updating the Flash player, even though they plan to keep it around for now.
 
 = Is there any practical reason to change this? = 
 
