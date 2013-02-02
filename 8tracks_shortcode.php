@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 0.995
+Version: 0.996
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -32,18 +32,16 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 // Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no" perpage="some number"]
 
 // Note:    height, width, and playops are optional. You must specify either a URL, some tags, a dj, an artist, or a particular collection or mix set.
-// height:  Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
-// width:   Yep, pick a number.  Standard is 300 for single mixes, and 500 for collections.
-// playops: Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
-// flash: Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
-// tags: Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
-// artist: Use this if you want to search for mixes with a given artist.
-// dj: Use this to specify a particular user/dj on 8tracks.
-// mixset: This value is for mixes that are found on the 8tracks site.  (Example: collection:645:favorite-artwork)
-
-// collection: Set this to "yes" to embed the collection player, which will give you a set of mixes matching your tags, artist, dj, or sort type (new, trending, popular).
-// perpage: Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
-// sort: Can be combined with tags or artist, or stand-alone. Options are "recent", "hot", or "popular".
+// height:      Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
+// width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for collections.
+// playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
+// flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
+// tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
+// artist:      Use this if you want to search for mixes with a given artist.
+// dj:          Use this to specify a particular user/dj on 8tracks.
+// smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
+// perpage:     Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
+// sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
 
 
 //Some useful global values for retrieving mixes.
@@ -80,25 +78,24 @@ function eighttracks_shortcode( $atts, $content) {
 			'height' => '',
 			'width' => '',
 			'playops' => '',
-			'url' => '',
+			'url' => NULL,
 			'flash' => '',
-			'tags' => '',
-			'artist' => '',
-			'dj' => '',
+			'tags' => NULL,
+			'artist' => NULL,
+			'dj' => NULL,
 			'collection' => '',
-			'mixset' => '',
+			'smart_id' => NULL,
 			'perpage' => '',
 			'sort' => '',
 			'lists' => '',
 			), $atts ) ); 
 
-// Make sure collection has a value. Default is no.
-	if (!isset( $collection['yes'] )) 
-		$collection="no";
-
-//If Lists or Mixset are defined, you probably want a collection.
-	if ((!empty($lists)) || (!empty($mixset)))  
+//If anything other than a URL is defined, you probably want a collection.
+    if (isset($url)) {
+        $collection = "no";
+}   else {
 		$collection = "yes";
+}
 
 // Let's set some default mix size parameters.
 	if ((empty($width)) && (empty($height))) {
@@ -135,7 +132,7 @@ function eighttracks_shortcode( $atts, $content) {
 		$flash="no";
 
 // Make sure the URL we are loading is from 8tracks.com
-	if (!empty($url)) {
+	if (isset($url)) {
 	$url_bits = parse_url( $url );
 	if ( '8tracks.com' != $url_bits['host'] )
 		return '';
@@ -151,9 +148,9 @@ function eighttracks_shortcode( $atts, $content) {
 		'hot',
 		'popular',
 	);
-	if ( !in_array( $sort, $allowed_sorts ) )
+	if ( !in_array( $sort, $allowed_sorts ) ) {
 		$sort = '';
-
+}  
 //Make sure our list settings are valid.
 	$allowed_lists = array(
 		'liked',
@@ -163,82 +160,78 @@ function eighttracks_shortcode( $atts, $content) {
 	);
 	if ( !in_array( $lists, $allowed_lists ) )
 		$lists = '';
-
-//We need to do a little extra work to get the correct value when $dj is specified:
-
-	if (!empty($dj)) {
-		if (strpos($dj,"http://8tracks.com/") =="true") {
-		$dj_body = wp_remote_get ('' . ($dj) . '.xml' . (api_key) . '' . (api_version) . '' );
-}	else {
-		$dj_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml' . (api_key) . '' . (api_version) . '' );
-}
-		//Handle Errors in case DJ returns 404.
-	if ( is_wp_error( $dj_body ) || $dj_body['response']['code'] != '200' ) {
-		return '';
-} 	else {
-		//Convert the canonical DJ name given by the user to its numerical equivalent.
-		$djxml = new SimpleXMLElement( $dj_body['body'] );	
-		$dj = ($djxml->user->id);
-}}
-
-//Let's combine our $lists value with our numerical $dj value and make a new $mixset value.
-
-	if ((!empty($lists)) && (!empty($dj))) {
-		$newlist = '' . ($lists) . ':' . ($dj) . '';
-		$mixset = $newlist;
-}
-	
-//A little extra work to make the 8tracks mix sets work properly:
-	
-	if (!empty($mixset)) {
-		if (strpos($mixset,"http://8tracks.com/mix_sets") =="true") {
-				$mixset_body = wp_remote_get ('' . ($mixset) . '.xml' . (api_key) . '' . (api_version) . '' );
-	} 	else {
-			$mixset_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) .'.xml' . (api_key) . '' . (api_version) . '' );
-} 
-	//Handle Errors in case MIXSET returns 404.
-	if ( is_wp_error( $mixset_body ) || $mixset_body['response']['code'] != '200' ) {
-		return '';
-} 	else {
-		//Convert the canonical mixset name to its numerical equivalent.
-		$mixsetxml = new SimpleXMLElement( $mixset_body['body'] );
-		$mixset = ($mixsetxml->id);
-}}
-
+        
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
-	$badchars = array(' ', '.', ',', ', ');
-	$goodchars = array('_', '%5E', '%2B', '%2B');
-	
-//Ok, here's where we convert our 8tracks URL from canonical to numerical, and then go and fetch the mix' xml file.		
+	$badchars = array(' ', '_', '/', '.', ',', ', ');
+	$goodchars = array('_', '__', '\\', '%5E', '%2B', '%2B');
 
-	//The basic URL method:
-	if (!empty($url)) {
-		$the_body = wp_remote_get( esc_url($url) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
-} 	
-//Here follow mixes where tags, artist, or dj are specified and collection is turned off.
-	else if (!empty($tags) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?tags=' . str_replace($badchars, $goodchars, $tags) .'' . (api_key) . '' . (api_version) . '' );
-} 	else if (!empty($artist) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mixes.xml?q=' . str_replace($badchars, $goodchars, $artist) .'' . (api_key) . '' . (api_version) . '' );
-} 	else if (!empty($dj) && (empty($lists)) && (empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) .'' . (api_key) . '' . (api_version) . '' );
-
-//Here follow mixes where tags, artist, or dj are specified and collection is turned on.
-} 	else if ((!empty($tags)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . '.xml' . (api_key) . '' . (api_version) . '' );
-} 	else if ((!empty($artist)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . '.xml' . (api_key) . '' . (api_version) . '' );
-} 	else if ((!empty($dj)) && (!empty($collection)) && (empty($lists))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' . (api_version) . '' );
-
-//This handles collections where only sort is set.
-} 	else if ((!empty($sort)) && (!empty($collection))) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' . (api_version) . '' );
-
-//This handles mix sets found on the 8tracks site.
-} 	else if (!empty($mixset)) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($mixset) . '.xml' . (api_key) . '' . (api_version) . '' );
+//Let's do some mix set processing:
+    if (is_null($url)) {
+    
+//Did we specify a sort?  Let's make sure that works.
+    if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)))) {
+        $sort = ':' . ($sort) . '';
 }
+//Here, we create the smart id from tags, artist, and dj:
+    if (isset($tags)) 
+        $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
+    if (isset($artist))
+        $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
+
+//We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
+    if (isset($smart_id))  
+        $smart_id = str_replace($badchars, $goodchars, $smart_id);
+        
+//This handles mix sets found on the 8tracks site.
+    if (!is_null($smart_id)) {
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
+}   
+    else if (strpos($smart_id,"http://8tracks.com/mix_sets/") =="true") { 
+		$the_body = wp_remote_get ('' . ($smart_id) . '.xml' . (api_key) . '' );
+}  	
+    else if (!empty($dj)) {
+        $the_body = wp_remote_get ('http://8tracks.com/' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' );
+} 	
+    else if (!empty($sort)) {   //This handles collections where only sort is set.
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' );
+}
+    
+//Error handling for URL processing.
+	if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
+		return '';
+
+	if ( ! isset( $the_body['body'] ) )
+		return '<!-- invalid response -->';
+
+	try {	
+		$xml = new SimpleXMLElement( $the_body['body'] );	
+} 	catch ( Exception $e ) {
+		return '<!-- invalid xml -->';
+}
+    if ((!empty($smart_id)) && (empty($dj))) { //This is a collection.
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
+}   else if (!empty($sort)) {
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
+}
+    else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
+} 	
+    else if (!empty($dj)) {
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
+		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
+    }  
+}
+   
+//This is for single mix processing:
+    if (!is_null($url)) {
+		$the_body = wp_remote_get( esc_url($url) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
 
 //Error handling for URL processing.
 	if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
@@ -252,88 +245,13 @@ function eighttracks_shortcode( $atts, $content) {
 } 	catch ( Exception $e ) {
 		return '<!-- invalid xml -->';
 }
-//Let's display an error if the tag, artist, mixset, or dj search returns no mixes.
 
-	if ( ((!empty($artist))) && ((empty($xml->mixes->mix->id)) )) {
-		$output = '<p>Sorry, search not found.</p>';
-}	else if ( ((!empty($tags))) && ((empty($xml->mixes->mix->id)) )) {
-		$output = '<p>Sorry, search not found.</p>';
-}	else if ( ((!empty($dj))) && ((empty($djxml->user->id)) )) {
-		$output = '<p>Sorry, search not found.</p>';
-}	else if ( ((!empty($mixset))) && ((empty($mixsetxml->id)) )) {
-		$output = '<p>Sorry, search not found.</p>';
-}
-
-//User-Constructed Collection Output (HTML5 only)
-	else if ($collection=="yes" && (!empty($tags))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/tags:' . str_replace($badchars, $goodchars, $tags) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-} 	else if ($collection=="yes" && (!empty($artist))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/artist:' . str_replace($badchars, $goodchars, $artist) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-} 	else if ($collection=="yes" && ((!empty($dj)) && (empty($lists)))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . str_replace($badchars, $goodchars, $dj) . ':' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-} 	else if ($collection=="yes" && (!empty($sort))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/all:' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . ( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}
-
-//Collections from 8tracks site
-	else if (!empty($mixset)) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($mixset) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}
-
-//Output mixes where tags, artist, or dj is requested, and Flash is turned on.
-	else if ($flash=="yes" && (!empty($tags))) {
-		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
-		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
-		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops .'"></param>';
-		$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops . '" ';
-		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
-		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
-} 	else if ($flash=="yes" && (!empty($artist))) {
-		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
-		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
-		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops .'"></param>';
-		$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops . '" ';
-		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
-		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>'; 
-} 	else if ($flash=="yes" && ((!empty($dj)) && (empty($lists)))) {
-		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
-		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
-		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops .'"></param>';
-		$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3/' . $playops . '" ';
-		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
-		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
-}
-
-//Output mixes where tags, artist, or dj is requested, and HTML5 is turned on.
-	else if ($flash=="no" && (!empty($tags))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
+//Output a mix where URL is set and HTML5 is turned on.
+	if ($flash=="no" && (!is_null($url))) { 
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
 		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
-} 	else if ($flash=="no" && (!empty($artist))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
-} 	else if ($flash=="no" && ((!empty($dj)) && (empty($lists)))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mixes->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
-}
- 
-//Output a mix where URL is set and Flash is turned on.
-	else if ($flash=="yes" && $tags=="" && $artist=="" && $dj=="") {
+}   
+	else if ($flash=="yes") {  //This is a single mix with Flash.
 		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
 		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
 		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
@@ -342,13 +260,9 @@ function eighttracks_shortcode( $atts, $content) {
 		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '" ';
 		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
-} 
-
-//Output a mix where URL is set and HTML5 is turned on.
-	else {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
-		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
-}		
+    }
+}   
+		
 $output = apply_filters('eighttracks_shortcode', $output, $atts);
 if ( $output != '' )
 	return $output;
