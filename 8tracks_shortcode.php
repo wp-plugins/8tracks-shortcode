@@ -29,20 +29,20 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 /*  A huge thanks goes to Justin S, WordPress.com Developer, for his enormous assistance with the plugin!
 */
 
-// Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no" perpage="some number"]
+/* Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no" perpage="some number"]
 
-// Note:    height, width, and playops are optional. You must specify either a URL, some tags, a dj, an artist, or a particular collection or mix set.
-// height:      Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
-// width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for collections.
-// playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
-// flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
-// tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
-// artist:      Use this if you want to search for mixes with a given artist.
-// dj:          Use this to specify a particular user/dj on 8tracks.
-// smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
-// perpage:     Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
-// sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
-
+ Note:    height, width, and playops are optional. You must specify either a URL, some tags, a dj, an artist, or a particular collection or mix set.
+ height:      Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
+ width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for collections.
+ playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
+ flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
+ tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
+ artist:      Use this if you want to search for mixes with a given artist.
+ dj:          Use this to specify a particular user/dj on 8tracks.
+ smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
+ perpage:     Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
+ sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
+*/
 
 //Some useful global values for retrieving mixes.
 define( 'api_key', '?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
