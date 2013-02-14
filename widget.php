@@ -3,7 +3,7 @@
 class eighttracks_widget extends WP_Widget {
 
   function __construct() {
-		$widget_ops = array( 'classname' => '8tracks', 'description' => __('Add an 8tracks mix to your sidebar.') ); 
+		$widget_ops = array( 'classname' => '8tracks', 'description' => __('Add an 8tracks mix or collection to your sidebar.') ); 
 		$control_ops = array('id_base' => 'eighttracks-widget');
 		parent::__construct('eighttracks-widget', __('8tracks'), $widget_ops, $control_ops);
   }
@@ -21,6 +21,7 @@ class eighttracks_widget extends WP_Widget {
 	$collection	= trim($instance['eighttracks_collection']);
 	$perpage	= trim($instance['eighttracks_perpage']);
 	$sort		= trim($instance['eighttracks_sort']);
+    $smart_id   = trim($instance['eighttracks_smartid']);
 
 // Initializing the output code.
     echo ($args['before_widget']);
@@ -42,6 +43,9 @@ class eighttracks_widget extends WP_Widget {
     else if ((empty($url)) && (!empty($artist))) {
         echo do_shortcode('[8tracks height="'.intval($height).'" width="'.intval($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '" perpage="' . intval($perpage) . '"]');
 }
+    else if ( (empty($url)) && (!empty($smart_id))) {
+        echo do_shortcode('[8tracks height="'.intval($height).'" width="'.intval($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '" perpage="' . intval($perpage) . '"]');
+}
     echo '</div>';
     echo ($args['after_widget']);
  }
@@ -49,17 +53,18 @@ class eighttracks_widget extends WP_Widget {
   function update($new_instance, $old_instance) {
     $instance = $old_instance;
  
-    $instance['title']     			= strip_tags($new_instance['title']);
-    $instance['eighttracks_url']  		= strip_tags($new_instance['eighttracks_url']);
+    $instance['title']     			        = strip_tags($new_instance['title']);
+    $instance['eighttracks_url']  		    = strip_tags($new_instance['eighttracks_url']);
     $instance['eighttracks_flash']  		= strip_tags($new_instance['eighttracks_flash']);
     $instance['eighttracks_height']     	= strip_tags($new_instance['eighttracks_height']);
     $instance['eighttracks_width']   		= strip_tags($new_instance['eighttracks_width']);
-    $instance['eighttracks_tags']		= strip_tags($new_instance['eighttracks_tags']);
-    $instance['eighttracks_artist']		= strip_tags($new_instance['eighttracks_artist']);
-    $instance['eighttracks_dj']			= strip_tags($new_instance['eighttracks_dj']);
+    $instance['eighttracks_tags']		    = strip_tags($new_instance['eighttracks_tags']);
+    $instance['eighttracks_artist']		    = strip_tags($new_instance['eighttracks_artist']);
+    $instance['eighttracks_dj']			    = strip_tags($new_instance['eighttracks_dj']);
     $instance['eighttracks_collection']		= strip_tags($new_instance['eighttracks_collection']);
     $instance['eighttracks_perpage']		= strip_tags($new_instance['eighttracks_perpage']);
-    $instance['eighttracks_sort']		= strip_tags($new_instance['eighttracks_sort']);
+    $instance['eighttracks_sort']		    = strip_tags($new_instance['eighttracks_sort']);
+    $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
 	
 	return $instance;
   }
@@ -79,13 +84,14 @@ class eighttracks_widget extends WP_Widget {
 	$collection = strip_tags($instance['eighttracks_collection']);
 	$perpage 	= strip_tags($instance['eighttracks_perpage']);
 	$sort	 	= strip_tags($instance['eighttracks_sort']);
-	
+	$smart_id   = strip_tags($instance['eighttracks_smartid']);
+    
     ?>
     <b>Widget Title:</b><br />
     <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr($title); ?>" />
     <br /><br />
 	<b>Random mix?</b> <br /><br />
-	Tag(s) (Example: a, b, c):
+	Tag(s):
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
 	<br />
 	Artist:
@@ -99,6 +105,9 @@ class eighttracks_widget extends WP_Widget {
 	Specific DJ:<br />
 	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
 	<br /><br />
+    8tracks Smart ID:<br />
+    <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" />
+    <br /><br />
 	<hr>
 	<b>Mix Options:</b><br />
 	Mixes Per Collection Page:
