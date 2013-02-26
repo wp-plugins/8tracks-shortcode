@@ -3,7 +3,8 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script type="text/javascript">
-		var eighttracks = {
+
+var eighttracks = {
 	e: '',
 	init: function(e) {
 		eighttracks.e = e;
@@ -11,60 +12,34 @@
 	},
 	insert: function createeighttracksShortcode(e) {
 		//Create eighttracks Shortcode
-		var url = $('#eighttracksURL').val();
-		var width = $('#eighttracksWidth').val();
-		var height = $('#eighttracksHeight').val();
-		var flash = $('#eighttracksFlash').val();
+		var url     = $('#eighttracksURL').val();
+		var width   = $('#eighttracksWidth').val();
+		var height  = $('#eighttracksHeight').val();
+		var flash   = $('#eighttracksFlash').val();
 		var playops = $('#eighttracksPlayops').val();
-		var tags = $('#eighttracksTags').val();
-		var artist = $('#eighttracksArtist').val();
-		var dj = $('#eighttracksDJ').val();
+		var tags    = $('#eighttracksTags').val();
+		var artist  = $('#eighttracksArtist').val();
+		var dj      = $('#eighttracksDJ').val();
 		var collection = $('#eighttracksCollection').val();
-		var mixset = $('#eighttracksMixset').val();
+		var mixset  = $('#eighttracksMixset').val();
 		var perpage = $('#eighttracksPerpage').val();
-		var sort = $('#eighttracksSort').val();
-		var lists = $('#eighttracksList').val();
-		var output = '[8tracks ';
+		var sort    = $('#eighttracksSort').val();
+		var lists   = $('#eighttracksList').val();
+		var output  = '[8tracks ';
 
-		if(url) {
-			output += 'url="'+url+'" ';
-		}
-		if(width) {
-			output += 'width="'+width+'" ';
-		}
-		if(height) {
-			output += 'height="'+height+'" ';
-		}
-		if(tags) {
-			output += 'tags="'+tags+'" ';
-		}
-		if(artist) {
-			output += 'artist="'+artist+'" ';
-		}
-		if(dj) {
-			output += 'dj="'+dj+'" ';
-		}
-		if(flash) {
-			output += 'flash="'+flash+'" ';
-		}
-		if(playops) {
-			output += 'playops="'+playops+'" ';
-		}		
-		if(collection) {
-			output += 'collection="'+collection+'" ';
-		}
-		if(mixset) {
-			output += 'mixset="'+mixset+'" ';
-		}
-		if(perpage) {
-			output += 'perpage="'+perpage+'" ';
-		}
-		if(sort) {
-			output += 'sort="'+sort+'" ';
-		}
-		if(lists) {
-			output += 'lists="'+lists+'" ';
-		}
+		if(url)     output += 'url="'+url+'" ';
+		if(width)   output += 'width="'+width+'" ';
+		if(height)  output += 'height="'+height+'" ';
+		if(tags)    output += 'tags="'+tags+'" ';
+		if(artist)  output += 'artist="'+artist+'" ';
+		if(dj)      output += 'dj="'+dj+'" ';
+		if(flash)   output += 'flash="'+flash+'" ';
+		if(playops) output += 'playops="'+playops+'" ';
+		if(collection) output += 'collection="'+collection+'" ';
+		if(mixset) 	output += 'mixset="'+mixset+'" ';
+		if(perpage)	output += 'perpage="'+perpage+'" ';
+		if(sort) 	  output += 'sort="'+sort+'" ';
+		if(lists)   output += 'lists="'+lists+'" ';
 		
 		output += ']';
 		
@@ -78,104 +53,199 @@
 
 tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	</script>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//bind to radio button change event
+		$('input[name="embed_type"]').change(function(){
+			var embed_type = $(this).val(); //get div name from radio button value
+			
+			$('#embed_options>div').hide(); // hide irrelevant options
+			
+			$('#' + embed_type + '_options').show(); //show relevant options
+
+			if (embed_type == 'artist' || embed_type == 'tags') { //show shared options if applicable
+				$('#sort_options').show();
+			}
+
+			var defaultWidth, defaultHeight;
+			if (embed_type == 'mix') { //update default height/width appropriately
+				defaultWidth = 300;
+				defaultHeight = 250;
+				$('#per_page_option').hide();
+			} else {
+				defaultWidth = 500;
+				defaultHeight = 500;
+				$('#per_page_option').show();
+			}
+			$('#eighttracksWidth').attr('placeholder', defaultWidth);
+			$('#eighttracksHeight').attr('placeholder', defaultHeight);
+		})
+	});
+	</script>
+
+	<style>
+		body{
+			padding-top: 10px;
+			font-family: Arial, Helvetica, "sans-serif";
+			font-size: 13px;
+			line-height: 15px;
+			color: #000;
+		}
+
+		label{
+			color: #333;
+		}
+
+		hr{
+			border: 0px none;
+			border-top: 1px solid #ccc;
+			height: 0;
+		}
+
+		input[type="text"], input[type="number"] {
+			background: #fff;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+
+		input[type="text"] {
+			width: 250px;
+		}
+
+		input[type="radio"] {
+			margin: 1px 6px 2px 0;
+		}
+
+		select{
+			width: 140px;
+		}
+
+		#insert_shortcode{
+			background: #70ba00;
+			color: #fff;
+			font-weight: bold;
+			text-align: center;
+			width: 200px;
+			padding: 10px;
+			border-radius: 5px;
+			text-decoration: none;
+			float: left;
+		}
+
+		#insert_shortcode:hover{
+			background: #8acb1a;
+		}
+
+	</style>
 </head>
 
 <body>
 <form id="eighttracksShortcode">
-	
+
+	<h2>Embed an 8tracks mix</h2>
+
+	<p><strong>Embed Type</strong></p>
+				
 	<table width="100%">
-	   <tr>
-	   <td width="50%"><h4>Just want a random mix?</h4></td>
-	   <td><h4>Rather have something specific?</h4></td>
-	   </tr>
-	   <tr><td></td><tr>
-	   <tr>
-	   <td><label for="eighttracksTags">Tags:</label></td>
-	   <td><label for="eighttracksURL">URL for your mix:</label></td>
-	   </tr>
-	   <tr>
-	   <td><input id="eighttracksTags" type="text" value="" placeholder="a, b, c" /></td>
-	   <td><input id="eighttracksURL" type="text" value="" size="50%" placeholder="Copy the mix' url from the 8tracks site." /></td>
-	   </tr>
-	   <tr>
-	   <td><label for="eighttracksArtist">Artist:</label></td>
-	   <td><label for="eighttracksMixset">Specific Collection:</label></td>       
-	   </tr>
-	   <tr>
-       <td><input id="eighttracksArtist" type="text" value="" placeholder="One Artist Only" /></td>
-	   <td><input id="eighttracksMixset" type="text" value="" size="50%" placeholder="Copy the collection's url from the 8tracks site."/></td>
-	   </tr>
-	   <tr>
-	   <td><label for="eighttracksSort">Sort By:</label></td>
-	   <td><label for="eighttracksDJ">Specific DJ/Username:</label></td>   
-	   </tr>
-	   <tr>
-	   <td><select name="eighttracksSort" id="eighttracksSort" style="width: 75%;">
-		     <option value="">None</option>
-		     <option value="recent">New</option>
-		     <option value="hot">Trending</option>
-		     <option value="popular">Popular</option>
-		     </select>
-	  </td>
-	  <td><input id="eighttracksDJ" type="text" value="" size="50%" placeholder="Copy the user's url or name from the 8tracks site."/></td>
-	  </tr>
-	  <tr>
-	  <td></td>
-	  <td><label for="eighttracksList">Common DJ/User Lists</label></td>
-      </tr>
-	  <tr>
-	  <td></td>
-	  <td><select name="eighttracksList" id="eighttracksList" style="width: 50%;">
-			 <option value="">None</option>
-		     <option value="liked">Liked</option>
-		     <option value="listen_later">Listen Later</option>
-		     <option value="listened">History</option>
-			 <option value="recommended">Recommended</option>
-		     </select></td>
-	  </tr>
+		<tr>
+			<td width="40%">
+				<label><input type="radio" checked="checked" name="embed_type" value="mix" />Mix</label><br />
+				<label><input type="radio" name="embed_type" value="collection" />Collection</label><br />
+				<label><input type="radio" name="embed_type" value="dj" />DJ</label><br />
+				<label><input type="radio" name="embed_type" value="artist" />Artist search</label><br />
+				<label><input type="radio" name="embed_type" value="tags" />Tag Search</label><br />
+			</td>
+			<td width="60%" id="embed_options" valign="top">
+				<div id="mix_options">
+					<label for="eighttracksURL">Mix URL</label><br />
+					<input id="eighttracksURL" type="text" value="" placeholder="Copy &amp; paste a mix URL from 8tracks.com" />
+				</div>
+
+				<div id="collection_options" style="display: none;">
+					<label for="eighttracksMixset">Collection URL:</label><br />
+					<input id="eighttracksMixset" type="text" value="" placeholder="Copy &amp; paste a collection from 8tracks.com"/>
+				</div>
+
+				<div id="dj_options" style="display: none;">
+					<label for="eighttracksDJ">DJ username:</label><br />
+					<input id="eighttracksDJ" type="text" value="" placeholder="Copy &amp; paste the the user's url or username"/><br /><br />
+					<label for="eighttracksList">Show:</label>
+					<select name="eighttracksList" id="eighttracksList" style="width: 50%;">
+						<option value="">DJ's latest mixes</option>
+						<option value="liked">Liked</option>
+						<option value="listen_later">Listen Later</option>
+						<option value="listened">History</option>
+						<option value="recommended">Recommended</option>
+					</select>
+				</div>
+
+				<div id="tags_options" style="display: none;">
+					<label for="eighttracksTags">Tags:</label><br />
+					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" />
+				</div>
+
+				<div id="artist_options" style="display: none;">
+					<label for="eighttracksArtist">Artist:</label><br />
+					<input id="eighttracksArtist" type="text" value="" placeholder="Enter an artist name to search" />
+				</div>
+
+				<div id="sort_options" style="display: none;">
+					<br />
+					<label for="eighttracksSort">Sort by:</label>
+					<select name="eighttracksSort" id="eighttracksSort">
+						<option value="hot">Trending</option>
+						<option value="recent">New</option>
+						<option value="popular">Popular</option>
+					</select>
+				</div>
+			</td>
+		</tr>
 	</table>
-	<br /><hr>
+
+	<p><strong>Options</strong></p>
+
 	<table width="100%">
-	  <tr>
-	  <td width="35%"><label for="eighttracksCollection"><h4>Display above as collection?</h4></label></td>
-	  <td><label for="eighttracksPerpage">Mixes per page?</label></td>
-	  <tr>
-	  <tr>
-	  <td width="35%"><select name="eighttracksCollection" id="eighttracksCollection" style="width: 75%;">
-		   <option value="">No</option>
-		   <option value="yes">Yes</option>
-		   </select></td>
-	  <td><input id="eighttracksPerpage" type="number" value="" placeholder="Default is 4" /></td>
-	  </tr>
-	  </table>
-	<hr>
-	<p><h4>Some options for your mix:</h4></p>
-	<table>
-	<tr>
-	<td><label for="eighttracksWidth">Width:</label></td>
-	<td><label for="eighttracksHeight">Height:</label></td>
-	<td><label for="eighttracksPlayops">Player Options</label><br /></td>
-	<td><label for="eighttracksFlash">Flash?</label><br /></td>	
-	</tr>
-	<tr>
-	<td><input id="eighttracksWidth" type="number" value="" placeholder="Defaults: 300 / 500(coll.)" /></td>
-	<td><input id="eighttracksHeight" type="number" value="" placeholder="Defaults: 250 / 500(coll.)" /></td>
-	<td><select name="eighttracksPlayops" id="eighttracksPlayops">
-		<option value="">None</option>
-		<option value="shuffle">Shuffle</option>
-		<option value="autoplay">Autoplay</option>
-		<option value="shuffle+autoplay">Shuffle and Autoplay</option>
-		</select>
-	</td>
-	<td><select name="eighttracksFlash" id="eighttracksFlash">
-		<option value="">No</option>
-		<option value="yes">Yes</option>
-		</select>
-		</td>
-	</tr>
+		<tr>
+			<td width="40%"><label for="eighttracksWidth">Width</label></td>
+			<td width="60%"><input id="eighttracksWidth" type="number" value="" placeholder="300" /> pixels</td>
+		</tr>
+
+		<tr>
+			<td><label for="eighttracksHeight">Height</label></td>
+			<td><input id="eighttracksHeight" type="number" value="" placeholder="250" /> pixels</td>
+		</tr>
+
+		<tr>
+			<td><label for="eighttracksPlayops">Player Options</label></td>
+			<td><select name="eighttracksPlayops" id="eighttracksPlayops">
+				<option value="">None</option>
+				<option value="shuffle">Shuffle</option>
+				<option value="autoplay">Autoplay</option>
+				<option value="shuffle+autoplay">Shuffle and Autoplay</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr>
+			<td><label for="eighttracksFlash">Use Flash player</label></td>	
+			<td>
+				<select name="eighttracksFlash" id="eighttracksFlash">
+					<option value="">No</option>
+					<option value="yes">Yes</option>
+				</select>
+			</td>
+		</tr>
+
+		<tr id="per_page_option" style="display: none;">
+			<td><label for="eighttracksPerpage">Mixes per page<br /></label></td>
+			<td><input id="eighttracksPerpage" type="number" value="" placeholder="4" /></td>
+		</tr>
 	</table>
-	<hr><br />
-	<p><a href="javascript:eighttracks.insert(eighttracks.e)">Create Shortcode</a></p>
+
+	<p><a href="javascript:eighttracks.insert(eighttracks.e)" id="insert_shortcode">Insert Shortcode</a></p>
+
 </form>
 </body>
 
