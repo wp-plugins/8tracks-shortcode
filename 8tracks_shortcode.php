@@ -213,16 +213,11 @@ function eighttracks_shortcode( $atts, $content) {
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}   else if ((!empty($sort)) && (empty($dj))) {
+}   else if (!empty($sort)) {
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
-    else if ((!empty($sort)) && (!empty($dj))) { // This is a collection made from a dj where a sort is also selected.
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '' . ($sort) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
-		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
-		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-} 	
     else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
