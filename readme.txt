@@ -67,10 +67,10 @@ That's it!  Enjoy!
 
 = Can I customize the plugin's output? =
 
-Yes!  I've added a div around the iframes, which has this id: "tracks-div."  
+Yes!  To help you customize the output via CSS, I've added a div around the iframes, which has this id: "tracks-div."  
 The iframe has a class also: "tracks-iframe."  
 
-Just add your custom css, and you're good to go!
+Just add your custom CSS, and you're good to go!
 
 = I don't want to use HTML5, and I don't want to say flash="yes" in every single shortcode.  What can I do? =
 
@@ -93,12 +93,12 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 == Upgrade Notice ==
 
 = 1.0 =
-This version is a major upgrade.  It introduces the ability to add collections, the ability to add widgets, a tinymce button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see the FAQ).
+This is a major upgrade. It introduces the ability to add collections, the ability to add widgets, a revamped tinymce button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see FAQ).
 
 == Changelog ==
 
 = 1.0 =
-You can now have the shortcode display random mixes by specifying tags, artists, or a specific dj.  These features have also been added to the widget, and the button in the post editor.  Support has also been added for the 8tracks' new collection embeds (Example: http://8tracks.com/mix_sets/collection:645:favorite-artwork/player).
+You can now have the shortcode display random mixes by specifying tags, artists, or a specific dj.  These features have also been added to the widget, and the button in the post editor.  Support has also been added for the 8tracks' new collection embeds (Example: http://8tracks.com/mix_sets/collection:645:favorite-artwork/player).  It is also possible to customize the plugin's output via CSS, as I have added an apply_filters call to the output.  Enjoy!
 
 = 0.99 =
 Added a widget for placing 8tracks mixes in sidebars and footers.  Also added a button to the tinymce editor which will help with adding mixes to your posts.
