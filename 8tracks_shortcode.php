@@ -29,7 +29,7 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 /*  A huge thanks to Justin S, WordPress.com Developer, and Matthew Cieplak at 8tracks.com, for their enormous assistance with the plugin!
 */
 
-/* Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no" perpage="some number"]
+/* Usage: [8tracks url ="" height="some value" width="some value" playops="some value(s)" flash="yes/no" tags="your, favorite, genres" collection="yes/no"]
 
  Note:    height, width, and playops are optional. You must specify either a URL, some tags, a dj, an artist, or a particular collection or mix set.
  height:      Pick a number, any number.  Standard for single mixes is 250, and 500 for collections.
@@ -40,7 +40,6 @@ License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
  artist:      Use this if you want to search for mixes with a given artist.
  dj:          Use this to specify a particular user/dj on 8tracks.
  smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
- perpage:     Set this to the number of mixes you'd like to see on each page of your collection.  Default is 4.
  sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
 */
 
@@ -91,7 +90,6 @@ function eighttracks_shortcode( $atts, $content) {
 			'dj' => NULL,
 			'collection' => '',
 			'smart_id' => NULL,
-			'perpage' => '',
 			'sort' => '',
 			'lists' => '',
 			), $atts ) ); 
@@ -143,10 +141,6 @@ function eighttracks_shortcode( $atts, $content) {
 	if ( '8tracks.com' != $url_bits['host'] )
 		return '';
 }
-
-//Specify a default number of mixes (4) per page of the collection.
-	if ($collection=="yes" && (empty($perpage)))
-		$perpage = 4;
 
 //Make sure our sort values are valid.
 	$allowed_sorts = array(
@@ -216,21 +210,21 @@ function eighttracks_shortcode( $atts, $content) {
 }
  //Collection processing:
     if ((!empty($smart_id)) && (empty($dj))) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   else if (!empty($sort)) {
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
     else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	
     else if (!empty($dj)) {
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?per_page=' . intval($perpage) . '' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
     }  

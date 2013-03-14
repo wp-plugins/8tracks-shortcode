@@ -22,7 +22,6 @@ var eighttracks = {
 		var dj      = $('#eighttracksDJ').val();
 		var collection = $('#eighttracksCollection').val();
 		var mixset  = $('#eighttracksMixset').val();
-		var perpage = $('#eighttracksPerpage').val();
 		var sort    = $('#eighttracksSort').val();
 		var lists   = $('#eighttracksList').val();
 		var output  = '[8tracks ';
@@ -37,7 +36,6 @@ var eighttracks = {
 		if(playops) output += 'playops="'+playops+'" ';
 		if(collection) output += 'collection="'+collection+'" ';
 		if(mixset) 	output += 'mixset="'+mixset+'" ';
-		if(perpage)	output += 'perpage="'+perpage+'" ';
 		if(sort) 	  output += 'sort="'+sort+'" ';
 		if(lists)   output += 'lists="'+lists+'" ';
 		
@@ -235,11 +233,6 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 					<option value="yes">Yes</option>
 				</select>
 			</td>
-		</tr>
-
-		<tr id="per_page_option" style="display: none;">
-			<td><label for="eighttracksPerpage">Mixes per page<br /></label></td>
-			<td><input id="eighttracksPerpage" type="number" value="" placeholder="4" /></td>
 		</tr>
 	</table>
 
