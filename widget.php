@@ -54,6 +54,7 @@ class eighttracks_widget extends WP_Widget {
     $instance = $old_instance;
  
     $instance['title']     			        = strip_tags($new_instance['title']);
+    $instance['eighttracks_embed_type']     = strip_tags($new_instance['eighttracks_embed_type']);
     $instance['eighttracks_url']  		    = strip_tags($new_instance['eighttracks_url']);
     $instance['eighttracks_flash']  		= strip_tags($new_instance['eighttracks_flash']);
     $instance['eighttracks_height']     	= strip_tags($new_instance['eighttracks_height']);
@@ -70,10 +71,11 @@ class eighttracks_widget extends WP_Widget {
   }
 
   function form($instance){
-    $defaults = array('title' => '', 'flash' => 'no', 'height' => '250', 'width' => '250');
+    $defaults = array('eighttracks_embed_type' => 'mix', 'title' => '', 'flash' => 'no', 'height' => '250', 'width' => '100%');
     $instance = wp_parse_args( (array) $instance, $defaults);
 
     $title    	= strip_tags($instance['title']);
+    $embed_type = strip_tags($instance['eighttracks_embed_type']);
     $width 		= strip_tags($instance['eighttracks_width']); 
     $height 	= strip_tags($instance['eighttracks_height']); 
     $url    	= strip_tags($instance['eighttracks_url']);
@@ -87,42 +89,85 @@ class eighttracks_widget extends WP_Widget {
 	$smart_id   = strip_tags($instance['eighttracks_smartid']);
     
     ?>
-    <b>Widget Title:</b><br />
-    <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr($title); ?>" />
-    <br /><br />
-	<b>Random mix?</b> <br /><br />
-	Tag(s):
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
-	<br />
-	Artist:
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_artist'); ?>" name="<?php echo $this->get_field_name('eighttracks_artist'); ?>" value="<?php echo esc_attr($artist); ?>" />
-	<br />
-	<hr>
-	<b>Specific Mix?</b><br /><br />
-    8tracks Mix URL:<br />
-    <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_url'); ?>" name="<?php echo $this->get_field_name('eighttracks_url'); ?>" value="<?php echo $url; ?>" />
-    <br /><br />
-	Specific DJ:<br />
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
-	<br /><br />
-    8tracks Smart ID:<br />
-    <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" />
-    <br /><br />
-	<hr>
-	<b>Mix Options:</b><br />
-	Mixes Per Collection Page:
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_perpage'); ?>" name="<?php echo $this->get_field_name('eighttracks_perpage'); ?>" value="<?php echo esc_attr($perpage); ?>" />
-	<br /><br />
-	List Type (Optional: recent, hot, popular):
-	<input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_sort'); ?>" name="<?php echo $this->get_field_name('eighttracks_sort'); ?>" value="<?php echo esc_attr($sort); ?>" />
-	<br /><br />
-	Mix Height:<br />
-	<input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" />
-	<br /><br />
-	Mix Width:<br />
-	<input id="<?php echo $this->get_field_id('eighttracks_width'); ?>" name="<?php echo $this->get_field_name('eighttracks_width'); ?>" type="text" value="<?php echo $width; ?>" />
-	<br /><br />
-    <input type="hidden" name="submitted" value="1" />
+
+    <p>
+        Title:<br />
+        <input type="text" class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo esc_attr($title); ?>" />
+    </p>
+
+    <p>Type:<br />
+    <select class="eighttracks_embed_type" id="<?php echo $this->get_field_id('eighttracks_embed_type'); ?>" name="<?php echo $this->get_field_name('eighttracks_embed_type'); ?>" data-container="<?php echo $this->get_field_id('eighttracks_embed_options'); ?>">
+        <option value="mix" <?php echo($embed_type == 'mix' ? 'selected' : '') ?>>Mix</option>
+        <option value="collection" <?php echo($embed_type == 'collection' ? 'selected' : '') ?>>Collection</option>
+        <option value="dj" <?php echo($embed_type == 'dj' ? 'selected' : '') ?>>DJ's latest mixes</option>
+        <option value="artist" <?php echo($embed_type == 'artist' ? 'selected' : '') ?>>Artist search</option>
+        <option value="tags" <?php echo($embed_type == 'tags' ? 'selected' : '') ?>>Tag Search</option>
+    </select>
+    </p>
+    
+
+    <div id="<?php echo $this->get_field_id('eighttracks_embed_options'); ?>">
+
+        <!-- begin dynamic options -->
+        <P>
+        <div class="eighttracks_mix_options">
+            Mix URL:<br />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_url'); ?>" name="<?php echo $this->get_field_name('eighttracks_url'); ?>" value="<?php echo $url; ?>" />
+        </div>
+
+        <div class="eighttracks_collection_options" style="display: none;">
+            Smart ID (replace with collection URL):<br />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" />
+        </div>
+
+        <div class="eighttracks_dj_options" style="display: none;">
+            Specific DJ:<br />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
+            <!--label for="eighttracksList">Show:</label>
+            <select name="eighttracksList" id="eighttracksList" style="width: 50%;">
+                <option value="">DJ's latest mixes</option>
+                <option value="liked">Liked</option>
+                <option value="listen_later">Listen Later</option>
+                <option value="listened">History</option>
+                <option value="recommended">Recommended</option>
+            </select-->
+        </div>
+
+        <div class="eighttracks_tags_options" style="display: none;">
+            Tag(s):<br />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
+        </div>
+
+        <div class="eighttracks_artist_options" style="display: none;">
+            Artist:
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_artist'); ?>" name="<?php echo $this->get_field_name('eighttracks_artist'); ?>" value="<?php echo esc_attr($artist); ?>" />
+        </div>
+
+        <div class="eighttracks_sort_options" style="display: none;">
+            Sort: <span class="color: #ccc;">optional: hot, new, popular
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_sort'); ?>" name="<?php echo $this->get_field_name('eighttracks_sort'); ?>" value="<?php echo esc_attr($sort); ?>" />
+        </div>
+        </p>
+
+        <!-- end dynamic options -->    
+
+        <p>
+            Width:<br />
+            <input id="<?php echo $this->get_field_id('eighttracks_width'); ?>" name="<?php echo $this->get_field_name('eighttracks_width'); ?>" type="text" value="<?php echo $width; ?>" class="eighttracks_width" placeholder="100%"/>
+        </p>
+
+    	<p>
+            Height:<br />
+    	   <input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" class="eighttracks_height" placeholder="250"/>
+    	</p>
+
+        <input type="hidden" name="submitted" value="1" />
+    </div>
+
+    <script type="text/javascript">
+        jQuery('select.eighttracks_embed_type').trigger('change'); //initialize to saved values on load
+    </script>
+
     <?php
   }
 }
