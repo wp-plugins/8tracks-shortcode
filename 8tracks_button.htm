@@ -1,7 +1,7 @@
 <head>
 	<title>Create 8tracks Shortcode</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript" src="../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
 	<script type="text/javascript">
 
 var eighttracks = {
@@ -72,11 +72,9 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 			if (embed_type == 'mix') { //update default height/width appropriately
 				defaultWidth = 300;
 				defaultHeight = 250;
-				$('#per_page_option').hide();
 			} else {
 				defaultWidth = 500;
 				defaultHeight = 500;
-				$('#per_page_option').show();
 			}
 			$('#eighttracksWidth').attr('placeholder', defaultWidth);
 			$('#eighttracksHeight').attr('placeholder', defaultHeight);
@@ -195,7 +193,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 					<br />
 					<label for="eighttracksSort">Sort by:</label>
 					<select name="eighttracksSort" id="eighttracksSort">
-                        <option value="" /> 
+                        <option value="" />
 						<option value="hot">Trending</option>
 						<option value="recent">New</option>
 						<option value="popular">Popular</option>
