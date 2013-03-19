@@ -209,11 +209,11 @@ function eighttracks_shortcode( $atts, $content) {
 		return '<!-- invalid xml -->';
 }
  //Collection processing:
-    if ((!empty($smart_id)) && (empty($dj))) {
+    if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}   else if (!empty($sort)) {
+}   else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
@@ -223,7 +223,7 @@ function eighttracks_shortcode( $atts, $content) {
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	
-    else if (!empty($dj)) {
+    else if (!empty($dj)) {  //This handles DJs.
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
