@@ -20,7 +20,6 @@ var eighttracks = {
 		var tags    = $('#eighttracksTags').val();
 		var artist  = $('#eighttracksArtist').val();
 		var dj      = $('#eighttracksDJ').val();
-		var collection = $('#eighttracksCollection').val();
 		var mixset  = $('#eighttracksMixset').val();
 		var sort    = $('#eighttracksSort').val();
 		var lists   = $('#eighttracksList').val();
@@ -34,8 +33,7 @@ var eighttracks = {
 		if(dj)      output += 'dj="'+dj+'" ';
 		if(flash)   output += 'flash="'+flash+'" ';
 		if(playops) output += 'playops="'+playops+'" ';
-		if(collection) output += 'collection="'+collection+'" ';
-		if(mixset) 	output += 'mixset="'+mixset+'" ';
+		if(mixset) 	output += 'smart_id="'+mixset+'" ';
 		if(sort) 	  output += 'sort="'+sort+'" ';
 		if(lists)   output += 'lists="'+lists+'" ';
 		
