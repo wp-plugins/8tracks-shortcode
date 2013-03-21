@@ -165,7 +165,7 @@ function eighttracks_shortcode( $atts, $content) {
 	$badchars = array(' ', '_', '/', '.', ',', ', ');
 	$goodchars = array('_', '__', '\\', '%5E', '%2B', '%2B');
 
-//We should probably make sure our smart_id is free on non-id elements before processing.
+//We should probably make sure our smart_id is free of non-id elements before processing.
     $needle = "http://8tracks.com/mix_sets/";
         
     if ((strpos($smart_id, $needle)) !== false) {    
