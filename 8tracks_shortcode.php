@@ -183,12 +183,13 @@ function eighttracks_shortcode( $atts, $content) {
         $smart_id = str_replace($badchars, $goodchars, $smart_id);
         
 //This handles collections made from smart_id, dj, or sort.
-    if (!is_null($smart_id)) {
-		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
-}   
-    else if (strpos($smart_id,"http://8tracks.com/mix_sets/") =="true") { 
+    
+    if (strpos($smart_id,"http://8tracks.com/mix_sets/") =="true") { 
 		$the_body = wp_remote_get ('' . ($smart_id) . '.xml' . (api_key) . '' );
 }  	
+    else if (!is_null($smart_id)) {
+		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
+}   
     else if (!empty($dj)) {
         $the_body = wp_remote_get ('http://8tracks.com/' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' );
 } 	
