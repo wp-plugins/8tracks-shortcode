@@ -165,8 +165,12 @@ function eighttracks_shortcode( $atts, $content) {
 	$badchars = array(' ', '_', '/', '.', ',', ', ');
 	$goodchars = array('_', '__', '\\', '%5E', '%2B', '%2B');
 
-//Let's make sure the smart_id is stripped of the non-id parts of the address.
-    $smart_id = str_replace("http://8tracks.com/mix_sets/", "", $smart_id);
+//We should probably make sure our smart_id is free on non-id elements before processing.
+    $needle = "http://8tracks.com/mix_sets/";
+        
+    if ((strpos($smart_id, $needle)) !== false) {    
+        $smart_id = str_replace("http://8tracks.com/mix_sets/", "", $smart_id);
+}
 
 //Let's do some mix set processing:
     if (is_null($url)) {
@@ -182,13 +186,14 @@ function eighttracks_shortcode( $atts, $content) {
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
-    if (isset($smart_id))  
+    if (isset($smart_id)) {
         $smart_id = str_replace($badchars, $goodchars, $smart_id);
-        $smart_id = str_replace($badurl, $goodurl, $smart_id);
-        
+}
+
 //This handles collections made from smart_id, dj, or sort.
       	
     if (!is_null($smart_id)) {
+        
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
 }   
     else if (!empty($dj)) {
