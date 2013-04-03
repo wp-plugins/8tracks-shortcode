@@ -172,6 +172,13 @@ function eighttracks_shortcode( $atts, $content) {
         $smart_id = str_replace("http://8tracks.com/mix_sets/", "", $smart_id);
 }
 
+//We'll also make sure that any DJ URLs are stripped down to just the DJ's ID.
+    $dj_needle = "http://8tracks.com/";
+    
+    if ((strpos($dj, $dj_needle)) !== false) {
+        $dj = str_replace("http://8tracks.com/", "", $dj);
+}
+
 //Let's do some mix set processing:
     if (is_null($url)) {
     
@@ -192,12 +199,11 @@ function eighttracks_shortcode( $atts, $content) {
 
 //This handles collections made from smart_id, dj, or sort.
       	
-    if (!is_null($smart_id)) {
-        
+    if (!is_null($smart_id)) {       
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
 }   
-    else if (!empty($dj)) {
-        $the_body = wp_remote_get ('http://8tracks.com/' . str_replace($badchars, $goodchars, $dj) . '.xml' . (api_key) . '' );
+    else if (!empty($dj)) { //Not escaping dj strings fixes the problem of missing DJ sets from users with _ in their name.
+        $the_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml' . (api_key) . '' );
 } 	
     else if (!empty($sort)) {   //This handles collections where only sort is set.
 		$the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' );
@@ -220,7 +226,8 @@ function eighttracks_shortcode( $atts, $content) {
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}   else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
+}   
+    else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
 		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
