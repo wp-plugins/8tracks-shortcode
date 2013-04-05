@@ -4,6 +4,8 @@ Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 0.99
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
@@ -17,22 +19,18 @@ Some useful syntax examples:
 
 A Specific Mix [8tracks url=""]
 A Specific DJ [8tracks dj="some username"]
-A Specific Collection [8tracks mixset="collection:645:favorite-artwork"]
+A Specific Collection [8tracks smart_id="collection url"]
+
+URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
+or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ). The same is true of collections. The above example could have been either [8tracks smart_id="http://8tracks.com/mix_sets/collection:645:favorite-artwork"] or [8tracks smart_id="collection:645:favorite-artwork"]  
 
 Random Collection from Tags [8tracks tags="some, tags, here"]
 Random Collection by Artist [8tracks artist="some artist"]
 Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
-URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
-or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ).  
-
-	NOTE: Regardless of input, the plugin will convert your URL to the format 	
-                    'http://8tracks.com/mixes/id/'.  
-              This is transparent to the user, and keeps things tidy.
-
 Parameters:
 	
-You can also add the 'height', 'width', 'flash,' 'playops', 'artist', 'dj', 'sort', 'smart_id', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'sort', 'smart_id', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
@@ -50,14 +48,23 @@ This would look like:
 		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
 		It's a randomized mix, but you can still exit and resume where you were.
 	
-	NOTE: url cannot be used with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
+	NOTE: url cannot be used in conjunction with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
 	allow you to search for sets of mixes, and url specifies a particular mix.
 
 == Installation ==
 
+The short version:
 
-1. Upload `8tracks_shortcode.php` to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
+1. Visit the Plugins Section of your WordPress install and choose "add new."
+2. Search for "8tracks shortcode."
+3. Select "install now" and activate the plugin.
+
+The longer version:
+
+1. Download the current version from: http://wordpress.org/extend/plugins/8tracks-shortcode/
+2. Visit the Plugins Section of your WordPress install and choose "add new."
+3. Select "upload" from the links at the top, and then select the file you downloaded.
+4. Activate the plugin once the upload completes.
 
 That's it!  Enjoy!
 
@@ -74,7 +81,7 @@ Just add your custom CSS, and you're good to go!
 
 = I don't want to use HTML5, and I don't want to say flash="yes" in every single shortcode.  What can I do? =
 
-I hear you.  Change is hard.  From your dashboard, go to plugins > editor > 8tracks-shortcode > 8tracks-shortcode.php.
+This one's a little more complicated, but not too cumbersome. From your dashboard, go to plugins > editor > 8tracks-shortcode > 8tracks-shortcode.php.
 
 Now, search for " 'flash' => '' " and replace it with " 'flash' => 'yes' ". 
 (Ignore the double quotation marks.)
@@ -128,7 +135,6 @@ Added some extra security checks on user-supplied URLs.
 Modified syntax as some mix titles with special characters weren't working when passed as $content.
 Because of this, the 'url' parameter is back in and $content is out.
 This will require a slight adjustment to any embedded mixes (see new syntax at top).
-
 
 = 0.7 =
 Replaced cURL with Wordpress' internal http API.
