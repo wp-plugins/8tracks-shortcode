@@ -92,7 +92,7 @@ function eighttracks_shortcode( $atts, $content) {
 			'smart_id' => NULL,
 			'sort' => '',
 			'lists' => '',
-			), $atts, 'eighttracks' ) ); 
+			), $atts, '8tracks' ) ); 
 
 //If anything other than a URL is defined, you probably want a collection.
     if (isset($url)) {
