@@ -243,22 +243,22 @@ $dj_needle = "http://8tracks.com/";
 
 //Collection processing:
     if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=joomla' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
     else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=joomla' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
     else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?platform=joomla' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	
     else if (!empty($dj)) {  //This handles DJs.
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?platform=joomla' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }  
@@ -284,7 +284,7 @@ $dj_needle = "http://8tracks.com/";
 
 //Output a mix where URL is set and HTML5 is turned on.
     if ($flash=="no" && (!is_null($url))) { 
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'?platform=joomla" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'?platform=wordpress" ';
         $output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 }   
     else if ($flash=="yes") {  //This is a single mix with Flash.
