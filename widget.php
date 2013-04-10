@@ -11,15 +11,15 @@ class eighttracks_widget extends WP_Widget {
   function widget($args, $instance) {
     extract($args);
     $title    	= apply_filters('widget_title',$instance['title']);
-	$url		= trim($instance['eighttracks_url']);
-	$height		= trim($instance['eighttracks_height']);
-	$width		= trim($instance['eighttracks_width']);
-	$flash		= trim($instance['eighttracks_flash']);
-	$tags		= trim($instance['eighttracks_tags']);
-	$artist		= trim($instance['eighttracks_artist']);
-	$dj		    = trim($instance['eighttracks_dj']);
-	$collection	= trim($instance['eighttracks_collection']);
-	$sort		= trim($instance['eighttracks_sort']);
+    $url		= trim($instance['eighttracks_url']);
+    $height		= trim($instance['eighttracks_height']);
+    $width		= trim($instance['eighttracks_width']);
+    $flash		= trim($instance['eighttracks_flash']);
+    $tags		= trim($instance['eighttracks_tags']);
+    $artist		= trim($instance['eighttracks_artist']);
+    $dj		    = trim($instance['eighttracks_dj']);
+    $collection	= trim($instance['eighttracks_collection']);
+    $sort		= trim($instance['eighttracks_sort']);
     $smart_id   = trim($instance['eighttracks_smartid']);
 
 // Initializing the output code.
@@ -52,17 +52,17 @@ class eighttracks_widget extends WP_Widget {
   function update($new_instance, $old_instance) {
     $instance = $old_instance;
  
-    $instance['title']     			        = strip_tags($new_instance['title']);
+    $instance['title']                      = strip_tags($new_instance['title']);
     $instance['eighttracks_embed_type']     = strip_tags($new_instance['eighttracks_embed_type']);
-    $instance['eighttracks_url']  		    = strip_tags($new_instance['eighttracks_url']);
-    $instance['eighttracks_flash']  		= strip_tags($new_instance['eighttracks_flash']);
-    $instance['eighttracks_height']     	= strip_tags($new_instance['eighttracks_height']);
-    $instance['eighttracks_width']   		= strip_tags($new_instance['eighttracks_width']);
-    $instance['eighttracks_tags']		    = strip_tags($new_instance['eighttracks_tags']);
-    $instance['eighttracks_artist']		    = strip_tags($new_instance['eighttracks_artist']);
-    $instance['eighttracks_dj']			    = strip_tags($new_instance['eighttracks_dj']);
-    $instance['eighttracks_collection']		= strip_tags($new_instance['eighttracks_collection']);
-    $instance['eighttracks_sort']		    = strip_tags($new_instance['eighttracks_sort']);
+    $instance['eighttracks_url']            = strip_tags($new_instance['eighttracks_url']);
+    $instance['eighttracks_flash']          = strip_tags($new_instance['eighttracks_flash']);
+    $instance['eighttracks_height']         = strip_tags($new_instance['eighttracks_height']);
+    $instance['eighttracks_width']          = strip_tags($new_instance['eighttracks_width']);
+    $instance['eighttracks_tags']           = strip_tags($new_instance['eighttracks_tags']);
+    $instance['eighttracks_artist']         = strip_tags($new_instance['eighttracks_artist']);
+    $instance['eighttracks_dj']             = strip_tags($new_instance['eighttracks_dj']);
+    $instance['eighttracks_collection']     = strip_tags($new_instance['eighttracks_collection']);
+    $instance['eighttracks_sort']           = strip_tags($new_instance['eighttracks_sort']);
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
 	
 	return $instance;
@@ -72,18 +72,18 @@ class eighttracks_widget extends WP_Widget {
     $defaults = array('eighttracks_embed_type' => 'mix', 'title' => '', 'flash' => 'no', 'height' => '250', 'width' => '100%');
     $instance = wp_parse_args( (array) $instance, $defaults);
 
-    $title    	= strip_tags($instance['title']);
+    $title      = strip_tags($instance['title']);
     $embed_type = strip_tags($instance['eighttracks_embed_type']);
-    $width 		= strip_tags($instance['eighttracks_width']); 
-    $height 	= strip_tags($instance['eighttracks_height']); 
-    $url    	= strip_tags($instance['eighttracks_url']);
-	$flash 		= strip_tags($instance['eighttracks_flash']);
-	$tags 		= strip_tags($instance['eighttracks_tags']);
-	$artist		= strip_tags($instance['eighttracks_artist']);
-	$dj 		= strip_tags($instance['eighttracks_dj']);
-	$collection = strip_tags($instance['eighttracks_collection']);
-	$sort	 	= strip_tags($instance['eighttracks_sort']);
-	$smart_id   = strip_tags($instance['eighttracks_smartid']);
+    $width      = strip_tags($instance['eighttracks_width']); 
+    $height     = strip_tags($instance['eighttracks_height']); 
+    $url        = strip_tags($instance['eighttracks_url']);
+    $flash      = strip_tags($instance['eighttracks_flash']);
+    $tags       = strip_tags($instance['eighttracks_tags']);
+    $artist     = strip_tags($instance['eighttracks_artist']);
+    $dj         = strip_tags($instance['eighttracks_dj']);
+    $collection = strip_tags($instance['eighttracks_collection']);
+    $sort       = strip_tags($instance['eighttracks_sort']);
+    $smart_id   = strip_tags($instance['eighttracks_smartid']);
     
     ?>
 
