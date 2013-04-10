@@ -10,16 +10,16 @@ class eighttracks_widget extends WP_Widget {
 
   function widget($args, $instance) {
     extract($args);
-    $title    	= apply_filters('widget_title',$instance['title']);
-    $url		= trim($instance['eighttracks_url']);
-    $height		= trim($instance['eighttracks_height']);
-    $width		= trim($instance['eighttracks_width']);
-    $flash		= trim($instance['eighttracks_flash']);
-    $tags		= trim($instance['eighttracks_tags']);
-    $artist		= trim($instance['eighttracks_artist']);
-    $dj		    = trim($instance['eighttracks_dj']);
-    $collection	= trim($instance['eighttracks_collection']);
-    $sort		= trim($instance['eighttracks_sort']);
+    $title      = apply_filters('widget_title',$instance['title']);
+    $url        = trim($instance['eighttracks_url']);
+    $height     = trim($instance['eighttracks_height']);
+    $width      = trim($instance['eighttracks_width']);
+    $flash      = trim($instance['eighttracks_flash']);
+    $tags       = trim($instance['eighttracks_tags']);
+    $artist     = trim($instance['eighttracks_artist']);
+    $dj         = trim($instance['eighttracks_dj']);
+    $collection = trim($instance['eighttracks_collection']);
+    $sort       = trim($instance['eighttracks_sort']);
     $smart_id   = trim($instance['eighttracks_smartid']);
 
 // Initializing the output code.
