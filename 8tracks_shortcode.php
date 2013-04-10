@@ -166,11 +166,18 @@ function eighttracks_shortcode( $atts, $content) {
 	$goodchars = array('_', '__', '\\', '%5E', '%2B', '%2B');
 
 //We should probably make sure our smart_id is free of non-id elements before processing.
-    $needle = "http://8tracks.com/mix_sets/";
-        
-    if ((strpos($smart_id, $needle)) !== false) {    
+    $needle1 = "http://8tracks.com/mix_sets/";
+    $needle2 = "/collections/";
+    
+    if ((strpos($smart_id, $needle1)) !== false) {    
         $smart_id = str_replace("http://8tracks.com/mix_sets/", "", $smart_id);
-}
+}   
+//Collection URLs on 8tracks only return JSON. Here, we get that JSON, extract the collection's smart_id, and pass that back to the plugin.
+    else if ((strpos($smart_id, $needle2)) !== false) {  
+        $json_body = wp_remote_get( esc_url($smart_id) . '.json' . (api_key) . '' );
+            $json_data = json_decode($json_body['body'], true);
+            $smart_id = $json_data["collection"]["smart_id"];
+}        
 
 //We'll also make sure that any DJ URLs are stripped down to just the DJ's ID.
     $dj_needle = "http://8tracks.com/";
@@ -223,22 +230,22 @@ function eighttracks_shortcode( $atts, $content) {
 }
  //Collection processing:
     if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=joomla' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
     else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?' . ($options) . '" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=joomla' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
     else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?platform=joomla' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	
     else if (!empty($dj)) {  //This handles DJs.
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?platform=joomla' . ($options) . '" ';
 		$output .= 'width="' . intval( $width ) .'" height="' . intval( $height ) . '" ';
 		$output .= 'border="0" style="border: 0px none;"></iframe></div>';
     }  
@@ -263,16 +270,16 @@ function eighttracks_shortcode( $atts, $content) {
 
 //Output a mix where URL is set and HTML5 is turned on.
 	if ($flash=="no" && (!is_null($url))) { 
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'?platform=joomla" ';
 		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 }   
 	else if ($flash=="yes") {  //This is a single mix with Flash.
 		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
 		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
 		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'"></param>';
+		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'?platform=joomla"></param>';
 		$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '" ';
+		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '?platform=joomla" ';
 		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
     }
