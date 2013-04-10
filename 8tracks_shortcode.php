@@ -127,7 +127,9 @@ function eighttracks_shortcode( $atts, $content) {
 //Tweak the playops for collections:
 	if ($playops=="shuffle" || $playops=="autoplay") {
 		$options = '&options=' . ($playops) . '';
+        $playops = '/' . ($playops) . '';
 } 	else if ($playops=="shuffle+autoplay") {
+        $playops = '/' . ($playops) . '';
 		$options = "&options=shuffle,autoplay";
 }
 		
@@ -270,16 +272,16 @@ function eighttracks_shortcode( $atts, $content) {
 
 //Output a mix where URL is set and HTML5 is turned on.
 	if ($flash=="no" && (!is_null($url))) { 
-		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal/' . $playops .'?platform=joomla" ';
+		$output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'?platform=joomla" ';
 		$output .= 'width="' .intval( $width ) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
 }   
 	else if ($flash=="yes") {  //This is a single mix with Flash.
 		$output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
 		$output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
 		$output .= 'height="' . intval( $height ) . '" width="' .intval( $width ) . '">';
-		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'?platform=joomla"></param>';
+		$output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'"></param>';
 		$output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops . '?platform=joomla" ';
+		$output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3' . $playops . '" ';
 		$output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
 		$output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . intval( $width ) . '"></embed></object>';
     }
