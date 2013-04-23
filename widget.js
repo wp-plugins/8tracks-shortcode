@@ -21,7 +21,7 @@ jQuery(document).ready(function(){
         var defaultWidth, defaultHeight;
         if (embed_type == 'mix') { //update default height/width appropriately
             defaultWidth = '100%';
-            defaultHeight = 250;
+            defaultHeight = 300;
         } else {
             defaultWidth = '100%';
             defaultHeight = 500;
