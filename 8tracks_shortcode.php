@@ -103,7 +103,7 @@ function eighttracks_shortcode( $atts, $content) {
         $collection = "yes";
 }
 
-// Let's set the default width parameter. We'll check the validity via regex.
+// Let's set the default width parameter. We'll check the validity of the supplied value via regex.
     if (preg_match("/^([0-9]+(%?)$)/", $width)) {
         $width = $width;
 }
