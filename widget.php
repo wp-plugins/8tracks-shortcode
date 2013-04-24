@@ -31,19 +31,19 @@ class eighttracks_widget extends WP_Widget {
   
   //Outputting the mixes.
     if ($url != '') {
-		echo do_shortcode('[8tracks url="'.($url).'" height="'.intval($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '"]');
+		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '"]');
 }
     else if ((empty($url)) && (!empty($dj))) {
-    	echo do_shortcode('[8tracks height="'.intval($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '"]');
+    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '"]');
 }
     else if ((empty($url)) && (!empty($tags))) {
-    	echo do_shortcode('[8tracks height="'.intval($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '"]');
+    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '"]');
 }   
     else if ((empty($url)) && (!empty($artist))) {
-        echo do_shortcode('[8tracks height="'.intval($height).'" width="'.($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '"]');
 }
     else if ( (empty($url)) && (!empty($smart_id))) {
-        echo do_shortcode('[8tracks height="'.intval($height).'" width="'.($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '"]');
 }
     echo '</div>';
     echo ($args['after_widget']);

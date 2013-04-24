@@ -103,20 +103,25 @@ function eighttracks_shortcode( $atts, $content) {
         $collection = "yes";
 }
 
-// Let's set some default mix size parameters.
-    if ((empty($width)) && (empty($height))) {
-
-//Make sure the collection is of an appropriate size, if no width and height are set, and you haven't said you don't want a collection.
-        if (($collection=="yes")) {
-            $width = 500;
-            $height = 500;
-
-//Make sure the specific mix is of an appropriate size, if no width and height are set.
-} 	
-        else if ($collection=="no") {
-            $width = 300;
-            $height = 250;
-    }
+// Let's set some default mix size parameters We'll check the validity of $height and $width via regex.
+    if (preg_match("/^([0-9]+(%?)$)/", $width)) {
+        $width = $width;
+}
+    else if (($collection=="yes")) {
+        $width = 500;
+}
+    else if ($collection=="no") {
+        $width = 300;
+}
+    
+    if (preg_match("/^([0-9]+(%?)$)/", $height)) {
+        $height = $height;
+}
+    else if (($collection=="yes")) {
+        $height = 500;
+}
+    else if (($collection=="no")) {
+        $height = 250;
 }
 
 // Make sure that a user can only enter a whitelisted set of playops.
@@ -244,22 +249,22 @@ $dj_needle = "http://8tracks.com/";
 //Collection processing:
     if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
-        $output .= 'width="' . ($width) .'" height="' . intval( $height ) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
     else if (!empty($sort)) { //This handles meta lists.  That is: new, trending, or popular.
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
-        $output .= 'width="' . ($width) .'" height="' . intval( $height ) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
     else if ((!empty($lists)) && (!empty($dj))) {  // This is a collection made from lists (recent, popular, etc.).
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
-        $output .= 'width="' . ($width) .'" height="' . intval( $height ) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 } 	
     else if (!empty($dj)) {  //This handles DJs.
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
-        $output .= 'width="' . ($width) .'" height="' . intval( $height ) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }  
 }
@@ -285,17 +290,17 @@ $dj_needle = "http://8tracks.com/";
 //Output a mix where URL is set and HTML5 is turned on.
     if ($flash=="no" && (!is_null($url))) { 
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3_universal' . $playops .'?platform=wordpress" ';
-        $output .= 'width="' .($width) . '" height="' . intval( $height ) . '" style="border: 0px none;"></iframe></div>';
+        $output .= 'width="' .($width) . '" height="' . ($height) . '" style="border: 0px none;"></iframe></div>';
 }   
     else if ($flash=="yes") {  //This is a single mix with Flash.
         $output = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" ';
         $output .= 'codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" ';
-        $output .= 'height="' . intval( $height ) . '" width="' .($width) . '">';
+        $output .= 'height="' . ($height) . '" width="' .($width) . '">';
         $output .= '<param name="movie" value="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3/' . $playops .'"></param>';
         $output .= '<param name="allowscriptaccess" value="always"><param name="allowscriptaccess" value="always">';
-        $output .= '<embed height="' . intval( $height ) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3' . $playops . '" ';
+        $output .= '<embed height="' . ($height) . '" src="http://8tracks.com/mixes/' . intval($xml->mix->id) . '/player_v3' . $playops . '" ';
         $output .= 'pluginspage="http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" ';
-        $output .= 'allowscriptaccess="always" height="' . intval( $height ) . '" width="' . ($width) . '"></embed></object>';
+        $output .= 'allowscriptaccess="always" height="' . ($height) . '" width="' . ($width) . '"></embed></object>';
 }
 }   
 
