@@ -4,7 +4,7 @@ class eighttracks_widget extends WP_Widget {
 
   function __construct() {
 		$widget_ops = array( 'classname' => '8tracks', 'description' => __('Add an 8tracks mix or collection to your sidebar.') ); 
-		$control_ops = array('id_base' => 'eighttracks-widget', 'widht' => '100%');
+		$control_ops = array('id_base' => 'eighttracks-widget');
 		parent::__construct('eighttracks-widget', __('8tracks'), $widget_ops, $control_ops);
   }
 
