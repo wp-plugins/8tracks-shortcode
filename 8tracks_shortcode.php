@@ -103,7 +103,7 @@ function eighttracks_shortcode( $atts, $content) {
         $collection = "yes";
 }
 
-// Let's set some default mix size parameters We'll check the validity of $height and $width via regex.
+// Let's set the default width parameter. We'll check the validity via regex.
     if (preg_match("/^([0-9]+(%?)$)/", $width)) {
         $width = $width;
 }
@@ -113,7 +113,8 @@ function eighttracks_shortcode( $atts, $content) {
     else if ($collection=="no") {
         $width = 300;
 }
-    
+
+// Now for the height parameter.  We check this the same way as width.
     if (preg_match("/^([0-9]+(%?)$)/", $height)) {
         $height = $height;
 }
