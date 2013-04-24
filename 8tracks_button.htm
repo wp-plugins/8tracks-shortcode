@@ -1,7 +1,11 @@
 <head>
 	<title>Create 8tracks Shortcode</title>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="../../../wp-includes/js/tinymce/tiny_mce_popup.js"></script>
+	<script type="text/javascript">
+		var wp_path = '/';
+		try{ wp_path = window.top.location.pathname.split(/wp-admin/)[0]; }catch(e){ }
+		document.write('<scr'+'ipt src="'+wp_path+'wp-includes/js/tinymce/tiny_mce_popup.js"></scr'+'ipt>');
+	</script>
 	<script type="text/javascript">
 
 var eighttracks = {
