@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 0.99
+Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -21,7 +21,7 @@ A Specific Mix [8tracks url=""]
 A Specific DJ [8tracks dj="some username"]
 A Specific Collection [8tracks smart_id="collection url"]
 
-URL may contain either the numerical ID of your mix(for example, http://8tracks.com/mixes/388942 ), 
+URL may contain either the numerical ID of your mix (for example, http://8tracks.com/mixes/388942 ), 
 or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ). The same is true of collections. The above example could have been either [8tracks smart_id="http://8tracks.com/mix_sets/collection:645:favorite-artwork"] or [8tracks smart_id="collection:645:favorite-artwork"]  
 
 Random Collection from Tags [8tracks tags="some, tags, here"]
@@ -38,6 +38,7 @@ This would look like:
 
 	Height and Width are optional, and default to 250 and 300 respectively.
 	Height and Width for Collections defaults to 500 and 500.
+    Width for widgets is 100%.
 
 	Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
 	whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
@@ -100,7 +101,7 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 == Upgrade Notice ==
 
 = 1.0 =
-This is a major upgrade. It introduces the ability to add collections, the ability to add widgets, a revamped tinymce button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see FAQ).
+This is a major upgrade. It introduces the ability to add collections, the ability to add multiple widgets, a revamped editor button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see FAQ).
 
 == Changelog ==
 
