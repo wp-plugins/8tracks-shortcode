@@ -21,6 +21,7 @@ class eighttracks_widget extends WP_Widget {
     $collection = trim($instance['eighttracks_collection']);
     $sort       = trim($instance['eighttracks_sort']);
     $smart_id   = trim($instance['eighttracks_smartid']);
+    $is_widget  = trim($instance['eighttracks_is_widget']);
 
 // Initializing the output code.
     echo ($args['before_widget']);
@@ -31,19 +32,19 @@ class eighttracks_widget extends WP_Widget {
   
   //Outputting the mixes.
     if ($url != '') {
-		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '"]');
+		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($dj))) {
-    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '"]');
+    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($tags))) {
-    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '"]');
+    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }   
     else if ((empty($url)) && (!empty($artist))) {
-        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ( (empty($url)) && (!empty($smart_id))) {
-        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
     echo '</div>';
     echo ($args['after_widget']);
@@ -64,12 +65,13 @@ class eighttracks_widget extends WP_Widget {
     $instance['eighttracks_collection']     = strip_tags($new_instance['eighttracks_collection']);
     $instance['eighttracks_sort']           = strip_tags($new_instance['eighttracks_sort']);
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
-	
+	$instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
+    
 	return $instance;
   }
 
   function form($instance){
-    $defaults = array('eighttracks_embed_type' => 'mix', 'title' => '', 'flash' => 'no', 'height' => '250', 'width' => '100%');
+    $defaults = array('eighttracks_embed_type' => 'mix', 'title' => '', 'is_widget' => 'yes', 'flash' => 'no', 'height' => '300', 'width' => '100%');
     $instance = wp_parse_args( (array) $instance, $defaults);
 
     $title      = strip_tags($instance['title']);
@@ -84,6 +86,7 @@ class eighttracks_widget extends WP_Widget {
     $collection = strip_tags($instance['eighttracks_collection']);
     $sort       = strip_tags($instance['eighttracks_sort']);
     $smart_id   = strip_tags($instance['eighttracks_smartid']);
+    $is_widget  = strip_tags($instance['eighttracks_is_widget']);
     
     ?>
 
@@ -155,7 +158,7 @@ class eighttracks_widget extends WP_Widget {
 
     	<p>
             Height:<br />
-    	   <input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" class="eighttracks_height" placeholder="250"/>
+    	   <input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" class="eighttracks_height" placeholder="300"/>
     	</p>
 
         <input type="hidden" name="submitted" value="1" />

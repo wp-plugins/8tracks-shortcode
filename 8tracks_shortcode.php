@@ -93,6 +93,7 @@ function eighttracks_shortcode( $atts, $content) {
         'smart_id' => NULL,
         'sort' => '',
         'lists' => '',
+        'is_widget' => '',
         ), $atts, '8tracks' ) ); 
 
 //If anything other than a URL is defined, you probably want a collection.
@@ -103,25 +104,46 @@ function eighttracks_shortcode( $atts, $content) {
         $collection = "yes";
 }
 
+//It's either a widget, or it's not.
+$allowed_widget_options = array(
+    'yes',
+    'no',
+    );
+
+if ( !in_array( $is_widget, $allowed_widget_options ) )
+    $is_widget = 'no';
+
 // Let's set the default width parameter. We'll check the validity of the supplied value via regex.
     if (preg_match("/^([0-9]+(%?)$)/", $width)) {
         $width = $width;
 }
-    else if (($collection=="yes")) {
+    else if (($is_widget=="yes") && ($collection=="yes")) {
+        $width = '100%';
+}
+    else if (($is_widget=="no") && ($collection=="yes")) {
         $width = 500;
 }
-    else if ($collection=="no") {
+    else if (($is_widget=="yes") && ($collection=="no")) {
+        $width = '100%';
+}
+    else {
         $width = 300;
 }
 
 // Now for the height parameter.  We check this the same way as width.
     if (preg_match("/^([0-9]+(%?)$)/", $height)) {
         $height = $height;
-}
-    else if (($collection=="yes")) {
+}   
+    else if (($is_widget=="yes") && ($collection=="yes")) {
         $height = 500;
 }
-    else if (($collection=="no")) {
+    else if (($is_widget=="yes") && ($collection=="no")) {
+        $height = 300;
+}
+    else if (($is_widget=="no") && ($collection=="yes")) {
+        $height = 500;
+}
+    else if (($is_widget=="no") && ($collection=="no")) {
         $height = 250;
 }
 
