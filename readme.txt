@@ -17,16 +17,15 @@ Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows
 
 Some useful syntax examples: 
 
-A Specific Mix [8tracks url=""]
-A Specific DJ [8tracks dj="some username"]
-A Specific Collection [8tracks smart_id="collection url"]
+1. A Specific Mix [8tracks url=""]  
+2. A Specific DJ [8tracks dj="some username"]  
+3. A Specific Collection [8tracks smart_id="collection url"]  
 
-URL may contain either the numerical ID of your mix (for example, http://8tracks.com/mixes/388942 ), 
-or the mix's name (for example, http://8tracks.com/songsthatsaved/the-fall-version ). The same is true of collections. The above example could have been either [8tracks smart_id="http://8tracks.com/mix_sets/collection:645:favorite-artwork"] or [8tracks smart_id="collection:645:favorite-artwork"]  
+URL may contain either the numerical ID of your mix. The same is true of collections.
 
-Random Collection from Tags [8tracks tags="some, tags, here"]
-Random Collection by Artist [8tracks artist="some artist"]
-Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
+1. Random Collection from Tags [8tracks tags="some, tags, here"]
+2. Random Collection by Artist [8tracks artist="some artist"]
+3. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
 Parameters:
 	
@@ -34,23 +33,23 @@ You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'sor
 
 This would look like: 
 
-	[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" smart_id=""]
+[8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" smart_id=""]
 
-	Height and Width are optional, and default to 250 and 300 respectively.
-	Height and Width for Collections defaults to 500 and 500.
-    Width for widgets is 100%.
+Height and Width are optional, and default to 250 and 300 respectively.
+Height and Width for Collections defaults to 500 and 500.
+Width for widgets is 100%.
 
-	Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
-	whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
+Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
+whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
 	
-	Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
-		These shuffle your mix, autostart your mix, or both.
+Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
+	These shuffle your mix, autostart your mix, or both.
 		
-		Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
-		It's a randomized mix, but you can still exit and resume where you were.
+	Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
+	It's a randomized mix, but you can still exit and resume where you were.
 	
-	NOTE: url cannot be used in conjunction with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
-	allow you to search for sets of mixes, and url specifies a particular mix.
+NOTE: url cannot be used in conjunction with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
+allow you to search for sets of mixes, and url specifies a particular mix.
 
 == Installation ==
 
