@@ -20,12 +20,9 @@ Some useful syntax examples:
 1. A Specific Mix [8tracks url=""]  
 2. A Specific DJ [8tracks dj="some username"]  
 3. A Specific Collection [8tracks smart_id="collection url"]  
-
-URL may contain either the numerical ID of your mix. The same is true of collections.
-
-1. Random Collection from Tags [8tracks tags="some, tags, here"]
-2. Random Collection by Artist [8tracks artist="some artist"]
-3. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
+4. Random Collection from Tags [8tracks tags="some, tags, here"]
+5. Random Collection by Artist [8tracks artist="some artist"]
+6. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
 Parameters:
 	
