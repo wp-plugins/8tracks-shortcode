@@ -4,7 +4,7 @@ Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.5.1
 Stable tag: 1.0
-License: GPLv2 or later
+License: GPLv2 or later 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
