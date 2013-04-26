@@ -3,8 +3,8 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 3.5.1
-Stable tag: 1.0 
-License: GPLv2 or later
+Stable tag: 1.0
+License: GPLv2 or later 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
@@ -93,11 +93,6 @@ Some themes render the iframe that the HTML5 player uses strangely, and then not
 fallback to Flash is the preferred option.  Additionally, Flash is conspicuously absent on many Apple products.  HTML5 is not. :)
 
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
-
-== Upgrade Notice ==
-
-= 1.0 =
-This is a major upgrade. It introduces the ability to add collections, the ability to add multiple widgets, a revamped editor button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see FAQ).
 
 == Changelog ==
 
