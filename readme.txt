@@ -94,11 +94,6 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
-== Upgrade Notice ==
-
-= 1.0 =
-This is a major upgrade. It introduces the ability to add collections, the ability to add multiple widgets, a revamped editor button for easier configuration, and the ability to add mixes by artist, tags, dj, or meta type (new, trending, or popular). You can also customize the output styling (see FAQ).
-
 == Changelog ==
 
 = 1.0 =
