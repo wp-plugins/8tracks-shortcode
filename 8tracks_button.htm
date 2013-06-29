@@ -28,6 +28,7 @@ var eighttracks = {
 		var sort    = $('#eighttracksSort').val();
 		var lists   = $('#eighttracksList').val();
 		var usecat  = $('#eighttracksUsecat').val();
+		var similar = $('#eighttracksSimilar').val();
 		var output  = '[8tracks ';
 
 		if(url)     output += 'url="'+url+'" ';
@@ -42,6 +43,7 @@ var eighttracks = {
 		if(sort)    output += 'sort="'+sort+'" ';
 		if(lists)   output += 'lists="'+lists+'" ';
 		if(usecat)  output += 'usecat="'+usecat+'" ';
+		if(similar)	output += 'similar="'+similar+'" ';
 		
 		output += ']';
 		
@@ -166,7 +168,9 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 				<div id="collection_options" style="display: none;">
 					<label for="eighttracksMixset">Collection URL:</label><br />
-					<input id="eighttracksMixset" type="text" value="" placeholder="Copy &amp; paste a collection from 8tracks.com"/>
+					<input id="eighttracksMixset" type="text" value="" placeholder="Copy &amp; paste a collection from 8tracks.com"/><br />
+					<label for="eighttracksSimilar">Similar Mix Collection:</label><br />
+					<input id="eighttracksSimilar" type="text" value="" placeholder="Use the URL of a single mix to get a collection of similar mixes"/><br />
 				</div>
 
 				<div id="dj_options" style="display: none;">

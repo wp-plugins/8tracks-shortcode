@@ -40,6 +40,7 @@ tags:        Use this if you want to explore by genre. Simply insert a comma-sep
 usecat:      Set to yes to use the WP category name(s) as your search tags.
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks.
+similar:     Use like URL.  However, instead of a single mix, you get a collection of mixes similar to the one you supplied.
 smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
 sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
 */
@@ -96,6 +97,7 @@ function eighttracks_shortcode( $atts, $content) {
         'lists' => '',
         'is_widget' => '',
         'usecat' => 'no',
+        'similar' => NULL,
         ), $atts, '8tracks' ) ); 
 
 //If anything other than a URL is defined, you probably want a collection.
@@ -246,6 +248,26 @@ $dj_needle = "http://8tracks.com/";
             }
         }
         $tags = trim(strtolower($cat_query_output), $separator);
+}
+
+//Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
+    if (!is_null($similar)) {
+        $the_body = wp_remote_get( esc_url($similar) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
+
+    //Error handling for mix processing.
+        if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
+            return '';
+        
+        if ( ! isset( $the_body['body'] ) )
+            return '<!-- invalid response -->';
+        
+        try {	
+            $xml = new SimpleXMLElement( $the_body['body'] );	
+    } 	
+        catch ( Exception $e ) {
+            return '<!-- invalid xml -->';
+    }   
+        $smart_id = 'similar:' . intval($xml->mix->id) . '';
 }
 
 //Here, we create the smart id from tags or artist:
