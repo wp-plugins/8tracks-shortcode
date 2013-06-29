@@ -22,6 +22,7 @@ class eighttracks_widget extends WP_Widget {
     $sort       = trim($instance['eighttracks_sort']);
     $smart_id   = trim($instance['eighttracks_smartid']);
     $is_widget  = trim($instance['eighttracks_is_widget']);
+    $similar    = trim($instance['eighttracks_similar']);
 
 // Initializing the output code.
     echo ($args['before_widget']);
@@ -33,6 +34,9 @@ class eighttracks_widget extends WP_Widget {
   //Outputting the mixes.
     if ($url != '') {
 		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
+}
+    else if ($similar != '') {
+        echo do_shortcode('[8tracks similar="'.($similar).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($dj))) {
     	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
@@ -66,6 +70,7 @@ class eighttracks_widget extends WP_Widget {
     $instance['eighttracks_sort']           = strip_tags($new_instance['eighttracks_sort']);
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
 	$instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
+    $instance['eighttracks_similar']        = strip_tags($new_instance['eighttracks_similar']);
     
 	return $instance;
   }
@@ -87,6 +92,7 @@ class eighttracks_widget extends WP_Widget {
     $sort       = strip_tags($instance['eighttracks_sort']);
     $smart_id   = strip_tags($instance['eighttracks_smartid']);
     $is_widget  = strip_tags($instance['eighttracks_is_widget']);
+    $similar    = strip_tags($instance['eighttracks_similar']);
     
     ?>
 
@@ -117,7 +123,9 @@ class eighttracks_widget extends WP_Widget {
 
         <div class="eighttracks_collection_options" style="display: none;">
             Smart ID (replace with collection URL):<br />
-            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" /><br />
+            Similar Mixes (insert a single mix URL):<br />
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_similar'); ?>" name="<?php echo $this->get_field_name('eighttracks_similar'); ?>" value="<?php echo esc_attr($similar); ?>" /><br />
         </div>
 
         <div class="eighttracks_dj_options" style="display: none;">
