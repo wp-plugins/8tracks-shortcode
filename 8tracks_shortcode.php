@@ -277,7 +277,7 @@ $dj_needle = "http://8tracks.com/";
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
-    if (isset($smart_id)) {
+    if ((!isset($tags)) && (!isset($artist)) && (isset($smart_id))) {
         $smart_id = str_replace($badchars, $goodchars, $smart_id);
 }
 
