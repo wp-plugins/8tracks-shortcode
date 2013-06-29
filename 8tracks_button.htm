@@ -159,6 +159,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<label><input type="radio" name="embed_type" value="dj" />DJ</label><br />
 				<label><input type="radio" name="embed_type" value="artist" />Artist search</label><br />
 				<label><input type="radio" name="embed_type" value="tags" />Tag Search</label><br />
+				<label><input type="radio" name="embed_type" value="similar" />Similar Mixes</label><br />
 			</td>
 			<td width="60%" id="embed_options" valign="top">
 				<div id="mix_options">
@@ -169,8 +170,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<div id="collection_options" style="display: none;">
 					<label for="eighttracksMixset">Collection URL:</label><br />
 					<input id="eighttracksMixset" type="text" value="" placeholder="Copy &amp; paste a collection from 8tracks.com"/><br />
-					<label for="eighttracksSimilar">Similar Mix Collection:</label><br />
-					<input id="eighttracksSimilar" type="text" value="" placeholder="Use the URL of a single mix to get a collection of similar mixes"/><br />
+					<br />
 				</div>
 
 				<div id="dj_options" style="display: none;">
@@ -189,7 +189,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<div id="tags_options" style="display: none;">
 					<label for="eighttracksTags">Tags:</label><br />
 					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" /><br />
-					<label for="eighttracksUsecat">Use WP Category Name(s) as Tags:</label><br />
+					<label for="eighttracksUsecat">Include WP Category Name(s) as Tags:</label><br />
 					<select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 50%;">
 						<option value="">No (default)</option>
 						<option value="yes">Yes</option>
@@ -199,6 +199,12 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<div id="artist_options" style="display: none;">
 					<label for="eighttracksArtist">Artist:</label><br />
 					<input id="eighttracksArtist" type="text" value="" placeholder="Enter an artist name to search" />
+				</div>
+				
+				<div id="similar_options" style="display: none;">
+					<label for="eighttracksSimilar">Create a collection of related mixes:</label><br />
+					<input id="eighttracksSimilar" type="text" value="" placeholder="Use the URL of a single mix."/><br /><br />
+					Powered by <a href="http://the.echonest.com/" target="_new">Echo Nest</a>.
 				</div>
 
 				<div id="sort_options" style="display: none;">
