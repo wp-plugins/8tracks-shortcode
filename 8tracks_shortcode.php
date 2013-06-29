@@ -37,6 +37,7 @@ width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for 
 playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
 tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
+usecat:      Set to yes to use the WordPress category name(s) as your search tags.
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks.
 smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
@@ -94,6 +95,7 @@ function eighttracks_shortcode( $atts, $content) {
         'sort' => '',
         'lists' => '',
         'is_widget' => '',
+        'usecat' => 'no',
         ), $atts, '8tracks' ) ); 
 
 //If anything other than a URL is defined, you probably want a collection.
@@ -232,6 +234,20 @@ $dj_needle = "http://8tracks.com/";
     if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)))) {
         $sort = ':' . ($sort) . '';
 }
+
+//Here, we convert the WordPress category values to tags parameters:
+    if ($usecat=="yes") {
+        $categories = get_the_category();
+        $separator = ',';
+        $cat_query_output = '';
+        if($categories) {
+            foreach($categories as $category) {
+                $cat_query_output .= ''.$category->cat_name.''.$separator;
+            }
+        }
+        $tags = trim(strtolower($cat_query_output), $separator);
+}
+
 //Here, we create the smart id from tags or artist:
     if (isset($tags)) 
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
