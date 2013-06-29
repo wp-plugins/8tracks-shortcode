@@ -27,6 +27,7 @@ var eighttracks = {
 		var mixset  = $('#eighttracksMixset').val();
 		var sort    = $('#eighttracksSort').val();
 		var lists   = $('#eighttracksList').val();
+        var usecat  = $('#eighttracksUsecat').val();
 		var output  = '[8tracks ';
 
 		if(url)     output += 'url="'+url+'" ';
@@ -40,6 +41,7 @@ var eighttracks = {
 		if(mixset)  output += 'smart_id="'+mixset+'" ';
 		if(sort)    output += 'sort="'+sort+'" ';
 		if(lists)   output += 'lists="'+lists+'" ';
+        if(usecat)  output += 'usecat="'+usecat+'" ';
 		
 		output += ']';
 		
@@ -182,7 +184,12 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 				<div id="tags_options" style="display: none;">
 					<label for="eighttracksTags">Tags:</label><br />
-					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" />
+					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" /><br />
+                    <label for="eighttracksUsecat">Use WP Category Name(s) as Tags:</label><br />
+                    <select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 50%;">
+                        <option value="">No (default)</option>
+                        <option value="yes">Yes</option>
+                    </select>
 				</div>
 
 				<div id="artist_options" style="display: none;">
