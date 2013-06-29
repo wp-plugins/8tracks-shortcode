@@ -37,7 +37,7 @@ width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for 
 playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
 tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
-usecat:      Set to yes to use the WordPress category name(s) as your search tags.
+usecat:      Set to yes to use the WP category name(s) as your search tags.
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks.
 smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
