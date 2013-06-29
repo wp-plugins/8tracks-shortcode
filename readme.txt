@@ -96,7 +96,13 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
+== Upgrade Notice ==
+This release fixes an annoying bug with tag and artist searches involving multi-part names.  Also, features added to allow use of WP categories in tag searches, and collections of similar mixes (powered by Echo Nest).
+
 == Changelog ==
+
+= 1.1 =
+Fixed a bug that was breaking certain types of tag and artist searches.  Have also added options to use your WP categories in your tag search, as well as an option to generate a collection of mixes single to one that you like.  (This last is built on Echo Nest.)  Enjoy!
 
 = 1.0 =
 You can now have the shortcode display random mixes by specifying tags, artists, or a specific dj.  These features have also been added to the widget, and the button in the post editor.  Support has also been added for the 8tracks' new collection embeds (Example: http://8tracks.com/mix_sets/collection:645:favorite-artwork/player).  It is also possible to customize the plugin's output via CSS, as I have added an apply_filters call to the output.  Enjoy!
