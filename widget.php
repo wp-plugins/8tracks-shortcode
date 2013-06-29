@@ -105,6 +105,7 @@ class eighttracks_widget extends WP_Widget {
     <select class="eighttracks_embed_type" id="<?php echo $this->get_field_id('eighttracks_embed_type'); ?>" name="<?php echo $this->get_field_name('eighttracks_embed_type'); ?>" data-container="<?php echo $this->get_field_id('eighttracks_embed_options'); ?>">
         <option value="mix" <?php echo($embed_type == 'mix' ? 'selected' : '') ?>>Mix</option>
         <option value="collection" <?php echo($embed_type == 'collection' ? 'selected' : '') ?>>Collection</option>
+        <option value="similar" <?php echo($embed_type == 'similar' ? 'selected' : '') ?>>Similar Mixes</option>
         <option value="dj" <?php echo($embed_type == 'dj' ? 'selected' : '') ?>>DJ's latest mixes</option>
         <option value="artist" <?php echo($embed_type == 'artist' ? 'selected' : '') ?>>Artist search</option>
         <option value="tags" <?php echo($embed_type == 'tags' ? 'selected' : '') ?>>Tag Search</option>
@@ -124,10 +125,13 @@ class eighttracks_widget extends WP_Widget {
         <div class="eighttracks_collection_options" style="display: none;">
             Smart ID (replace with collection URL):<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" /><br />
-            Similar Mixes (insert a single mix URL):<br />
+        </div>
+        
+        <div class="eighttracks_similar_options" style="display: none;">
+            Insert a single mix URL:<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_similar'); ?>" name="<?php echo $this->get_field_name('eighttracks_similar'); ?>" value="<?php echo esc_attr($similar); ?>" /><br />
         </div>
-
+        
         <div class="eighttracks_dj_options" style="display: none;">
             Specific DJ:<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
