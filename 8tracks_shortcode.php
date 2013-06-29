@@ -247,7 +247,7 @@ $dj_needle = "http://8tracks.com/";
                 $cat_query_output .= ''.$category->cat_name.''.$separator;
             }
         }
-        $tags = trim(strtolower($cat_query_output), $separator);
+        $tags = trim(strtolower($cat_query_output), $separator) . ',' . $tags; 
 }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
