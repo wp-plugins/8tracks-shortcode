@@ -21,12 +21,13 @@ Some useful syntax examples:
 2. A Specific DJ [8tracks dj="some username"]  
 3. A Specific Collection [8tracks smart_id="collection url"]  
 4. Random Collection from Tags [8tracks tags="some, tags, here"]
-5. Random Collection by Artist [8tracks artist="some artist"]
-6. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
+5. Random Collection using WP Category Name(s) as Tags [8tracks usecat="yes"]
+6. Random Collection by Artist [8tracks artist="some artist"]
+7. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'sort', 'smart_id', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'sort', 'smart_id', 'usecat', and 'tags' parameters to the shortcode.
 
 This would look like: 
 
