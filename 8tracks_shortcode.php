@@ -373,4 +373,9 @@ $output = apply_filters('eighttracks_shortcode', $output, $atts);
 //Include Widget Code
 
 include_once dirname( __FILE__ ) . '/widget.php';
+
+//Add Admin Menu Pointers to help new users.
+
+include_once dirname( __FILE__ ) . '/pointer.php';
+
 ?>
