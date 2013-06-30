@@ -1,7 +1,7 @@
 <?php
 
 /*
-Plugin Name: Official 8tracks Radio Shortcode Plugin
+Plugin Name: 8tracks Radio: Official Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
 Version: 1.1
