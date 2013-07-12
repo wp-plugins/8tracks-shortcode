@@ -241,13 +241,24 @@ $dj_needle = "http://8tracks.com/";
     if ($usecat=="yes") {
         $categories = get_the_category();
         $separator = ',';
-        $cat_query_output = '';
+        $valid_cats = '';
         if($categories) {
             foreach($categories as $category) {
-                $cat_query_output .= ''.$category->cat_name.''.$separator;
-            }
+				//Test to see whether the categories even exist on 8tracks as tags, and tell the user if they don't.
+				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . ($category->cat_name) . ''));
+				$json_data = json_decode($json_test['body'], true);
+				
+				//If they exist, we add the categories to our valid_cats variable.
+				if ($json_test['response']['code'] == '200' ) {
+					$valid_cats .= ($category->cat_name) . ',' . $valid_cats;
+				} 
+				//If they don't exist, we insert an html comment that says so, and use what did work.
+				else if ( is_wp_error ($json_test) || $json_test['response']['code'] != '200' ) {
+					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
+				}
+			}
         }
-        $tags = trim(strtolower($cat_query_output), $separator) . ',' . $tags; 
+        $tags = trim(strtolower($valid_cats), $separator) . ',' . $tags; 
 }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
