@@ -246,7 +246,6 @@ $dj_needle = "http://8tracks.com/";
             foreach($categories as $category) {
 				//Test to see whether the categories even exist on 8tracks as tags, and tell the user if they don't.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . ($category->cat_name) . ''));
-				$json_data = json_decode($json_test['body'], true);
 				
 				//If they exist, we add the categories to our valid_cats variable.
 				if ($json_test['response']['code'] == '200' ) {
