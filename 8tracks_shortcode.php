@@ -37,7 +37,8 @@ width:       Yep, pick a number.  Standard is 300 for single mixes, and 500 for 
 playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay". 
 flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
 tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
-usecat:      Set to yes to use the WP category name(s) as your search tags.
+usecat:      Set to yes to use the WP category name(s) as your search tags on 8tracks.
+usetags:	 Set to yes to use the WP Post's tags as your search tags on 8tracks
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks.
 similar:     Use like URL.  However, instead of a single mix, you get a collection of mixes similar to the one you supplied.
@@ -97,6 +98,7 @@ function eighttracks_shortcode( $atts, $content) {
         'lists' => '',
         'is_widget' => '',
         'usecat' => 'no',
+		'usetags' => 'no',
         'similar' => NULL,
         ), $atts, '8tracks' ) ); 
 
@@ -233,7 +235,7 @@ $dj_needle = "http://8tracks.com/";
     if (is_null($url)) {
 
 //Did we specify a sort?  Let's make sure that works.
-    if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)))) {
+    if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)) || (isset($usecat)) || (isset($usetags)))) {
         $sort = ':' . ($sort) . '';
 }
 
@@ -244,20 +246,45 @@ $dj_needle = "http://8tracks.com/";
         $valid_cats = '';
         if($categories) {
             foreach($categories as $category) {
-				//Test to see whether the categories even exist on 8tracks as tags, and tell the user if they don't.
+				//Test to see whether the categories even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . ($category->cat_name) . ''));
 				
 				//If they exist, we add the categories to our valid_cats variable.
 				if ($json_test['response']['code'] == '200' ) {
 					$valid_cats .= ($category->cat_name) . ',' . $valid_cats;
 				} 
-				//If they don't exist, we insert an html comment that says so, and use what did work.
+				//If they don't exist, we insert an html comment that says so.
 				else if ( is_wp_error ($json_test) || $json_test['response']['code'] != '200' ) {
 					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
         }
+		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
         $tags = trim(strtolower($valid_cats), $separator) . ',' . $tags; 
+}
+
+//Here, we convert the WordPress post tags values to tags parameters:
+    if ($usetags=="yes") {
+        $wp_tags = get_the_tags();
+        $separator = ',';
+        $valid_tags = '';
+        if($wp_tags) {
+            foreach($wp_tags as $wp_tag) {
+				//Test to see whether the tags even exist on 8tracks as tags.
+				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . ($wp_tag->name) . ''));
+				
+				//If they exist, we add the categories to our valid_cats variable.
+				if ($json_test['response']['code'] == '200' ) {
+					$valid_tags .= ($wp_tag->name) . ',' . $valid_tags;
+				} 
+				//If they don't exist, we insert an html comment that says so.
+				else if ( is_wp_error ($json_test) || $json_test['response']['code'] != '200' ) {
+					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
+				}
+			}
+        }
+		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
+        $tags = trim(strtolower($valid_tags), $separator) . ',' . $tags; 
 }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.

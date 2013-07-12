@@ -28,6 +28,7 @@ var eighttracks = {
 		var sort    = $('#eighttracksSort').val();
 		var lists   = $('#eighttracksList').val();
 		var usecat  = $('#eighttracksUsecat').val();
+		var usetags	= $('#eighttracksUsetags').val();
 		var similar = $('#eighttracksSimilar').val();
 		var output  = '[8tracks ';
 
@@ -43,6 +44,7 @@ var eighttracks = {
 		if(sort)    output += 'sort="'+sort+'" ';
 		if(lists)   output += 'lists="'+lists+'" ';
 		if(usecat)  output += 'usecat="'+usecat+'" ';
+		if(usetags)	output += 'usetags="'+usetags+'" ';
 		if(similar)	output += 'similar="'+similar+'" ';
 		
 		output += ']';
@@ -86,6 +88,16 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 	});
 	</script>
 
+	<script language="javascript" type="text/javascript">
+	<!--
+	function popitup(url) {
+		newwindow=window.open(url,'name','height=500,width=500');
+		if (window.focus) {newwindow.focus()}
+		return false;
+	}
+	// -->
+	</script>
+	
 	<style>
 		body{
 			padding-top: 10px;
@@ -147,7 +159,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 <body>
 <form id="eighttracksShortcode">
 
-	<h2>Embed an 8tracks mix</h2>
+	<h2>Embed an 8tracks mix</h2> (<a href="buttonhelp.htm" onclick="return popitup('buttonhelp.htm')">help</a>)
 
 	<p><strong>Embed Type</strong></p>
 				
@@ -188,12 +200,16 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 				<div id="tags_options" style="display: none;">
 					<label for="eighttracksTags">Tags:</label><br />
-					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" /><br /><br />
-					<label for="eighttracksUsecat">Your post's categories can be used as tags to search 8tracks. Would you like to?</label>
-					<select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 30%;">
-						<option value="">No (default)</option>
+					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" /><br />
+					<label for="eighttracksUsetags">Search 8tracks with metadata from your WordPress post:</label>
+					<select name="eighttrracksUsetags" id="eighttracksUsetags" style="width: 80%;">
+						<option value="">Use my post's tags? (No is default)</option>
 						<option value="yes">Yes</option>
-					</select>
+					</select><br />
+					<select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 80%;">
+						<option value="">Use my post's categories? (No is default)</option>
+						<option value="yes">Yes</option>
+					</select><br />
 				</div>
 
 				<div id="artist_options" style="display: none;">
