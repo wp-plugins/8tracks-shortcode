@@ -258,7 +258,7 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 				//Test to see whether the categories even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . ''));
 				
-				//If they exist, we add the categories to our valid_cats variable.
+				//If they exist, we add the categories to our valid_cats variable and to valid_meta (for saving for later).
 				if ($json_test['response']['code'] == '200' ) {
 					$valid_meta[] = (strtolower($category->cat_name));
 					$valid_cats[] = (strtolower($category->cat_name));
@@ -291,7 +291,7 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 				//Test to see whether the tags even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . ''));
 				
-				//If they exist, we add the categories to our valid_cats variable.
+				//If they exist, we add the categories to our valid_tags variable and to valid_meta (for saving for later)..
 				if ($json_test['response']['code'] == '200' ) {
 					$valid_meta[] = (strtolower($wp_tag->name));
 					$valid_tags[] = (strtolower($wp_tag->name));
