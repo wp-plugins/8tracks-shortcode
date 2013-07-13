@@ -283,7 +283,7 @@ $dj_needle = "http://8tracks.com/";
 				}
 			}
         }
-		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
+		//We now pass valid_tags to the tags variable, and process as if they were tags all along.
         $tags = trim(strtolower($valid_tags), $separator) . ',' . $tags; 
 }
 
