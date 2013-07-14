@@ -229,6 +229,7 @@ $dj_needle = "http://8tracks.com/";
 
     if ((strpos($dj, $dj_needle)) !== false) {
         $dj = str_replace("http://8tracks.com/", "", $dj);
+		$dj = str_replace($badchars, $goodchars, $dj);
 }
 
 //Let's do some mix set processing:
@@ -373,6 +374,7 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
     if (isset($artist))
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
+
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
     if ((!isset($tags)) && (!isset($artist)) && (isset($smart_id))) {
