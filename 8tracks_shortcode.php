@@ -239,8 +239,27 @@ $dj_needle = "http://8tracks.com/";
         $sort = ':' . ($sort) . '';
 }
 
+//Make sure that usecat and usetags are set to something valid.
+
+$allowed_usecat_options = array(
+    'yes',
+    'no',
+    );
+
+if ( !in_array( $usecat, $allowed_usecat_options ) )
+    $usecat = 'no';
+
+$allowed_usetags_options = array(
+    'yes',
+    'no',
+    );
+
+if ( !in_array( $usetags, $allowed_usetags_options ) )
+    $usetags = 'no';
+
 //Here, we create an array to hold known good 8tracks tags.  We'll use this to speed-up lookups.
 //Note that both categories and tags feed the valid_meta array.  That's because they are semantically equivalent on 8tracks.com
+
 $valid_meta = get_site_transient( '8tracks_meta_search_results');
 
 //Here, we convert the WordPress category values to tags parameters:
