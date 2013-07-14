@@ -258,7 +258,6 @@ if ( !in_array( $usetags, $allowed_usetags_options ) )
     $usetags = 'no';
 
 //Here, we create an array to hold known good 8tracks tags, and tags that return zero mixes.  We'll use this to speed-up lookups.
-//Note that both categories and tags feed the valid_meta array.  That's because they are semantically equivalent on 8tracks.com
 
 $valid_cat_meta = get_site_transient( '8tracks_meta_cat_search_results');
 $bad_cat_meta = get_site_transient( '8tracks_meta_empty_cat_search_results');
@@ -284,10 +283,10 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 				}
 				
 				//Test to see whether the categories even exist on 8tracks as tags.
-				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . ''));
+				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
 				
 				//If they exist, we add the categories to our valid_cats variable and to valid_meta (for saving for later).
-				if ($json_test['response']['code'] == '200' ) {
+				if ($json_test["response"]["total-entries"] > 0 ) {
 					$valid_cat_meta[] = (strtolower($category->cat_name));
 					$valid_cats[] = (strtolower($category->cat_name));
 				} 
@@ -327,10 +326,10 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 				}				
 				
 				//Test to see whether the tags even exist on 8tracks as tags.
-				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . ''));
+				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
 				
 				//If they exist, we add the categories to our valid_tags variable and to valid_meta (for saving for later)..
-				if ($json_test['response']['code'] == '200' ) {
+				if ($json_test["response"]["total-entries"] > 0 ) {
 					$valid_tag_meta[] = (strtolower($wp_tag->name));
 					$valid_tags[] = (strtolower($wp_tag->name));
 				} 
