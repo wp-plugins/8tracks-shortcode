@@ -257,22 +257,27 @@ $allowed_usetags_options = array(
 if ( !in_array( $usetags, $allowed_usetags_options ) )
     $usetags = 'no';
 
-//Here, we create an array to hold known good 8tracks tags.  We'll use this to speed-up lookups.
+//Here, we create an array to hold known good 8tracks tags, and tags that return zero mixes.  We'll use this to speed-up lookups.
 //Note that both categories and tags feed the valid_meta array.  That's because they are semantically equivalent on 8tracks.com
 
 $valid_meta = get_site_transient( '8tracks_meta_search_results');
+$invalid_meta = get_site_transient( '8tracks_meta_empty_search_results');
 
 //Here, we convert the WordPress category values to tags parameters:
 	if ($usecat=="yes") {
 		$categories = get_the_category();
 		$separator = ',';
 		$valid_cats = array();	
+		$invalid_cats = array();
 		if($categories) {
 			foreach($categories as $category) {
 				//Let's see if we've already looked up this category before.
-					if (in_array($category->cat_name, $valid_meta)) {
-						$valid_cats[] = (strtolower($category->cat_name));
-						continue;		
+				if (in_array($category->cat_name, $valid_meta)) {
+					$valid_cats[] = (strtolower($category->cat_name));
+					continue;		
+				}
+				if (in_array($category->cat_name, $invalid_meta)) {
+					continue;
 				}
 				//Test to see whether the categories even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . ''));
@@ -283,16 +288,20 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 					$valid_cats[] = (strtolower($category->cat_name));
 				} 
 				
-				//If they don't exist, we insert an html comment that says so.
+				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
 				else if ( is_wp_error ($json_test) || $json_test['response']['code'] != '200' ) {
+					$invalid_meta[] = (strtolower($category->cat_name));
 					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
 		}
+		
 		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
 		$tags = implode(',', $valid_cats); 
+		
 		//We'll store the search data for one day.
 		set_site_transient( '8tracks_meta_search_results', $valid_meta, 60*60*24 );
+		set_site_transient( '8tracks_meta_empty_search_results', $invalid_meta, 60*60*24 );
 }
 
 //Here, we convert the WordPress post tags values to tags parameters:
@@ -300,13 +309,18 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 		$wp_tags = get_the_tags();
 		$separator = ',';
 		$valid_tags = array();
+		$invalid_tags = array();
 		if($wp_tags) {
 			foreach($wp_tags as $wp_tag) {
-				//Let's see if we've already looked up this category before.
+				//Let's see if we've already looked up this tag before.
 				if (in_array($wp_tag->name, $valid_meta)) {
 					$valid_tags[] = (strtolower($wp_tag->name));
 					continue;		
 				}
+				if (in_array($wp_tag->name, $invalid_meta)) {
+					continue;
+				}				
+				
 				//Test to see whether the tags even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . ''));
 				
@@ -316,16 +330,19 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 					$valid_tags[] = (strtolower($wp_tag->name));
 				} 
 				
-				//If they don't exist, we insert an html comment that says so.
+				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
 				else if ( is_wp_error ($json_test) || $json_test['response']['code'] != '200' ) {
+					$invalid_meta[] = (strtolower($wp_tag->name));
 					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
 		}
 		//We now pass valid_tags to the tags variable, and process as if they were tags all along.
 		$tags = implode(',', $valid_tags); 
+		
 		//We'll store the search data for one day.
-		set_site_transient( '8tracks_meta_search_results', $valid_meta, 60*60*24 );		
+		set_site_transient( '8tracks_meta_search_results', $valid_meta, 60*60*24 );
+		set_site_transient( '8tracks_meta_empty_search_results', $invalid_meta, 60*60*24 );
 }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
