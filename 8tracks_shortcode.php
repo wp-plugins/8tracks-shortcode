@@ -244,12 +244,12 @@ $dj_needle = "http://8tracks.com/";
 $valid_meta = get_site_transient( '8tracks_meta_search_results');
 
 //Here, we convert the WordPress category values to tags parameters:
-    if ($usecat=="yes") {
-        $categories = get_the_category();
-        $separator = ',';
-        $valid_cats = array();	
-        if($categories) {
-            foreach($categories as $category) {
+	if ($usecat=="yes") {
+		$categories = get_the_category();
+		$separator = ',';
+		$valid_cats = array();	
+		if($categories) {
+			foreach($categories as $category) {
 				//Let's see if we've already looked up this category before.
 					if (in_array($category->cat_name, $valid_meta)) {
 						$valid_cats[] = (strtolower($category->cat_name));
@@ -269,20 +269,20 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
-        }
+		}
 		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
-        $tags = implode(',', $valid_cats); 
+		$tags = implode(',', $valid_cats); 
 		//We'll store the search data for one day.
 		set_site_transient( '8tracks_meta_search_results', $valid_meta, 60*60*24 );
 }
 
 //Here, we convert the WordPress post tags values to tags parameters:
-    if ($usetags=="yes") {
-        $wp_tags = get_the_tags();
-        $separator = ',';
-        $valid_tags = array();
-        if($wp_tags) {
-            foreach($wp_tags as $wp_tag) {
+	if ($usetags=="yes") {
+		$wp_tags = get_the_tags();
+		$separator = ',';
+		$valid_tags = array();
+		if($wp_tags) {
+			foreach($wp_tags as $wp_tag) {
 				//Let's see if we've already looked up this category before.
 				if (in_array($wp_tag->name, $valid_meta)) {
 					$valid_tags[] = (strtolower($wp_tag->name));
@@ -302,31 +302,31 @@ $valid_meta = get_site_transient( '8tracks_meta_search_results');
 					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
-        }
+		}
 		//We now pass valid_tags to the tags variable, and process as if they were tags all along.
-        $tags = implode(',', $valid_tags); 
+		$tags = implode(',', $valid_tags); 
 		//We'll store the search data for one day.
 		set_site_transient( '8tracks_meta_search_results', $valid_meta, 60*60*24 );		
 }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
-    if (!is_null($similar)) {
-        $the_body = wp_remote_get( esc_url($similar) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
+	if (!is_null($similar)) {
+		$the_body = wp_remote_get( esc_url($similar) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
 
-    //Error handling for mix processing.
-        if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
-            return '';
+		//Error handling for mix processing.
+		if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
+			return '';
         
-        if ( ! isset( $the_body['body'] ) )
-            return '<!-- invalid response -->';
+		if ( ! isset( $the_body['body'] ) )
+			return '<!-- invalid response -->';
         
-        try {	
-            $xml = new SimpleXMLElement( $the_body['body'] );	
-    } 	
-        catch ( Exception $e ) {
-            return '<!-- invalid xml -->';
-    }   
-        $smart_id = 'similar:' . intval($xml->mix->id) . '';
+		try {	
+			$xml = new SimpleXMLElement( $the_body['body'] );	
+		} 	
+		catch ( Exception $e ) {
+			return '<!-- invalid xml -->';
+		}   
+		$smart_id = 'similar:' . intval($xml->mix->id) . '';
 }
 
 //Here, we create the smart id from tags or artist:
