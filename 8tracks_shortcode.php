@@ -279,6 +279,7 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 					continue;		
 				}
 				if (in_array(strtolower($category->cat_name), $bad_cat_meta)) {
+					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com.--> ';
 					continue;
 				}
 				
@@ -294,7 +295,6 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
 				else if ( is_wp_error ($json_test) || $json_test["response"]["total-entries"] == 0 ) {
 					$bad_cat_meta[] = (strtolower($category->cat_name));
-					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
 		}
@@ -322,6 +322,7 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 				}
 				
 				if (in_array(strtolower($wp_tag->name), $bad_tag_meta)) {
+					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com.--> ';
 					continue;
 				}				
 				
@@ -337,7 +338,6 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
 				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
 				else if ( is_wp_error ($json_test) || $json_test["response"]["total-entries"] == 0) {
 					$bad_tag_meta[] = (strtolower($wp_tag->name));
-					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com, and so I couldn\'t use it.--> ';
 				}
 			}
 		}
