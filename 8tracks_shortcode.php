@@ -194,6 +194,7 @@ $allowed_sorts = array(
 if ( !in_array( $sort, $allowed_sorts ) ) {
     $sort = '';
 }  
+
 //Make sure our list settings are valid.
 $allowed_lists = array(
     'liked',
@@ -260,10 +261,10 @@ if ( !in_array( $usetags, $allowed_usetags_options ) )
 
 //Here, we create an array to hold known good 8tracks tags, and tags that return zero mixes.  We'll use this to speed-up lookups.
 
-$valid_cat_meta = get_site_transient( '8tracks_meta_cat_search_results');
-$bad_cat_meta = get_site_transient( '8tracks_meta_empty_cat_search_results');
-$valid_tag_meta = get_site_transient( '8tracks_meta_tag_search_results');
-$bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
+$valid_cat_meta = array_unique(get_site_transient( '8tracks_meta_cat_search_results'));
+$bad_cat_meta = array_unique(get_site_transient( '8tracks_meta_empty_cat_search_results'));
+$valid_tag_meta = array_unique(get_site_transient( '8tracks_meta_tag_search_results'));
+$bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we convert the WordPress category values to tags parameters:
 	if ($usecat=="yes") {
@@ -386,7 +387,7 @@ $bad_tag_meta = get_site_transient( '8tracks_meta_empty_tag_search_results');
     if (!is_null($smart_id)) {       
         $the_body = wp_remote_get ('http://8tracks.com/mix_sets/' . ($smart_id) . '.xml' . (api_key) . '' );
 }   
-    else if (!empty($dj)) { //Not escaping dj strings fixes the problem of missing DJ sets from users with _ in their name.
+    else if (!empty($dj)) { 
         $the_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml' . (api_key) . '' );
 } 	
     else if (!empty($sort)) {   //This handles collections where only sort is set.
