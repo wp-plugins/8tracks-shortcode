@@ -268,7 +268,14 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 
 //Here, we convert the WordPress category values to tags parameters:
 	if ($usecat=="yes") {
-		$categories = get_the_category();
+		if ($is_widget=="yes") {
+			//Widget will be created based on the categories of the most recent post.
+			$last = wp_get_recent_posts( '1');
+			$last_id = $last['0']['ID'];
+			$categories = get_the_category($last_id);
+	}	else if ($is_widget=="no") {
+			$categories = get_the_category();
+	}
 		$separator = ',';
 		$valid_cats = array();	
 		if($categories) {
@@ -286,15 +293,16 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 				
 				//Test to see whether the categories even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
+				$json_data = json_decode($json_test['body'], true);
 				
 				//If they exist, we add the categories to our valid_cats variable and to valid_meta (for saving for later).
-				if ($json_test["response"]["total-entries"] > 0 ) {
+				if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
 					$valid_cat_meta[] = (strtolower($category->cat_name));
 					$valid_cats[] = (strtolower($category->cat_name));
 				} 
 				
 				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
-				else if ( is_wp_error ($json_test) || $json_test["response"]["total-entries"] == 0 ) {
+				else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
 					$bad_cat_meta[] = (strtolower($category->cat_name));
 				}
 			}
@@ -310,7 +318,14 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 
 //Here, we convert the WordPress post tags values to tags parameters:
 	if ($usetags=="yes") {
-		$wp_tags = get_the_tags();
+		if ($is_widget=="yes") {
+			//Widget will be created based on tags of the most recent post.
+			$last = wp_get_recent_posts( '1');
+			$last_id = $last['0']['ID'];
+			$wp_tags = get_the_tags($last_id);
+	}	else if ($is_widget=="no") {
+			$wp_tags = get_the_tags();
+	}
 		$separator = ',';
 		$valid_tags = array();
 		if($wp_tags) {
@@ -329,15 +344,16 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 				
 				//Test to see whether the tags even exist on 8tracks as tags.
 				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
+				$json_data = json_decode($json_test['body'], true);
 				
 				//If they exist, we add the categories to our valid_tags variable and to valid_meta (for saving for later)..
-				if ($json_test["response"]["total-entries"] > 0 ) {
+				if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
 					$valid_tag_meta[] = (strtolower($wp_tag->name));
 					$valid_tags[] = (strtolower($wp_tag->name));
 				} 
 				
 				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
-				else if ( is_wp_error ($json_test) || $json_test["response"]["total-entries"] == 0) {
+				else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
 					$bad_tag_meta[] = (strtolower($wp_tag->name));
 				}
 			}
@@ -349,6 +365,12 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 		set_site_transient( '8tracks_meta_tag_search_results', $valid_tag_meta, 60*60*24 );
 		set_site_transient( '8tracks_meta_empty_tag_search_results', $bad_tag_meta, 60*60*24 );
 }
+
+//Here, we deal with both usecat and usetags being turned on.
+	if (($usecat=="yes") && ($usetags=="yes")) {
+		$valid_combined_meta = array_merge($valid_cats, $valid_tags); //We combine the arrays containing the valid categories and tags.
+		$tags = implode(',', $valid_combined_meta); //We set tags search equal to all the valid categories and post tags.
+	}
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
 	if (!is_null($similar)) {
