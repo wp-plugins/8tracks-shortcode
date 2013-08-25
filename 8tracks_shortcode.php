@@ -261,10 +261,10 @@ if ( !in_array( $usetags, $allowed_usetags_options ) )
 
 //Here, we create an array to hold known good 8tracks tags, and tags that return zero mixes.  We'll use this to speed-up lookups.
 
-$valid_cat_meta = array_unique(get_site_transient( '8tracks_meta_cat_search_results'));
-$bad_cat_meta = array_unique(get_site_transient( '8tracks_meta_empty_cat_search_results'));
-$valid_tag_meta = array_unique(get_site_transient( '8tracks_meta_tag_search_results'));
-$bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_results'));
+$valid_cat_meta = (get_site_transient( '8tracks_meta_cat_search_results'));
+$bad_cat_meta = (get_site_transient( '8tracks_meta_empty_cat_search_results'));
+$valid_tag_meta = (get_site_transient( '8tracks_meta_tag_search_results'));
+$bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we convert the WordPress category values to tags parameters:
 	if ($usecat=="yes") {
@@ -312,8 +312,8 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 		$tags = implode(',', $valid_cats); 
 		
 		//We'll store the search data for one day.
-		set_site_transient( '8tracks_meta_cat_search_results', $valid_cat_meta, 60*60*24 );
-		set_site_transient( '8tracks_meta_empty_cat_search_results', $bad_cat_meta, 60*60*24 );
+		set_site_transient( '8tracks_meta_cat_search_results', (array_unique($valid_cat_meta)), 60*60*24 );
+		set_site_transient( '8tracks_meta_empty_cat_search_results', (array_unique($bad_cat_meta)), 60*60*24 );
 }
 
 //Here, we convert the WordPress post tags values to tags parameters:
@@ -362,8 +362,8 @@ $bad_tag_meta = array_unique(get_site_transient( '8tracks_meta_empty_tag_search_
 		$tags = implode(',', $valid_tags); 
 		
 		//We'll store the search data for one day.
-		set_site_transient( '8tracks_meta_tag_search_results', $valid_tag_meta, 60*60*24 );
-		set_site_transient( '8tracks_meta_empty_tag_search_results', $bad_tag_meta, 60*60*24 );
+		set_site_transient( '8tracks_meta_tag_search_results', (array_unique($valid_tag_meta)), 60*60*24 );
+		set_site_transient( '8tracks_meta_empty_tag_search_results', (array_unique($bad_tag_meta)), 60*60*24 );
 }
 
 //Here, we deal with both usecat and usetags being turned on.
