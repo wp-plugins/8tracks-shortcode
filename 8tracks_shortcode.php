@@ -98,7 +98,7 @@ function eighttracks_shortcode( $atts, $content) {
         'lists' => '',
         'is_widget' => '',
         'usecat' => 'no',
-		'usetags' => 'no',
+        'usetags' => 'no',
         'similar' => NULL,
         ), $atts, '8tracks' ) ); 
 
