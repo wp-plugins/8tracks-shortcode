@@ -10,7 +10,7 @@ Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
 */
 
-/*  Copyright 2011-13  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
+/*  Copyright 2011-14  Jonathan Martin  (email : jon@songsthatsavedyourlife.com)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as 
@@ -307,9 +307,15 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 				}
 			}
 		}
-		
+        //We need to deal with a case where tags and usecat are both set.
+        if (!is_null($tags)) {
+            $buffer = explode(',', $tags); //Create an array from the user-supplied string $tags.
+            $catsbuffer = array_unique(array_merge($valid_cats, $buffer)); //Merge that array with $valid_tags
+    }   else {
+            $catsbuffer = $valid_cats;
+	}	
 		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
-		$tags = implode(',', $valid_cats); 
+		$tags = implode(',', $catsbuffer); //Convert the merged array back into a string.
 		
 		//We'll store the search data for one day.
 		set_site_transient( '8tracks_meta_cat_search_results', (array_unique($valid_cat_meta)), 60*60*24 );
@@ -358,8 +364,16 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 				}
 			}
 		}
-		//We now pass valid_tags to the tags variable, and process as if they were tags all along.
-		$tags = implode(',', $valid_tags); 
+		//We need to deal with a case where tags and usetags are both set.
+        if (!is_null($tags)) {
+            $buffer = explode(',', $tags); //Create an array from the user-supplied string $tags.
+            $tagsbuffer = array_unique(array_merge($valid_tags, $buffer)); //Merge that array with $valid_tags
+    }   else {
+            $tagsbuffer = $valid_tags;
+    }
+        
+        //We now pass valid_tags to the tags variable, and process as if they were tags all along.
+		$tags = implode(',', $tagsbuffer); //Convert the merged array $tags into a string.
 		
 		//We'll store the search data for one day.
 		set_site_transient( '8tracks_meta_tag_search_results', (array_unique($valid_tag_meta)), 60*60*24 );
@@ -368,7 +382,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we deal with both usecat and usetags being turned on.
 	if (($usecat=="yes") && ($usetags=="yes")) {
-		$valid_combined_meta = array_merge($valid_cats, $valid_tags); //We combine the arrays containing the valid categories and tags.
+		$valid_combined_meta = array_merge($tagsbuffer, $catsbuffer); //We combine the arrays containing the valid categories and tags.
 		$tags = implode(',', $valid_combined_meta); //We set tags search equal to all the valid categories and post tags.
 	}
 
