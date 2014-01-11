@@ -207,8 +207,8 @@ if ( !in_array( $lists, $allowed_lists ) )
     $lists = '';
 
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
-$badchars = array(' ', '_', '/', '.', ',', ', ');
-$goodchars = array('_', '__', '\\', '%5E', '%2B', '%2B');
+$badchars = array('_', ' ', '/', '.', ',');
+$goodchars = array('__', '_', '\\', '^', '+');
 
 //We should probably make sure our smart_id is free of non-id elements before processing.
 $needle1 = "http://8tracks.com/mix_sets/";
@@ -230,6 +230,8 @@ $dj_needle = "http://8tracks.com/";
 
     if ((strpos($dj, $dj_needle)) !== false) {
         $dj = str_replace("http://8tracks.com/", "", $dj);
+        $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
+        $dj = str_replace(".", "", $dj); //DJ URLs seem to ignore the period character.
 		$dj = str_replace($badchars, $goodchars, $dj);
 }
 
@@ -411,7 +413,9 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
     if (isset($artist))
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
-
+    if (isset($dj))
+        $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
+        $dj = str_replace(".", "", $dj); //DJ URLs seem to ignore the period character.
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
     if ((!isset($tags)) && (!isset($artist)) && (isset($smart_id))) {
@@ -445,7 +449,16 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 //Collection processing:
-    if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
+    if (!empty($artist)) {
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
+        $output .= 'border="0" style="border: 0px none;"></iframe></div>';
+}   else if (!empty($tags)) {
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
+        $output .= 'border="0" style="border: 0px none;"></iframe></div>';
+}
+    else if ((!empty($smart_id)) && (empty($dj)) && (empty($artist))) { //This handles smart-ids (as distinct from DJs).
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com' . ($xml->path) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
@@ -465,6 +478,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }  
+    
 }
 
 //This is for single mix processing:
