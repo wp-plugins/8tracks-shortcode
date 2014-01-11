@@ -446,7 +446,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Collection processing:
     if ((!empty($smart_id)) && (empty($dj))) { //This handles smart-ids (as distinct from DJs).
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . intval($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com' . ($xml->path) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
