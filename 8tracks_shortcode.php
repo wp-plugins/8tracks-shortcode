@@ -102,6 +102,8 @@ function eighttracks_shortcode( $atts, $content) {
         'similar' => NULL,
         ), $atts, '8tracks' ) ); 
 
+// <------------- This is the beginning of the variable creation and input sanitization section. -------------->
+
 //If anything other than a URL is defined, you probably want a collection.
     if (isset($url)) {
         $collection = "no";
@@ -206,6 +208,28 @@ $allowed_lists = array(
 if ( !in_array( $lists, $allowed_lists ) )
     $lists = '';
 
+//Make sure that usecat and usetags are set to something valid.
+
+$allowed_usecat_options = array(
+    'yes',
+    'no',
+    );
+
+if ( !in_array( $usecat, $allowed_usecat_options ) )
+    $usecat = 'no';
+
+$allowed_usetags_options = array(
+    'yes',
+    'no',
+    );
+
+if ( !in_array( $usetags, $allowed_usetags_options ) )
+    $usetags = 'no';
+
+//  <----------- This is the end of the variable creation and input santization section. ------------>
+
+//  <----------- This is the beginning of the section where we format the data to be sent to 8tracks.com ------------>
+
 //These arrays contain character substitutions to ensure the URLs are well-formed for querying 8tracks.
 $badchars = array('_', ' ', '/', '.', ',');
 $goodchars = array('__', '_', '\\', '^', '+');
@@ -235,6 +259,9 @@ $dj_needle = "http://8tracks.com/";
 		$dj = str_replace($badchars, $goodchars, $dj);
 }
 
+//  <---------- This is the end of the data formatting section. --------->
+
+
 //Let's do some mix set processing:
     if (is_null($url)) {
 
@@ -242,24 +269,6 @@ $dj_needle = "http://8tracks.com/";
     if ((in_array( $sort, $allowed_sorts )) && ((isset($tags)) || (isset($artist)) || (isset($dj)) || (isset($usecat)) || (isset($usetags)))) {
         $sort = ':' . ($sort) . '';
 }
-
-//Make sure that usecat and usetags are set to something valid.
-
-$allowed_usecat_options = array(
-    'yes',
-    'no',
-    );
-
-if ( !in_array( $usecat, $allowed_usecat_options ) )
-    $usecat = 'no';
-
-$allowed_usetags_options = array(
-    'yes',
-    'no',
-    );
-
-if ( !in_array( $usetags, $allowed_usetags_options ) )
-    $usetags = 'no';
 
 //Here, we create an array to hold known good 8tracks tags, and tags that return zero mixes.  We'll use this to speed-up lookups.
 
