@@ -296,19 +296,19 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $post_id = url_to_postid( $meta_url );
             $categories = get_the_category( $post_id );
     }
-		else if (($is_widget=="yes") && (is_null($meta_url))) {
-			//Widget will be created based on the categories of the most recent post.
+        else if (($is_widget=="yes") && (is_null($meta_url))) {
+            //Widget will be created based on the categories of the most recent post.
             $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
-			$last = wp_get_recent_posts( $recent_posts_arguments );
-			$last_id = $last['0']['ID'];
-			$categories = get_the_category($last_id);
-	}	
+            $last = wp_get_recent_posts( $recent_posts_arguments );
+            $last_id = $last['0']['ID'];
+            $categories = get_the_category($last_id);
+    }	
         else if (($is_widget=="no") && (!is_null($meta_url))) {
             $post_id = url_to_postid( $meta_url );
             $categories = get_the_category( $post_id );
     }
         else if (($is_widget=="no") && (is_null($meta_url))) {
-			$categories = get_the_category();
+            $categories = get_the_category();
     }
 
 		$separator = ',';
@@ -366,17 +366,17 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $post_id = url_to_postid( $meta_url );
             $wp_tags = get_the_tags( $post_id );
     }
-		else if (($is_widget=="yes") && (is_null($meta_url))) {
-			//Widget will be created based on tags of the most recent post.
+        else if (($is_widget=="yes") && (is_null($meta_url))) {
+            //Widget will be created based on tags of the most recent post.
             $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
             $last = wp_get_recent_posts( $recent_posts_arguments );			
             $last_id = $last['0']['ID'];
-			$wp_tags = get_the_tags($last_id);
-	}	
+            $wp_tags = get_the_tags($last_id);
+    }	
         else if (($is_widget=="no") && (!is_null($meta_url))) {
             $post_id = url_to_postid( $meta_url );
             $wp_tags = get_the_tags( $post_id );
-	}
+    }
         else if (($is_widget=="no") && (is_null($meta_url))) {
             $wp_tags = get_the_tags();
     }
