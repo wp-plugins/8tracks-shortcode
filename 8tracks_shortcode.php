@@ -254,8 +254,9 @@ $dj_needle = "http://8tracks.com/";
 
     if ((strpos($dj, $dj_needle)) !== false) {
         $dj = str_replace("http://8tracks.com/", "", $dj);
-        $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-'.
-        $dj = preg_replace("/[^(a-zA-Z0-9\s)|(\-)|(\_)]/i", '-', $dj); //Replace all non-aplhanumeric characters with a "-".
+        $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-' to account for Tiny_MCE formatting.
+        $dj = preg_replace('/(@|\(|\)|\{|\})/i', '', $dj);  //8tracks drops a bunch of characters from DJ URLs.  Doing that here.
+        $dj = preg_replace("/[^(a-zA-Z0-9)|(\-)|(\_)]/i", '-', $dj); //Replace all remaining non-aplhanumeric characters with a "-".
 }
 
 //  <---------- This is the end of the data formatting section. --------->
@@ -417,23 +418,21 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 //Here, we create the smart id from tags or artist:
-    if ((isset($tags)) && (!is_null($sort))) { 
+    if ((isset($tags)) && (!is_null($sort))) { //Tag searches with a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
-}   else if ((isset($tags)) && (!is_null($sort))) {
+}   else if ((isset($tags)) && (!is_null($sort))) { //Tag searches without a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '';    
-}   if ((isset($artist)) && (!is_null($sort))) {
+}   if ((isset($artist)) && (!is_null($sort))) { //Artist searches with a specified sort.
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
-}   else if ((isset($artist)) && (is_null($sort))) {
+}   else if ((isset($artist)) && (is_null($sort))) { //Artist searches without a specified sort.
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '';
-}   if (isset($dj)) {
+}   if (isset($dj)) { //DJ searches.
         $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-'.
-        $dj = preg_replace("/[^(a-zA-Z0-9\s)|(\-)|(\_)]/i", '-', $dj); //Replace all non-aplhanumeric characters with a "-".
+        $dj = preg_replace('/(@|\(|\)|\{|\})/i', '', $dj);  //8tracks drops a bunch of characters from DJ URLs.  Doing that here.
+        $dj = preg_replace("/[^(a-zA-Z0-9)|(\-)|(\_)]/i", '-', $dj); //Replace all remaining non-aplhanumeric characters with a "-" to account for Tiny_MCE formatting.
 }
 
-//We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
-    if ((!isset($tags)) && (!isset($artist)) && (isset($smart_id))) {
-        $smart_id = str_replace($badchars, $goodchars, $smart_id);
-}
+
 
 //This handles collections made from smart_id, dj, or sort.
 
