@@ -420,15 +420,19 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 //Here, we create the smart id from tags or artist:
-    if ((isset($tags)) && (!is_null($sort))) { //Tag searches with a specified sort.
+    if ((isset($tags)) && (!is_null($sort))) {   //Tag searches with a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
-}   else if ((isset($tags)) && (!is_null($sort))) { //Tag searches without a specified sort.
+}   
+    else if ((isset($tags)) && (!is_null($sort))) {   //Tag searches without a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '';    
-}   if ((isset($artist)) && (!is_null($sort))) { //Artist searches with a specified sort.
+}   
+    if ((isset($artist)) && (!is_null($sort))) {   //Artist searches with a specified sort.
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
-}   else if ((isset($artist)) && (is_null($sort))) { //Artist searches without a specified sort.
+}   
+    else if ((isset($artist)) && (is_null($sort))) {   //Artist searches without a specified sort.
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '';
-}   if (isset($dj)) { //DJ searches.
+}   
+    if (isset($dj)) {   //DJ searches.
         $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-'.
         $dj = preg_replace('/(@|\(|\)|\{|\})/i', '', $dj);  //8tracks drops a bunch of characters from DJ URLs.  Doing that here.
         $dj = preg_replace("/[^(a-zA-Z0-9)|(\-)|(\_)]/i", '-', $dj); //Replace all remaining non-aplhanumeric characters with a "-" to account for Tiny_MCE formatting.
@@ -467,7 +471,8 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($smart_id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
-}   else if (!empty($tags)) {
+}   
+    else if (!empty($tags)) {
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
