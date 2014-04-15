@@ -138,7 +138,7 @@ class eighttracks_widget extends WP_Widget {
         </div>
 
         <div class="eighttracks_collection_options" style="display: none;">
-            Smart ID (replace with collection URL):<br />
+            Collection URL:<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_smartid'); ?>" name="<?php echo $this->get_field_name('eighttracks_smartid'); ?>" value="<?php echo esc_attr($smart_id); ?>" /><br />
         </div>
         
@@ -163,9 +163,9 @@ class eighttracks_widget extends WP_Widget {
         <div class="eighttracks_tags_options" style="display: none;">
             Tag(s):<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
-			Use most recent post's categories as tags?<br />
+			Use most recent post's categories as tags?&nbsp;
 			<input id="<?php echo $this->get_field_id('eighttracks_usecat'); ?>" name="<?php echo $this->get_field_name('eighttracks_usecat'); ?>" type="checkbox" value="1" <?php checked( '1', $usecat ); ?> /><br />
-			Use most recent post's tags?<br />
+			Use most recent post's tags?&nbsp;
 			<input id="<?php echo $this->get_field_id('eighttracks_usetags'); ?>" name="<?php echo $this->get_field_name('eighttracks_usetags'); ?>" type="checkbox" value="1" <?php checked( '1', $usetags ); ?> /><br />
         </div>
 
@@ -175,7 +175,8 @@ class eighttracks_widget extends WP_Widget {
         </div>
 
         <div class="eighttracks_sort_options" style="display: none;">
-            Sort: <span class="color: #ccc;">optional: hot, new, popular
+            <br />
+            Sort: <span class="color: #ccc;">(optional): hot, new, popular
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_sort'); ?>" name="<?php echo $this->get_field_name('eighttracks_sort'); ?>" value="<?php echo esc_attr($sort); ?>" />
         </div>
         </p>
