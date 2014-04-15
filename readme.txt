@@ -28,7 +28,8 @@ Some useful syntax examples:
 
 Parameters:
 	
-You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'similar', 'sort', 'smart_id', 'usecat', and 'tags' parameters to the shortcode.
+You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'similar', 'sort', 'smart_id', 'usecat', 'usetags', and 'tags' parameters to the shortcode.
+(There's a help system in the visual editor button.  I'd recommend looking there for useful examples.)
 
 This would look like: 
 
