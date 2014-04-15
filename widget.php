@@ -23,9 +23,6 @@ class eighttracks_widget extends WP_Widget {
     $smart_id   = trim($instance['eighttracks_smartid']);
     $is_widget  = trim($instance['eighttracks_is_widget']);
     $similar    = trim($instance['eighttracks_similar']);
-	$usecat		= trim($instance['eighttracks_usecat']);
-	$usetags	= trim($instance['eighttracks_usetags']);
-    $meta_url   = trim($instance['eighttracks_metaurl']);
 
 // Initializing the output code.
     echo ($args['before_widget']);
@@ -35,16 +32,7 @@ class eighttracks_widget extends WP_Widget {
     echo '<div class="textwidget">';
   
   //Outputting the mixes.
-	if (($usecat=='1') && ($usetags != '1')) {
-		echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" usecat="yes"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
-}
-	else if (($usetags=='1') && ($usecat != '1')) {
-		echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" usetags="yes"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
-}
-	else if (($usecat=='1') && ($usetags=='1')) {
-		echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" usecat="yes"  usetags="yes" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
-}
-    else if ($url != '') {
+	if ($url != '') {
 		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ($similar != '') {
@@ -83,8 +71,6 @@ class eighttracks_widget extends WP_Widget {
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
 	$instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
     $instance['eighttracks_similar']        = strip_tags($new_instance['eighttracks_similar']);
-	$instance['eighttracks_usecat']			= strip_tags($new_instance['eighttracks_usecat']);
-	$instance['eighttracks_usetags']		= strip_tags($new_instance['eighttracks_usetags']);
     
 	return $instance;
   }
@@ -107,8 +93,6 @@ class eighttracks_widget extends WP_Widget {
     $smart_id   = strip_tags($instance['eighttracks_smartid']);
     $is_widget  = strip_tags($instance['eighttracks_is_widget']);
     $similar    = strip_tags($instance['eighttracks_similar']);
-	$usecat		= strip_tags($instance['eighttracks_usecat']);
-	$usetags	= strip_tags($instance['eighttracks_usetags']);
     
     ?>
 
@@ -164,10 +148,6 @@ class eighttracks_widget extends WP_Widget {
         <div class="eighttracks_tags_options" style="display: none;">
             Tag(s):<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
-			Use most recent post's categories as tags?&nbsp;
-			<input id="<?php echo $this->get_field_id('eighttracks_usecat'); ?>" name="<?php echo $this->get_field_name('eighttracks_usecat'); ?>" type="checkbox" value="1" <?php checked( '1', $usecat ); ?> /><br />
-			Use most recent post's tags?&nbsp;
-			<input id="<?php echo $this->get_field_id('eighttracks_usetags'); ?>" name="<?php echo $this->get_field_name('eighttracks_usetags'); ?>" type="checkbox" value="1" <?php checked( '1', $usetags ); ?> /><br />
         </div>
 
         <div class="eighttracks_artist_options" style="display: none;">
