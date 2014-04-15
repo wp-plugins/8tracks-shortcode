@@ -25,6 +25,7 @@ class eighttracks_widget extends WP_Widget {
     $similar    = trim($instance['eighttracks_similar']);
 	$usecat		= trim($instance['eighttracks_usecat']);
 	$usetags	= trim($instance['eighttracks_usetags']);
+    $meta_url   = trim($instance['eighttracks_metaurl']);
 
 // Initializing the output code.
     echo ($args['before_widget']);

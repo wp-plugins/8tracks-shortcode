@@ -1,7 +1,7 @@
 === Plugin Name ===
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
-Requires at least: 3.0
+Requires at least: 3.7
 Tested up to: 3.9
 Stable tag: 1.0
 License: GPLv2 or later 

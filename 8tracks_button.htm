@@ -30,6 +30,7 @@ var eighttracks = {
 		var usecat  = $('#eighttracksUsecat').val();
 		var usetags	= $('#eighttracksUsetags').val();
 		var similar = $('#eighttracksSimilar').val();
+		var metaurl = $('#eighttracksSpecificMeta').val();
 		var output  = '[8tracks ';
 
 		if(url)     output += 'url="'+url+'" ';
@@ -46,6 +47,7 @@ var eighttracks = {
 		if(usecat)  output += 'usecat="'+usecat+'" ';
 		if(usetags)	output += 'usetags="'+usetags+'" ';
 		if(similar)	output += 'similar="'+similar+'" ';
+		if(metaurl) output += 'meta_url="'+metaurl+'" ';
 		
 		output += ']';
 		
@@ -178,6 +180,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<label><input type="radio" name="embed_type" value="artist" />Artist search</label><br />
 				<label><input type="radio" name="embed_type" value="tags" />Tag Search</label><br />
 				<label><input type="radio" name="embed_type" value="similar" />Similar Mixes</label><br />
+				<label><input type="radio" name="embed_type" value="meta" />WP Meta</label><br />
 			</td>
 			<td width="60%" id="embed_options" valign="top">
 				<div id="mix_options">
@@ -207,9 +210,14 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<div id="tags_options" style="display: none;">
 					<label for="eighttracksTags">Tags:</label><br />
 					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" />
+				</div>
+
+				<div id="meta_options" style="display: none;">
+					<label for="eighttracksSpecificMeta">You can use a specific post by putting its URL here. (Default is current first post)</label>
+					<input id="eighttracksSpecificMeta" type="text" value="" placeholder="Copy &amp; paste a URL from this blog." />
 					<ul>
 						<li>
-							<label for="eighttracksUsetags">Search 8tracks with metadata from your post:</label>
+							<label for="eighttracksUsetags">Select the metadata you want to use:</label>
 							<select name="eighttrracksUsetags" id="eighttracksUsetags" style="width: 80%;">
 								<option value="">Use my post's tags? (No is default)</option>
 								<option value="yes">Yes</option>

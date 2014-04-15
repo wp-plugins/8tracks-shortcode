@@ -39,6 +39,7 @@ flash:       Can be set to "yes" to use the Flash player for your mixes, or left
 tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
 usecat:      Set to yes to use the WP category name(s) as your search tags on 8tracks.
 usetags:	 Set to yes to use the WP Post's tags as your search tags on 8tracks
+meta_url:    Use a specific post for usecat and usetags.
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks - name or URL is fine.
 similar:     Use like URL.  However, instead of a single mix, you get a collection of mixes similar to the one you supplied.
@@ -100,6 +101,7 @@ function eighttracks_shortcode( $atts, $content) {
         'usecat' => 'no',
         'usetags' => 'no',
         'similar' => NULL,
+        'meta_url' => NULL,
         ), $atts, '8tracks' ) ); 
 
 // <------------- This is the beginning of the variable creation and input sanitization section. -------------->
@@ -183,6 +185,14 @@ if ( !in_array( $playops, $allowed_playops ) )
     if (isset($url)) {
         $url_bits = parse_url( $url );
         if ( '8tracks.com' != $url_bits['host'] )
+            return '';
+}
+
+// Make sure our meta_url is from the same domain as the plugin host. (Won't work else.)
+    if (isset($meta_url)) {
+        $url_bits = parse_url( $meta_url );
+        $domain_name = $_SERVER['SERVER_NAME'];
+        if ( $domain_name != $url_bits['host'] )
             return '';
 }
 
@@ -285,9 +295,15 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 			$last = wp_get_recent_posts( $recent_posts_arguments );
 			$last_id = $last['0']['ID'];
 			$categories = get_the_category($last_id);
-	}	else if ($is_widget=="no") {
+	}	
+        else if (($is_widget=="no") && (!is_null($meta_url))) {
+            $post_id = url_to_postid( $meta_url );
+            $categories = get_the_category( $post_id );
+    }
+        else if (($is_widget=="no") && (is_null($meta_url))) {
 			$categories = get_the_category();
-	}
+    }
+
 		$separator = ',';
 		$valid_cats = array();	
 		if($categories) {
@@ -342,9 +358,15 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $last = wp_get_recent_posts( $recent_posts_arguments );			
             $last_id = $last['0']['ID'];
 			$wp_tags = get_the_tags($last_id);
-	}	else if ($is_widget=="no") {
-			$wp_tags = get_the_tags();
+	}	
+        else if (($is_widget=="no") && (!is_null($meta_url))) {
+            $post_id = url_to_postid( $meta_url );
+            $wp_tags = get_the_tags( $post_id );
 	}
+        else if (($is_widget=="no") && (is_null($meta_url))) {
+            $wp_tags = get_the_tags();
+    }
+
 		$separator = ',';
 		$valid_tags = array();
 		if($wp_tags) {
