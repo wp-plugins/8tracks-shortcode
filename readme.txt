@@ -102,7 +102,7 @@ This release fixes an annoying bug with tag, dj, and artist searches involving m
 
 == Changelog ==
 
-= 1.1 =
+= 1.11 =
 Now using API v3. Fixed a bug that was breaking certain types of tag, dj, and artist searches.  Have also added options to use your WP categories and meta tags in your tag search, as well as an option to generate a collection of mixes similar to one that you like.  (This last is built on Echo Nest.)  Finally, there's a help system in the visual editor button.  Enjoy!
 
 = 1.0 =
