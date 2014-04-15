@@ -281,7 +281,8 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 	if ($usecat=="yes") {
 		if ($is_widget=="yes") {
 			//Widget will be created based on the categories of the most recent post.
-			$last = wp_get_recent_posts( '1');
+            $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
+			$last = wp_get_recent_posts( $recent_posts_arguments );
 			$last_id = $last['0']['ID'];
 			$categories = get_the_category($last_id);
 	}	else if ($is_widget=="no") {
@@ -337,8 +338,9 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 	if ($usetags=="yes") {
 		if ($is_widget=="yes") {
 			//Widget will be created based on tags of the most recent post.
-			$last = wp_get_recent_posts( '1');
-			$last_id = $last['0']['ID'];
+            $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
+            $last = wp_get_recent_posts( $recent_posts_arguments );			
+            $last_id = $last['0']['ID'];
 			$wp_tags = get_the_tags($last_id);
 	}	else if ($is_widget=="no") {
 			$wp_tags = get_the_tags();
