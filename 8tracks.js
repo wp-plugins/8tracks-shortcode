@@ -4,7 +4,7 @@
 			ed.addCommand('eighttracks_button', function () {
 				ed.windowManager.open({
 					file : url + '/8tracks_button.htm',
-					width : 580 + parseInt(ed.getLang('eighttracks_button.delta_width', 0)),
+					width : 680 + parseInt(ed.getLang('eighttracks_button.delta_width', 0)),
 					height : 480 + parseInt(ed.getLang('eighttracks_button.delta_height', 0)),
 					inline : 1
 				}, {

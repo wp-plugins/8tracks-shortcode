@@ -118,6 +118,12 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 			height: 0;
 		}
 
+		ul{
+    		list-style-type: none;
+    		padding-left: 0;
+    		padding-bottom: 5px;
+		}
+
 		input[type="text"], input[type="number"] {
 			background: #fff;
 			padding: 5px;
@@ -200,16 +206,22 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 				<div id="tags_options" style="display: none;">
 					<label for="eighttracksTags">Tags:</label><br />
-					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" /><br />
-					<label for="eighttracksUsetags">Search 8tracks with metadata from your WordPress post:</label>
-					<select name="eighttrracksUsetags" id="eighttracksUsetags" style="width: 80%;">
-						<option value="">Use my post's tags? (No is default)</option>
-						<option value="yes">Yes</option>
-					</select><br />
-					<select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 80%;">
-						<option value="">Use my post's categories? (No is default)</option>
-						<option value="yes">Yes</option>
-					</select><br />
+					<input id="eighttracksTags" type="text" value="" placeholder="hip hop, rock" />
+					<ul>
+						<li>
+							<label for="eighttracksUsetags">Search 8tracks with metadata from your post:</label>
+							<select name="eighttrracksUsetags" id="eighttracksUsetags" style="width: 80%;">
+								<option value="">Use my post's tags? (No is default)</option>
+								<option value="yes">Yes</option>
+							</select>
+						</li>
+						<li>
+							<select name="eighttracksUsecat" id="eighttracksUsecat" style="width: 80%;">
+								<option value="">Use my post's categories? (No is default)</option>
+								<option value="yes">Yes</option>
+							</select>
+						</li>
+					</ul>
 				</div>
 
 				<div id="artist_options" style="display: none;">
@@ -224,7 +236,6 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				</div>
 
 				<div id="sort_options" style="display: none;">
-					<br />
 					<label for="eighttracksSort">Sort by:</label>
 					<select name="eighttracksSort" id="eighttracksSort">
                         <option value="" />
