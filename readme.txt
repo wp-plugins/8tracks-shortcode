@@ -97,7 +97,7 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Upgrade Notice ==
-This release fixes an annoying bug with tag and artist searches involving multi-part names.  Also, features added to allow use of WP categories in tag searches, and collections of similar mixes (powered by Echo Nest).
+This release fixes an annoying bug with tag, dj, and artist searches involving multi-part names.  Also, features added to allow use of WP categories in tag searches, and collections of similar mixes (powered by Echo Nest).
 
 == Changelog ==
 
