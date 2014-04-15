@@ -163,9 +163,9 @@ class eighttracks_widget extends WP_Widget {
         <div class="eighttracks_tags_options" style="display: none;">
             Tag(s):<br />
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_tags'); ?>" name="<?php echo $this->get_field_name('eighttracks_tags'); ?>" value="<?php echo esc_attr($tags); ?>" />
-			Use your post's categories as tags?<br />
+			Use most recent post's categories as tags?<br />
 			<input id="<?php echo $this->get_field_id('eighttracks_usecat'); ?>" name="<?php echo $this->get_field_name('eighttracks_usecat'); ?>" type="checkbox" value="1" <?php checked( '1', $usecat ); ?> /><br />
-			Use your post's tags?<br />
+			Use most recent post's tags?<br />
 			<input id="<?php echo $this->get_field_id('eighttracks_usetags'); ?>" name="<?php echo $this->get_field_name('eighttracks_usetags'); ?>" type="checkbox" value="1" <?php checked( '1', $usetags ); ?> /><br />
         </div>
 

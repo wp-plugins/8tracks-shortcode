@@ -40,7 +40,7 @@ tags:        Use this if you want to explore by genre. Simply insert a comma-sep
 usecat:      Set to yes to use the WP category name(s) as your search tags on 8tracks.
 usetags:	 Set to yes to use the WP Post's tags as your search tags on 8tracks
 artist:      Use this if you want to search for mixes with a given artist.
-dj:          Use this to specify a particular user/dj on 8tracks.
+dj:          Use this to specify a particular user/dj on 8tracks - name or URL is fine.
 similar:     Use like URL.  However, instead of a single mix, you get a collection of mixes similar to the one you supplied.
 smart_id:    This allows you to copy a smart id from the 8tracks site in order to generate a collection.
 sort:        Can be combined with tags or artist, or used on its own. Options are "recent", "hot", or "popular".
@@ -48,7 +48,7 @@ sort:        Can be combined with tags or artist, or used on its own. Options ar
 
 //Some useful global values for retrieving mixes.
 define( 'api_key', '?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
-define( 'api_version', '&api_version=2' );
+define( 'api_version', '&api_version=3' );
 
 //Begin Custom Editor Button
 function tcustom_addbuttons() {
@@ -94,7 +94,7 @@ function eighttracks_shortcode( $atts, $content) {
         'dj' => NULL,
         'collection' => '',
         'smart_id' => NULL,
-        'sort' => '',
+        'sort' => NULL,
         'lists' => '',
         'is_widget' => '',
         'usecat' => 'no',
@@ -255,8 +255,8 @@ $dj_needle = "http://8tracks.com/";
     if ((strpos($dj, $dj_needle)) !== false) {
         $dj = str_replace("http://8tracks.com/", "", $dj);
         $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
-        $dj = str_replace(".", "", $dj); //DJ URLs seem to ignore the period character.
-		$dj = str_replace($badchars, $goodchars, $dj);
+        $dj = str_replace(".", "-", $dj); //DJ URLs seem to ignore the period character.
+        $dj = str_replace("@", "", $dj); //DJ URLs seem to drop the @ symbol.
 }
 
 //  <---------- This is the end of the data formatting section. --------->
@@ -418,13 +418,19 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 //Here, we create the smart id from tags or artist:
-    if (isset($tags)) 
+    if ((isset($tags)) && (!is_null($sort))) { 
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
-    if (isset($artist))
+}   else if ((isset($tags)) && (!is_null($sort))) {
+        $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '';    
+}   if ((isset($artist)) && (!is_null($sort))) {
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '' . ($sort) . '';
-    if (isset($dj))
+}   else if ((isset($artist)) && (is_null($sort))) {
+        $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '';
+}   if (isset($dj)) {
         $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
-        $dj = str_replace(".", "", $dj); //DJ URLs seem to ignore the period character.
+        $dj = str_replace(".", "-", $dj); //DJ URLs seem to ignore the period character.
+        $dj = str_replace("@", "", $dj); //DJ URLs seem to drop the @ symbol.
+}
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
     if ((!isset($tags)) && (!isset($artist)) && (isset($smart_id))) {
@@ -459,7 +465,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Collection processing:
     if (!empty($artist)) {
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($smart_id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   else if (!empty($tags)) {
