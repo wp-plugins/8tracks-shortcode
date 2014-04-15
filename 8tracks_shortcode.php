@@ -289,7 +289,14 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we convert the WordPress category values to tags parameters:
 	if ($usecat=="yes") {
-		if ($is_widget=="yes") {
+        if ($recentcat=="yes") {
+            $categories = get_the_category();
+    }
+        else if (($is_widget=="yes") && (!is_null($meta_url))) {
+            $post_id = url_to_postid( $meta_url );
+            $categories = get_the_category( $post_id );
+    }
+		else if (($is_widget=="yes") && (is_null($meta_url))) {
 			//Widget will be created based on the categories of the most recent post.
             $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
 			$last = wp_get_recent_posts( $recent_posts_arguments );
@@ -352,7 +359,14 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we convert the WordPress post tags values to tags parameters:
 	if ($usetags=="yes") {
-		if ($is_widget=="yes") {
+        if ($recenttags=="yes") {
+            $categories = get_the_tags();
+    }
+        else if (($is_widget=="yes") && (!is_null($meta_url))) {
+            $post_id = url_to_postid( $meta_url );
+            $wp_tags = get_the_tags( $post_id );
+    }
+		else if (($is_widget=="yes") && (is_null($meta_url))) {
 			//Widget will be created based on tags of the most recent post.
             $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
             $last = wp_get_recent_posts( $recent_posts_arguments );			
@@ -442,10 +456,10 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 //Here, we create the smart id from tags or artist:
-    if ((isset($tags)) && (!is_null($sort))) {   //Tag searches with a specified sort.
+    if ((!is_null($tags)) && (!is_null($sort))) {   //Tag searches with a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
 }   
-    else if ((isset($tags)) && (!is_null($sort))) {   //Tag searches without a specified sort.
+    else if ((!is_null($tags)) && (!is_null($sort))) {   //Tag searches without a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '';    
 }   
     if ((isset($artist)) && (!is_null($sort))) {   //Artist searches with a specified sort.
@@ -494,7 +508,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
-    else if (!empty($tags)) {
+    else if (!is_null($tags)) {
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
@@ -565,6 +579,10 @@ $output = apply_filters('eighttracks_shortcode', $output, $atts);
 //Include Widget Code
 
 include_once dirname( __FILE__ ) . '/widget.php';
+
+//Include Meta Widget Code
+
+include_once dirname( __FILE__ ) . '/meta-widget.php';
 
 //Add Admin Menu Pointers to help new users.
 

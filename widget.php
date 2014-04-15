@@ -1,11 +1,11 @@
 <?php
 
-class eighttracks_widget extends WP_Widget {
+class eighttracks_basic_widget extends WP_Widget {
 
   function __construct() {
-		$widget_ops = array( 'classname' => '8tracks', 'description' => __('Add an 8tracks mix or collection to your sidebar.') ); 
-		$control_ops = array('id_base' => 'eighttracks-widget');
-		parent::__construct('eighttracks-widget', __('8tracks'), $widget_ops, $control_ops);
+        $widget_ops = array( 'classname' => '8tracks', 'description' => __('Add an 8tracks mix or collection to your sidebar.') ); 
+        $control_ops = array('id_base' => 'eighttracks-basicwidget');
+        parent::__construct('eighttracks-basicwidget', __('8tracks'), $widget_ops, $control_ops);
   }
 
   function widget($args, $instance) {
@@ -32,17 +32,17 @@ class eighttracks_widget extends WP_Widget {
     echo '<div class="textwidget">';
   
   //Outputting the mixes.
-	if ($url != '') {
-		echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
+    if ($url != '') {
+        echo do_shortcode('[8tracks url="'.($url).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ($similar != '') {
         echo do_shortcode('[8tracks similar="'.($similar).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($dj))) {
-    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($tags))) {
-    	echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }   
     else if ((empty($url)) && (!empty($artist))) {
         echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" artist="'.($artist).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
@@ -69,10 +69,10 @@ class eighttracks_widget extends WP_Widget {
     $instance['eighttracks_collection']     = strip_tags($new_instance['eighttracks_collection']);
     $instance['eighttracks_sort']           = strip_tags($new_instance['eighttracks_sort']);
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
-	$instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
+    $instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
     $instance['eighttracks_similar']        = strip_tags($new_instance['eighttracks_similar']);
     
-	return $instance;
+    return $instance;
   }
 
   function form($instance){
@@ -169,10 +169,10 @@ class eighttracks_widget extends WP_Widget {
             <input id="<?php echo $this->get_field_id('eighttracks_width'); ?>" name="<?php echo $this->get_field_name('eighttracks_width'); ?>" type="text" value="<?php echo $width; ?>" class="eighttracks_width" placeholder="100%"/>
         </p>
 
-    	<p>
+        <p>
             Height:<br />
-    	   <input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" class="eighttracks_height" placeholder="300"/>
-    	</p>
+           <input id="<?php echo $this->get_field_id('eighttracks_height'); ?>" name="<?php echo $this->get_field_name('eighttracks_height'); ?>" type="text" value="<?php echo $height; ?>" class="eighttracks_height" placeholder="300"/>
+        </p>
 
         <input type="hidden" name="submitted" value="1" />
     </div>
@@ -189,6 +189,6 @@ class eighttracks_widget extends WP_Widget {
 add_action('widgets_init', 'eighttracks_widgets_init');
 
 function eighttracks_widgets_init() {
-  register_widget('eighttracks_widget');
+  register_widget('eighttracks_basic_widget');
 }
 ?>

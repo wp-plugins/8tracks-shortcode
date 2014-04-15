@@ -14,7 +14,7 @@ jQuery(document).ready(function(){
 
         jQuery(container_id + ' .eighttracks_' + embed_type + '_options').show(); //show relevant options
 
-        if (embed_type == 'artist' || embed_type == 'tags') { //show shared options if applicable
+        if (embed_type == 'artist' || embed_type == 'tags' || embed_type == 'recent' ) { //show shared options if applicable
             jQuery(container_id + ' .eighttracks_sort_options').show();
         }
 
