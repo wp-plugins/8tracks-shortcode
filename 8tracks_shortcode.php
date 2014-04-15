@@ -254,9 +254,8 @@ $dj_needle = "http://8tracks.com/";
 
     if ((strpos($dj, $dj_needle)) !== false) {
         $dj = str_replace("http://8tracks.com/", "", $dj);
-        $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
-        $dj = str_replace(".", "-", $dj); //DJ URLs seem to ignore the period character.
-        $dj = str_replace("@", "", $dj); //DJ URLs seem to drop the @ symbol.
+        $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-'.
+        $dj = preg_replace("/[^(a-zA-Z0-9\s)|(\-)|(\_)]/i", '-', $dj); //Replace all non-aplhanumeric characters with a "-".
 }
 
 //  <---------- This is the end of the data formatting section. --------->
@@ -427,9 +426,8 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }   else if ((isset($artist)) && (is_null($sort))) {
         $smart_id = 'artist:' . str_replace($badchars, $goodchars, $artist) . '';
 }   if (isset($dj)) {
-        $dj = str_replace(" ", "-", $dj);  //DJ URLs seem to convert spaces to dashes instead of underscores.
-        $dj = str_replace(".", "-", $dj); //DJ URLs seem to ignore the period character.
-        $dj = str_replace("@", "", $dj); //DJ URLs seem to drop the @ symbol.
+        $dj = preg_replace('/&amp;/i', '-', $dj);  //Replace the string '&amp;' with '-'.
+        $dj = preg_replace("/[^(a-zA-Z0-9\s)|(\-)|(\_)]/i", '-', $dj); //Replace all non-aplhanumeric characters with a "-".
 }
 
 //We also need to make sure that smart IDs we copy from 8tracks have their characters escaped.
