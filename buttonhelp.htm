@@ -1,8 +1,8 @@
 <html>
 <head>
 <title>8tracks Visual Editor Help</title>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="https://code.jquery.com/jquery-1.9.1.js"></script>
 <style>
 	body{
 		padding-top: 10px;
@@ -18,7 +18,7 @@
 		color:#9999CC;
 	}
 </style>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
 	$(function() {
 		$( "#tabs" ).tabs();
@@ -49,6 +49,7 @@
 <li><a href="#tabs-4">Artist</a></li>
 <li><a href="#tabs-5">Tags</a></li>
 <li><a href="#tabs-6">Similar</a></li>
+<li><a href="#tabs-7">WP Meta</a></li>
 </ul>
 <div id="tabs-1">
 <p>This option is for embedding single mixes from 8tracks.com (<a href="http://8tracks.com/tiagonoronha/rainy-days" target="_blank">Example</a>). You simply find a mix you like, and then drop into the box labeled "Mix URL."</p>
@@ -69,12 +70,14 @@
 </div>
 <div id="tabs-5">
 <p>The tags option lets you search 8tracks by genre, mood, or whatever other meta category through the use of tags or keywords. Simply enter a comma-separated list of things you'd like to find. This search returns a collection of mixes marked with those tags (<a href="http://8tracks.com/explore/hip_hop" target="_blank">Example</a>).</p>
-<p>You are also given the option to use your WordPress post's categories or tags.  When you say yes, the plugin grabs these and converts them to tags (as if you'd entered them in the box above) and then uses them to search 8tracks.com.  If one of your categories or tags returns zero results, it is omitted from the search and the rest are used (you'll see a comment in your html source about this when it happens).</p>
 <p>Finally, the "sort by" dropdown lets you choose three types of collections: Trending (mixes popular right now), New (mixes that are recently made), and Popular (mixes that have been liked by many users over time.</p>
 </div>
 <div id="tabs-6">
 <p>The similar mixes option lets you take the URL of a mix you like (<a href="http://8tracks.com/songsthatsaved/looting-dad-s-lps" target="_blank">Example</a>), and get back a collection of mixes that have been judged to be similar by data from <a href="http://the.echonest.com/" target="_blank">Echo Nest</a> and <a href="http://last.fm" target="_blank">Last.fm</a> (<a href="http://8tracks.com/mix_sets/similar:371039/player" target="_blank">Example Output</a>).</p>
 </div>
+<div id="tabs-7">
+<p>This option lets you conduct tag searches using the categories or tags (or both!) from one of your WordPress posts.  You can specify a post by inserting its URL, or you can allow the plugin to use the most recent post.  (Note: This will only work for posts on your blog.  Other sites' posts won't work.)</p>
+<p>If one of your categories or tags returns zero results, it is omitted from the search and the rest are used (you'll see a comment in your html source about this when it happens).</p>
 </div>
 <div id="opts">
 <ul>
