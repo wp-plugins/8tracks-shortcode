@@ -98,7 +98,7 @@ fallback to Flash is the preferred option.  Additionally, Flash is conspicuously
 Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 
 == Upgrade Notice ==
-This release fixes an annoying bug with tag, dj, and artist searches involving multi-part names.  Also, features added to allow use of WP categories in tag searches, and collections of similar mixes (powered by Echo Nest).
+Fixed some very annoying search bugs, and added support for new types of searches.  Also, a rewrite of the widget code might necessitate reconfiguring your 8tracks widgets.  This is a one time thing (sorry!).  Various other optimizations and fixes.  Enjoy!
 
 == Changelog ==
 
