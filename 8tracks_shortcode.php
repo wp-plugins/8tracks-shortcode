@@ -509,7 +509,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
     else if (!is_null($tags)) {
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($smart_id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
