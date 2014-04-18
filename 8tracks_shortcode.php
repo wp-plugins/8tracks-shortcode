@@ -431,7 +431,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we deal with both usecat and usetags being turned on.
 	if (($usecat=="yes") && ($usetags=="yes")) {
-		$valid_combined_meta = array_merge($tagsbuffer, $catsbuffer); //We combine the arrays containing the valid categories and tags.
+		$valid_combined_meta = array_unique(array_merge($tagsbuffer, $catsbuffer)); //We combine the arrays containing the valid categories and tags.
 		$tags = implode(',', $valid_combined_meta); //We set tags search equal to all the valid categories and post tags.
 	}
 
