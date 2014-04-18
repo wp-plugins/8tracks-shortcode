@@ -293,7 +293,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $categories = get_the_category();
     }
         else if (($is_widget=="yes") && (!is_null($meta_url))) {
-            $post_id = url_to_postid( $meta_url );
+            $post_id = url_to_postid(esc_url( $meta_url ));
             $categories = get_the_category( $post_id );
     }
         else if (($is_widget=="yes") && (is_null($meta_url))) {
@@ -363,7 +363,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $categories = get_the_tags();
     }
         else if (($is_widget=="yes") && (!is_null($meta_url))) {
-            $post_id = url_to_postid( $meta_url );
+            $post_id = url_to_postid(esc_url( $meta_url ));
             $wp_tags = get_the_tags( $post_id );
     }
         else if (($is_widget=="yes") && (is_null($meta_url))) {
