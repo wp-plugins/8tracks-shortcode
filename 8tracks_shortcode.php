@@ -38,7 +38,7 @@ playops:     Can be set to "shuffle", "autoplay", or "shuffle+autoplay".
 flash:       Can be set to "yes" to use the Flash player for your mixes, or left empty to use the default HTML5 player.
 tags:        Use this if you want to explore by genre. Simply insert a comma-separated list of tags, and you'll get a random mix.
 usecat:      Set to yes to use the WP category name(s) as your search tags on 8tracks.
-usetags:	 Set to yes to use the WP Post's tags as your search tags on 8tracks
+usetags:     Set to yes to use the WP Post's tags as your search tags on 8tracks
 meta_url:    Use a specific post for usecat and usetags.
 artist:      Use this if you want to search for mixes with a given artist.
 dj:          Use this to specify a particular user/dj on 8tracks - name or URL is fine.
@@ -171,7 +171,7 @@ if ( !in_array( $playops, $allowed_playops ) )
     if ($playops=="shuffle" || $playops=="autoplay") {
         $options = '&options=' . ($playops) . '';
         $playops = '/' . ($playops) . '';
-} 	
+}   
     else if ($playops=="shuffle+autoplay") {
         $options = "&options=shuffle,autoplay";
         $playops = '/' . ($playops) . '';
@@ -288,7 +288,7 @@ $valid_tag_meta = (get_site_transient( '8tracks_meta_tag_search_results'));
 $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 
 //Here, we convert the WordPress category values to tags parameters:
-	if ($usecat=="yes") {
+    if ($usecat=="yes") {
         if ($recentcat=="yes") {
             $categories = get_the_category();
     }
@@ -302,7 +302,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $last = wp_get_recent_posts( $recent_posts_arguments );
             $last_id = $last['0']['ID'];
             $categories = get_the_category($last_id);
-    }	
+    }   
         else if (($is_widget=="no") && (!is_null($meta_url))) {
             $post_id = url_to_postid( $meta_url );
             $categories = get_the_category( $post_id );
@@ -311,54 +311,54 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $categories = get_the_category();
     }
 
-		$separator = ',';
-		$valid_cats = array();	
-		if($categories) {
-			foreach($categories as $category) {
-				//Let's see if we've already looked up this category before.
-				
-				if (in_array(strtolower($category->cat_name), $valid_cat_meta)) {
-					$valid_cats[] = (strtolower($category->cat_name));
-					continue;		
-				}
-				if (in_array(strtolower($category->cat_name), $bad_cat_meta)) {
-					print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com.--> ';
-					continue;
-				}
-				
-				//Test to see whether the categories even exist on 8tracks as tags.
-				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
-				$json_data = json_decode($json_test['body'], true);
-				
-				//If they exist, we add the categories to our valid_cats variable and to valid_meta (for saving for later).
-				if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
-					$valid_cat_meta[] = (strtolower($category->cat_name));
-					$valid_cats[] = (strtolower($category->cat_name));
-				} 
-				
-				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
-				else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
-					$bad_cat_meta[] = (strtolower($category->cat_name));
-				}
-			}
-		}
+        $separator = ',';
+        $valid_cats = array();  
+        if($categories) {
+            foreach($categories as $category) {
+                //Let's see if we've already looked up this category before.
+                
+                if (in_array(strtolower($category->cat_name), $valid_cat_meta)) {
+                    $valid_cats[] = (strtolower($category->cat_name));
+                    continue;       
+                }
+                if (in_array(strtolower($category->cat_name), $bad_cat_meta)) {
+                    print '<!--8tracks Plugin Says: Sorry, but "' . ($category->cat_name) . '" occurs in zero mixes on 8tracks.com.--> ';
+                    continue;
+                }
+                
+                //Test to see whether the categories even exist on 8tracks as tags.
+                $json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($category->cat_name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
+                $json_data = json_decode($json_test['body'], true);
+                
+                //If they exist, we add the categories to our valid_cats variable and to valid_meta (for saving for later).
+                if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
+                    $valid_cat_meta[] = (strtolower($category->cat_name));
+                    $valid_cats[] = (strtolower($category->cat_name));
+                } 
+                
+                //If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
+                else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
+                    $bad_cat_meta[] = (strtolower($category->cat_name));
+                }
+            }
+        }
         //We need to deal with a case where tags and usecat are both set.
         if (!is_null($tags)) {
             $buffer = explode(',', $tags); //Create an array from the user-supplied string $tags.
             $catsbuffer = array_unique(array_merge($valid_cats, $buffer)); //Merge that array with $valid_tags
     }   else {
             $catsbuffer = $valid_cats;
-	}	
-		//We now pass valid_cats to the tags variable, and process as if they were tags all along.
-		$tags = implode(',', $catsbuffer); //Convert the merged array back into a string.
-		
-		//We'll store the search data for one day.
-		set_site_transient( '8tracks_meta_cat_search_results', (array_unique($valid_cat_meta)), 60*60*24 );
-		set_site_transient( '8tracks_meta_empty_cat_search_results', (array_unique($bad_cat_meta)), 60*60*24 );
+    }   
+        //We now pass valid_cats to the tags variable, and process as if they were tags all along.
+        $tags = implode(',', $catsbuffer); //Convert the merged array back into a string.
+        
+        //We'll store the search data for one day.
+        set_site_transient( '8tracks_meta_cat_search_results', (array_unique($valid_cat_meta)), 60*60*24 );
+        set_site_transient( '8tracks_meta_empty_cat_search_results', (array_unique($bad_cat_meta)), 60*60*24 );
 }
 
 //Here, we convert the WordPress post tags values to tags parameters:
-	if ($usetags=="yes") {
+    if ($usetags=="yes") {
         if ($recenttags=="yes") {
             $categories = get_the_tags();
     }
@@ -369,10 +369,10 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         else if (($is_widget=="yes") && (is_null($meta_url))) {
             //Widget will be created based on tags of the most recent post.
             $recent_posts_arguments = array('numberposts' => 1, 'post_status' => 'publish');
-            $last = wp_get_recent_posts( $recent_posts_arguments );			
+            $last = wp_get_recent_posts( $recent_posts_arguments );         
             $last_id = $last['0']['ID'];
             $wp_tags = get_the_tags($last_id);
-    }	
+    }   
         else if (($is_widget=="no") && (!is_null($meta_url))) {
             $post_id = url_to_postid( $meta_url );
             $wp_tags = get_the_tags( $post_id );
@@ -381,39 +381,39 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $wp_tags = get_the_tags();
     }
 
-		$separator = ',';
-		$valid_tags = array();
-		if($wp_tags) {
-			foreach($wp_tags as $wp_tag) {
-				
-				//Let's see if we've already looked up this tag before.
-				if (in_array(strtolower($wp_tag->name), $valid_tag_meta)) {
-					$valid_tags[] = (strtolower($wp_tag->name));
-					continue;		
-				}
-				
-				if (in_array(strtolower($wp_tag->name), $bad_tag_meta)) {
-					print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com.--> ';
-					continue;
-				}				
-				
-				//Test to see whether the tags even exist on 8tracks as tags.
-				$json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
-				$json_data = json_decode($json_test['body'], true);
-				
-				//If they exist, we add the categories to our valid_tags variable and to valid_meta (for saving for later)..
-				if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
-					$valid_tag_meta[] = (strtolower($wp_tag->name));
-					$valid_tags[] = (strtolower($wp_tag->name));
-				} 
-				
-				//If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
-				else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
-					$bad_tag_meta[] = (strtolower($wp_tag->name));
-				}
-			}
-		}
-		//We need to deal with a case where tags and usetags are both set.
+        $separator = ',';
+        $valid_tags = array();
+        if($wp_tags) {
+            foreach($wp_tags as $wp_tag) {
+                
+                //Let's see if we've already looked up this tag before.
+                if (in_array(strtolower($wp_tag->name), $valid_tag_meta)) {
+                    $valid_tags[] = (strtolower($wp_tag->name));
+                    continue;       
+                }
+                
+                if (in_array(strtolower($wp_tag->name), $bad_tag_meta)) {
+                    print '<!--8tracks Plugin Says: Sorry, but "' . ($wp_tag->name) . '" occurs in zero mixes on 8tracks.com.--> ';
+                    continue;
+                }               
+                
+                //Test to see whether the tags even exist on 8tracks as tags.
+                $json_test = wp_remote_get ( esc_url('http://8tracks.com/explore/' . (strtolower($wp_tag->name)) . '.json' .'' . (api_key) . '' . (api_version) . ''));
+                $json_data = json_decode($json_test['body'], true);
+                
+                //If they exist, we add the categories to our valid_tags variable and to valid_meta (for saving for later)..
+                if ($json_data["total_entries"]) { //Total entries only exists in returned JSON that has status of 200 and a set of mixes to draw from.
+                    $valid_tag_meta[] = (strtolower($wp_tag->name));
+                    $valid_tags[] = (strtolower($wp_tag->name));
+                } 
+                
+                //If they don't exist, we add them to the array of known invalid tags and also insert an html comment that says so.
+                else if (!$json_data["total_entries"]) { //No total entries means the search was empty.
+                    $bad_tag_meta[] = (strtolower($wp_tag->name));
+                }
+            }
+        }
+        //We need to deal with a case where tags and usetags are both set.
         if (!is_null($tags)) {
             $buffer = explode(',', $tags); //Create an array from the user-supplied string $tags.
             $tagsbuffer = array_unique(array_merge($valid_tags, $buffer)); //Merge that array with $valid_tags
@@ -422,37 +422,37 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
     }
         
         //We now pass valid_tags to the tags variable, and process as if they were tags all along.
-		$tags = implode(',', $tagsbuffer); //Convert the merged array $tags into a string.
-		
-		//We'll store the search data for one day.
-		set_site_transient( '8tracks_meta_tag_search_results', (array_unique($valid_tag_meta)), 60*60*24 );
-		set_site_transient( '8tracks_meta_empty_tag_search_results', (array_unique($bad_tag_meta)), 60*60*24 );
+        $tags = implode(',', $tagsbuffer); //Convert the merged array $tags into a string.
+        
+        //We'll store the search data for one day.
+        set_site_transient( '8tracks_meta_tag_search_results', (array_unique($valid_tag_meta)), 60*60*24 );
+        set_site_transient( '8tracks_meta_empty_tag_search_results', (array_unique($bad_tag_meta)), 60*60*24 );
 }
 
 //Here, we deal with both usecat and usetags being turned on.
-	if (($usecat=="yes") && ($usetags=="yes")) {
-		$valid_combined_meta = array_merge($tagsbuffer, $catsbuffer); //We combine the arrays containing the valid categories and tags.
-		$tags = implode(',', $valid_combined_meta); //We set tags search equal to all the valid categories and post tags.
-	}
+    if (($usecat=="yes") && ($usetags=="yes")) {
+        $valid_combined_meta = array_merge($tagsbuffer, $catsbuffer); //We combine the arrays containing the valid categories and tags.
+        $tags = implode(',', $valid_combined_meta); //We set tags search equal to all the valid categories and post tags.
+    }
 
 //Here, we create a smart_id that will return a collection of similar mixes (as determined by Echo Nest) to the mix given.
-	if (!is_null($similar)) {
-		$the_body = wp_remote_get( esc_url($similar) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
+    if (!is_null($similar)) {
+        $the_body = wp_remote_get( esc_url($similar) . '.xml' .'' . (api_key) . '' . (api_version) . '' );
 
-		//Error handling for mix processing.
-		if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
-			return '';
+        //Error handling for mix processing.
+        if ( is_wp_error( $the_body ) || $the_body['response']['code'] != '200' )
+            return '';
         
-		if ( ! isset( $the_body['body'] ) )
-			return '<!-- invalid response -->';
+        if ( ! isset( $the_body['body'] ) )
+            return '<!-- invalid response -->';
         
-		try {	
-			$xml = new SimpleXMLElement( $the_body['body'] );	
-		} 	
-		catch ( Exception $e ) {
-			return '<!-- invalid xml -->';
-		}   
-		$smart_id = 'similar:' . intval($xml->mix->id) . '';
+        try {   
+            $xml = new SimpleXMLElement( $the_body['body'] );   
+        }   
+        catch ( Exception $e ) {
+            return '<!-- invalid xml -->';
+        }   
+        $smart_id = 'similar:' . intval($xml->mix->id) . '';
 }
 
 //Here, we create the smart id from tags or artist:
@@ -483,7 +483,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }   
     else if (!empty($dj)) { 
         $the_body = wp_remote_get ('http://8tracks.com/' . ($dj) . '.xml' . (api_key) . '' );
-} 	
+}   
     else if (!empty($sort)) {   //This handles collections where only sort is set.
         $the_body = wp_remote_get ('http://8tracks.com/mix_sets/all:' . ($sort) . '.xml' . (api_key) . '' );
 }
@@ -495,9 +495,9 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
     if ( ! isset( $the_body['body'] ) )
         return '<!-- invalid response -->';
 
-    try {	
-        $xml = new SimpleXMLElement( $the_body['body'] );	
-} 	
+    try {   
+        $xml = new SimpleXMLElement( $the_body['body'] );   
+}   
     catch ( Exception $e ) {
         return '<!-- invalid xml -->';
 }
@@ -509,7 +509,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }   
     else if (!is_null($tags)) {
-        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($xml->id) . '/player?platform=wordpress' . ($options) . '" ';
+        $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($smart_id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
 }
@@ -527,7 +527,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/' . ($lists) . ':' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
         $output .= 'border="0" style="border: 0px none;"></iframe></div>';
-} 	
+}   
     else if (!empty($dj)) {  //This handles DJs.
         $output = '<div class="tracks-div"><iframe class="tracks-iframe" src="http://8tracks.com/mix_sets/dj:' . intval($xml->user->id) . '/player?platform=wordpress' . ($options) . '" ';
         $output .= 'width="' . ($width) .'" height="' . ($height) . '" ';
@@ -547,9 +547,9 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
     if ( ! isset( $the_body['body'] ) )
         return '<!-- invalid response -->';
 
-    try {	
-        $xml = new SimpleXMLElement( $the_body['body'] );	
-} 	
+    try {   
+        $xml = new SimpleXMLElement( $the_body['body'] );   
+}   
     catch ( Exception $e ) {
         return '<!-- invalid xml -->';
 }
