@@ -103,7 +103,7 @@ Fixed some very annoying search bugs, and added support for new types of searche
 == Changelog ==
 
 = 1.11 =
-Now using API v3. Fixed a bug that was breaking certain types of tag, dj, and artist searches.  Have also added options to use your WP categories and meta tags in your tag search.  This functionality is found in a separate widget, as well as the visual editor button.  There is also an option to generate a collection of mixes similar to one that you like.  (This last is built on Echo Nest.)  Finally, there's a help system in the visual editor button.  Enjoy!
+Now using API v3. Fixed a bug that was breaking certain types of tag, dj, and artist searches.  Have also added options to use your WP categories and meta tags in your tag search.  This functionality is found in a separate widget, as well as the visual editor button.  A rewrite of the widget code might necessitate reconfiguring your 8tracks widgets.  This is a one time thing (sorry!). There is also an option to generate a collection of mixes similar to one that you like.  (This last is built on Echo Nest.)  Finally, there's a help system in the visual editor button.  Enjoy!
 
 = 1.0 =
 You can now have the shortcode display random mixes by specifying tags, artists, or a specific dj.  These features have also been added to the widget, and the button in the post editor.  Support has also been added for the 8tracks' new collection embeds (Example: http://8tracks.com/mix_sets/collection:645:favorite-artwork/player).  It is also possible to customize the plugin's output via CSS, as I have added an apply_filters call to the output.  Enjoy!
