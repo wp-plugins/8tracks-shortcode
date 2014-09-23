@@ -459,7 +459,7 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
     if ((!is_null($tags)) && (!is_null($sort))) {   //Tag searches with a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
 }   
-    else if ((!is_null($tags)) && (!is_null($sort))) {   //Tag searches without a specified sort.
+    else if ((!is_null($tags)) && (is_null($sort))) {   //Tag searches without a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '';    
 }   
     if ((isset($artist)) && (!is_null($sort))) {   //Artist searches with a specified sort.
