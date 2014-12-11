@@ -2,8 +2,8 @@
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
-Tested up to: 4.0
-Stable tag: 1.11
+Tested up to: 4.1
+Stable tag: 1.12
 License: GPLv2 or later 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,6 +101,9 @@ Also, Queen wrote a catchy song about Flash, but so far nothing about HTML5.
 Fixed some very annoying search bugs, and added support for new types of searches.  Also, a rewrite of the widget code might necessitate reconfiguring your 8tracks widgets.  This is a one time thing (sorry!).  Various other optimizations and fixes.  Enjoy!
 
 == Changelog ==
+
+= 1.12 =
+Fixed a bug with custom sorts. Updated readme to indicate 4.1 compatibility.
 
 = 1.11 =
 Now using API v3. Fixed a bug that was breaking certain types of tag, dj, and artist searches.  Have also added options to use your WP categories and meta tags in your tag search.  This functionality is found in a separate widget, as well as the visual editor button.  A rewrite of the widget code might necessitate reconfiguring your 8tracks widgets.  This is a one time thing (sorry!). There is also an option to generate a collection of mixes similar to one that you like.  (This last is built on Echo Nest.)  Finally, there's a help system in the visual editor button.  Enjoy!
