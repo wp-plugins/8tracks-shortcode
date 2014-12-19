@@ -4,7 +4,7 @@
 Plugin Name: 8tracks Radio: Official Shortcode Plugin
 Plugin URI: http://wordpress.org/extend/plugins/8tracks-shortcode/
 Description: Allows you to embed 8tracks playlists via a shortcode.
-Version: 1.12
+Version: 1.2
 Author: Jonathan Martin
 Author URI: http://www.shh-listen.com
 License: GPL2 (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -48,8 +48,11 @@ sort:        Can be combined with tags or artist, or used on its own. Options ar
 */
 
 //Some useful global values for retrieving mixes.
+//8tracks API Stuff
 define( 'api_key', '?api_key=5b82285b882670e12d33862f4e79cf950505f6ae' );
 define( 'api_version', '&api_version=3' );
+//Last FM API Stuff
+define( 'lastfm_key', '&api_key=a0989377d74feb422661328b500820d0&format=json&limit=1' );
 
 //Begin Custom Editor Button
 function tcustom_addbuttons() {
@@ -102,6 +105,8 @@ function eighttracks_shortcode( $atts, $content) {
         'usetags' => 'no',
         'similar' => NULL,
         'meta_url' => NULL,
+        'lastfm_user' => NULL,
+        'lastfm_type' => NULL,
         ), $atts, '8tracks' ) ); 
 
 // <------------- This is the beginning of the variable creation and input sanitization section. -------------->
@@ -236,6 +241,16 @@ $allowed_usetags_options = array(
 if ( !in_array( $usetags, $allowed_usetags_options ) )
     $usetags = 'no';
 
+//Make sure our Last.fm type selection is valid.
+$allowed_lastfm_types = array(
+    'topartist',
+    'toptag',
+    'weeklyartist',
+    );
+
+if ( !in_array( $lastfm_type, $allowed_lastfm_types ) ) 
+    $lastfm_type = '';
+
 //  <----------- This is the end of the variable creation and input santization section. ------------>
 
 //  <----------- This is the beginning of the section where we format the data to be sent to 8tracks.com ------------>
@@ -268,8 +283,6 @@ $dj_needle = "http://8tracks.com/";
         $dj = preg_replace('/(@|\(|\)|\{|\})/i', '', $dj);  //8tracks drops a bunch of characters from DJ URLs.  Doing that here.
         $dj = preg_replace("/[^(a-zA-Z0-9)|(\-)|(\_)]/i", '-', $dj); //Replace all remaining non-aplhanumeric characters with a "-".
 }
-
-//  <---------- This is the end of the data formatting section. --------->
 
 
 //Let's do some mix set processing:
@@ -455,6 +468,27 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 		$smart_id = 'similar:' . intval($xml->mix->id) . '';
 }
 
+// This is where we fetch data from Last.FM (if that option has been chosen), and convert it to the relevant 8tracks data:
+    if (!is_null($lastfm_user)) {
+        $lastfm_user = preg_replace('/[^a-zA-Z0-9-_]/i', '', $lastfm_user); // Ensure that Last.fm usernames contain only Letters, numbers, hyphens, and underscores.
+
+        if ($lastfm_type=="topartist") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $artist = $json_data->topartists->artist->name;
+    }   else if ($lastfm_type=="toptag") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.gettoptags&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $tags = $json_data->toptags->tag->name;            
+    }   else if ($lastfm_type=="weeklyartist") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklyartistchart&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $artist = $json_data->weeklyartistchart->artist->name;
+    }
+
+}
+//  <---------- This is the end of the data formatting section. --------->
+
 //Here, we create the smart id from tags or artist:
     if ((!is_null($tags)) && (!is_null($sort))) {   //Tag searches with a specified sort.
         $smart_id = 'tags:' . str_replace($badchars, $goodchars, $tags) . '' . ($sort) . '';
@@ -473,8 +507,6 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
         $dj = preg_replace('/(@|\(|\)|\{|\})/i', '', $dj);  //8tracks drops a bunch of characters from DJ URLs.  Doing that here.
         $dj = preg_replace("/[^(a-zA-Z0-9)|(\-)|(\_)]/i", '-', $dj); //Replace all remaining non-aplhanumeric characters with a "-" to account for Tiny_MCE formatting.
 }
-
-
 
 //This handles collections made from smart_id, dj, or sort.
 
