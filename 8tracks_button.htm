@@ -31,6 +31,8 @@ var eighttracks = {
 		var usetags	= $('#eighttracksUsetags').val();
 		var similar = $('#eighttracksSimilar').val();
 		var metaurl = $('#eighttracksSpecificMeta').val();
+		var lastfmuser = $('#eighttracksLastfmUser').val();
+		var lastfmtype = $('#eighttrackslastfmtype').val();
 		var output  = '[8tracks ';
 
 		if(url)     output += 'url="'+url+'" ';
@@ -48,6 +50,8 @@ var eighttracks = {
 		if(usetags)	output += 'usetags="'+usetags+'" ';
 		if(similar)	output += 'similar="'+similar+'" ';
 		if(metaurl) output += 'meta_url="'+metaurl+'" ';
+		if(lastfmuser) output += 'lastfm_user="'+lastfmuser+'" ';
+		if(lastfmtype) output += 'lastfm_type="'+lastfmtype+'" ';
 		
 		output += ']';
 		
@@ -125,6 +129,10 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
     		padding-left: 0;
     		padding-bottom: 5px;
 		}
+		table{
+			line-height: 90%;
+
+		}
 
 		input[type="text"], input[type="number"] {
 			background: #fff;
@@ -143,6 +151,10 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 		select{
 			width: 140px;
+		}
+		
+		p{
+			line-height: 90%;
 		}
 
 		#insert_shortcode{
@@ -171,7 +183,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 
 	<p><strong>Embed Type</strong></p>
 				
-	<table width="100%">
+	<table width="100%" cellspacing="0">
 		<tr>
 			<td width="40%">
 				<label><input type="radio" checked="checked" name="embed_type" value="mix" />Mix</label><br />
@@ -181,6 +193,7 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 				<label><input type="radio" name="embed_type" value="tags" />Tag Search</label><br />
 				<label><input type="radio" name="embed_type" value="similar" />Similar Mixes</label><br />
 				<label><input type="radio" name="embed_type" value="meta" />WP Meta</label><br />
+				<label><input type="radio" name="embed_type" value="lastfm" />Last.fm</label><br />
 			</td>
 			<td width="60%" id="embed_options" valign="top">
 				<div id="mix_options">
@@ -252,13 +265,27 @@ tinyMCEPopup.onInit.add(eighttracks.init, eighttracks);
 						<option value="popular">Popular</option>
 					</select>
 				</div>
+
+				<div id="lastfm_options" style="display: none;">
+					<label for="eighttracksLastfmUser">Last.fm username</label><br />
+					<input id="eighttracksLastfmUser" type="text" value="" placeholder="Enter a Last.fm username" /><br /><br />
+					<label for="eighttrackslastfmtype">What Last.fm data should I use?</label><br />
+					<select name="eighttrackslastfmtype" id="eighttrackslastfmtype">
+						<option value="usertopartist">User's top artist</option>
+						<option value="usertoptag">User's top tag</option>
+						<option value="weeklyartist">User's top artist (this week)</option>
+						<option value="charthypedartist">Last.fm's most hyped artist</option>
+						<option value="charttopartist">Last.fm's current top artist</option>
+						<option value="charttoptag">Last.fm's current top tag</option>
+					</select>
+				</div>
 			</td>
 		</tr>
 	</table>
 
 	<p><strong>Options</strong></p>
 
-	<table width="100%">
+	<table width="100%" cellspacing="0">
 		<tr>
 			<td width="40%"><label for="eighttracksWidth">Width</label></td>
 			<td width="60%"><input id="eighttracksWidth" type="number" value="" placeholder="300" /> pixels</td>

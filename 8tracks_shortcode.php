@@ -243,9 +243,12 @@ if ( !in_array( $usetags, $allowed_usetags_options ) )
 
 //Make sure our Last.fm type selection is valid.
 $allowed_lastfm_types = array(
-    'topartist',
-    'toptag',
+    'usertopartist',
+    'usertoptag',
     'weeklyartist',
+    'charttopartist',
+    'charttoptag',
+    'charthypedartist'
     );
 
 if ( !in_array( $lastfm_type, $allowed_lastfm_types ) ) 
@@ -469,14 +472,14 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 }
 
 // This is where we fetch data from Last.FM (if that option has been chosen), and convert it to the relevant 8tracks data:
-    if (!is_null($lastfm_user)) {
+    if (!is_null($lastfm_user) || (!is_null($lastfm_type))) {
         $lastfm_user = preg_replace('/[^a-zA-Z0-9-_]/i', '', $lastfm_user); // Ensure that Last.fm usernames contain only Letters, numbers, hyphens, and underscores.
 
-        if ($lastfm_type=="topartist") {
+        if ($lastfm_type=="usertopartist") {
             $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
             $json_data = json_decode($json_body['body']);
             $artist = $json_data->topartists->artist->name;
-    }   else if ($lastfm_type=="toptag") {
+    }   else if ($lastfm_type=="usertoptag") {
             $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.gettoptags&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
             $json_data = json_decode($json_body['body']);
             $tags = $json_data->toptags->tag->name;            
@@ -484,9 +487,21 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
             $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.getweeklyartistchart&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
             $json_data = json_decode($json_body['body']);
             $artist = $json_data->weeklyartistchart->artist->name;
+    }   else if ($lastfm_type=="charthypedartist") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=chart.gethypedartists' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $artist = $json_data->artists->artist->name;
+    }   else if ($lastfm_type=="charttoptag") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=chart.gettoptags' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $tags = $json_data->tags->tag->name;            
+    }   else if ($lastfm_type=="charttopartist") {
+            $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=chart.gettopartists' . (lastfm_key) . ''  );
+            $json_data = json_decode($json_body['body']);
+            $artist = $json_data->artists->artist->name;
     }
-
 }
+
 //  <---------- This is the end of the data formatting section. --------->
 
 //Here, we create the smart id from tags or artist:
