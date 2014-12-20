@@ -254,6 +254,7 @@ $allowed_lastfm_types = array(
 if ( !in_array( $lastfm_type, $allowed_lastfm_types ) ) 
     $lastfm_type = '';
 
+
 //  <----------- This is the end of the variable creation and input santization section. ------------>
 
 //  <----------- This is the beginning of the section where we format the data to be sent to 8tracks.com ------------>
@@ -474,6 +475,10 @@ $bad_tag_meta = (get_site_transient( '8tracks_meta_empty_tag_search_results'));
 // This is where we fetch data from Last.FM (if that option has been chosen), and convert it to the relevant 8tracks data:
     if (!is_null($lastfm_user) || (!is_null($lastfm_type))) {
         $lastfm_user = preg_replace('/[^a-zA-Z0-9-_]/i', '', $lastfm_user); // Ensure that Last.fm usernames contain only Letters, numbers, hyphens, and underscores.
+        //An extra check to make sure that lastfm_user will return something, if it's the only option given
+        if ( $lastfm_type=='' ) {
+            $lastfm_type = "usertopartist";
+        }
 
         if ($lastfm_type=="usertopartist") {
             $json_body = wp_remote_get( 'http://ws.audioscrobbler.com/2.0/?method=user.gettopartists&user=' . ($lastfm_user) . '' . (lastfm_key) . ''  );
