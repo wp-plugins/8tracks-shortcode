@@ -19,10 +19,13 @@ class eighttracks_basic_widget extends WP_Widget {
     $artist     = trim($instance['eighttracks_artist']);
     $dj         = trim($instance['eighttracks_dj']);
     $collection = trim($instance['eighttracks_collection']);
+    $list       = trim($instance['eighttracks_list']);
     $sort       = trim($instance['eighttracks_sort']);
     $smart_id   = trim($instance['eighttracks_smartid']);
     $is_widget  = trim($instance['eighttracks_is_widget']);
     $similar    = trim($instance['eighttracks_similar']);
+    $lastfmuser = trim($instance['eighttracks_lastfmuser']);
+    $lastfmtype = trim($instance['eighttracks_lastfmtype']);
 
 // Initializing the output code.
     echo ($args['before_widget']);
@@ -38,8 +41,11 @@ class eighttracks_basic_widget extends WP_Widget {
     else if ($similar != '') {
         echo do_shortcode('[8tracks similar="'.($similar).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
+    else if ($lastfmuser != '') {
+        echo do_shortcode('[8tracks lastfm_user="'.($lastfmuser).'" lastfm_type="'.($lastfmtype).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  sort="' . ($sort) . '" is_widget="yes"]');
+}
     else if ((empty($url)) && (!empty($dj))) {
-        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
+        echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" lists="'.($list).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
     else if ((empty($url)) && (!empty($tags))) {
         echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" tags="'.($tags).'"  collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
@@ -71,6 +77,9 @@ class eighttracks_basic_widget extends WP_Widget {
     $instance['eighttracks_smartid']        = strip_tags($new_instance['eighttracks_smartid']);
     $instance['eighttracks_is_widget']      = strip_tags($new_instance['eighttracks_is_widget']);
     $instance['eighttracks_similar']        = strip_tags($new_instance['eighttracks_similar']);
+    $instance['eighttracks_lastfmtype']     = strip_tags($new_instance['eighttracks_lastfmtype']);
+    $instance['eighttracks_lastfmuser']     = strip_tags($new_instance['eighttracks_lastfmuser']);
+    $instance['eighttracks_list']           = strip_tags($new_instance['eighttracks_list']);
     
     return $instance;
   }
@@ -90,9 +99,12 @@ class eighttracks_basic_widget extends WP_Widget {
     $dj         = strip_tags($instance['eighttracks_dj']);
     $collection = strip_tags($instance['eighttracks_collection']);
     $sort       = strip_tags($instance['eighttracks_sort']);
+    $list       = strip_tags($instance['eighttracks_list']);
     $smart_id   = strip_tags($instance['eighttracks_smartid']);
     $is_widget  = strip_tags($instance['eighttracks_is_widget']);
     $similar    = strip_tags($instance['eighttracks_similar']);
+    $lastfmuser = strip_tags($instance['eighttracks_lastfmuser']);
+    $lastfmtype = strip_tags($instance['eighttracks_lastfmtype']);
     
     ?>
 
@@ -109,6 +121,7 @@ class eighttracks_basic_widget extends WP_Widget {
         <option value="dj" <?php echo($embed_type == 'dj' ? 'selected' : '') ?>>DJ's latest mixes</option>
         <option value="artist" <?php echo($embed_type == 'artist' ? 'selected' : '') ?>>Artist search</option>
         <option value="tags" <?php echo($embed_type == 'tags' ? 'selected' : '') ?>>Tag Search</option>
+        <option value="lastfm" <?php echo($embed_type == 'lastfm' ? 'selected' : '') ?>>Last.fm search</option>
     </select>
     </p>
     
@@ -134,15 +147,16 @@ class eighttracks_basic_widget extends WP_Widget {
         
         <div class="eighttracks_dj_options" style="display: none;">
             Specific DJ:<br />
-            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" />
-            <!--label for="eighttracksList">Show:</label>
-            <select name="eighttracksList" id="eighttracksList" style="width: 50%;">
-                <option value="">DJ's latest mixes</option>
-                <option value="liked">Liked</option>
-                <option value="listen_later">Listen Later</option>
-                <option value="listened">History</option>
-                <option value="recommended">Recommended</option>
-            </select-->
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_dj'); ?>" name="<?php echo $this->get_field_name('eighttracks_dj'); ?>" value="<?php echo esc_attr($dj); ?>" /><br /><br />
+            <label for="<?php echo $this->get_field_id('eighttracks_list'); ?>">What type of collection?
+            <select class='widefat' id="<?php echo $this->get_field_id('eighttracks_list'); ?>"
+                name="<?php echo $this->get_field_name('eighttracks_list'); ?>" type="text">
+                <option <?php selected( $instance['eighttracks_list'], ''); ?> value="mostrecent">DJ's latest mixes</option>
+                <option <?php selected( $instance['eighttracks_list'], 'liked'); ?> value="liked">DJ's liked mixes</option>
+                <option <?php selected( $instance['eighttracks_list'], 'listen_later'); ?> value="listen_later">DJ's 'Listen Later' mixes</option>
+                <option <?php selected( $instance['eighttracks_list'], 'listened'); ?> value="listened">DJ's history</option>
+                <option <?php selected( $instance['eighttracks_list'], 'recommended'); ?> value="recommended">Recommendations</option>
+            </select>
         </div>
 
         <div class="eighttracks_tags_options" style="display: none;">
@@ -159,6 +173,21 @@ class eighttracks_basic_widget extends WP_Widget {
             <br />
             Sort: <span class="color: #ccc;">(optional): hot, new, popular
             <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_sort'); ?>" name="<?php echo $this->get_field_name('eighttracks_sort'); ?>" value="<?php echo esc_attr($sort); ?>" />
+        </div>
+        <div class="eighttracks_lastfm_options" style="display: none;">
+            <br />
+            Last.fm username:
+            <input type="text" class="widefat" id="<?php echo $this->get_field_id('eighttracks_lastfmuser'); ?>" name="<?php echo $this->get_field_name('eighttracks_lastfmuser'); ?>" value="<?php echo esc_attr($lastfmuser); ?>" /><br /><br />
+            <label for="<?php echo $this->get_field_id('eighttracks_lastfmtype'); ?>">What should I use to construct the collection?
+            <select class='widefat' id="<?php echo $this->get_field_id('eighttracks_lastfmtype'); ?>"
+                name="<?php echo $this->get_field_name('eighttracks_lastfmtype'); ?>" type="text">
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'usertopartist'); ?> value="usertopartist">User's Top Artist</option>
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'usertoptag'); ?> value="usertoptag">User's Top Tag</option>
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'weeklyartist'); ?> value="weeklyartist">User's Top Weekly Artist</option>
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'charttopartist'); ?> value="charttopartist">Last.fm's Top Artist</option>
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'charttoptag'); ?> value="charttoptag">Last.fm's Top Tag</option>
+                <option <?php selected( $instance['eighttracks_lastfmtype'], 'charthypedartist'); ?> value="charthypedartist">Last.fm's Most-Hyped Artist</option>
+            </select>
         </div>
         </p>
 

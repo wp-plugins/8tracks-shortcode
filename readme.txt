@@ -102,6 +102,9 @@ Fixed some very annoying search bugs, and added support for new types of searche
 
 == Changelog ==
 
+= 1.20 =
+Added a new option that allows you to pull data from Last.fm to create collections of 8tracks mixes. This lives in the editor button and widget interfaces respectively.  I've also added the ability to use list options with DJ collections in the widget (e.g. recommended mixes, listening history, etc.)Enjoy! 
+
 = 1.12 =
 Fixed a bug with custom sorts. Updated readme to indicate 4.1 compatibility.
 
