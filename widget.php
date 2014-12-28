@@ -41,9 +41,6 @@ class eighttracks_basic_widget extends WP_Widget {
     else if ($similar != '') {
         echo do_shortcode('[8tracks similar="'.($similar).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  collection="no" sort="' . ($sort) . '" is_widget="yes"]');
 }
-    else if ($lastfmuser != '') {
-        echo do_shortcode('[8tracks lastfm_user="'.($lastfmuser).'" lastfm_type="'.($lastfmtype).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'"  sort="' . ($sort) . '" is_widget="yes"]');
-}
     else if ((empty($url)) && (!empty($dj))) {
         echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" flash="'.($flash).'" dj="'.($dj).'" lists="'.($list).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
 }
@@ -55,6 +52,12 @@ class eighttracks_basic_widget extends WP_Widget {
 }
     else if ( (empty($url)) && (!empty($smart_id))) {
         echo do_shortcode('[8tracks height="'.($height).'" width="'.($width).'" smart_id="'.($smart_id).'" collection="yes" sort="' . ($sort) . '" is_widget="yes"]');
+}
+    else if (!empty($lastfmuser))  {
+        echo do_shortcode('[8tracks lastfm_user="'.($lastfmuser).'" lastfm_type="'.($lastfmtype).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'" sort="' . ($sort) . '" is_widget="yes"]');
+}
+    else if ((empty($lastfmuser)) && (!empty($lastfmtype)))  {
+        echo do_shortcode('[8tracks lastfm_type="'.($lastfmtype).'" height="'.($height).'" width="'.($width).'" flash="'.($flash).'" sort="' . ($sort) . '" is_widget="yes"]');
 }
     echo '</div>';
     echo ($args['after_widget']);
