@@ -70,7 +70,7 @@ function register_tcustom_button($buttons) {
 } 
 
 function add_tcustom_tinymce_plugin($plugin_array) {
-    $plugin_array['eighttracks_button'] = WP_PLUGIN_URL.'/8tracks-shortcode/8tracks.js';
+    $plugin_array['eighttracks_button'] = plugins_url().'/8tracks-shortcode/8tracks.js';
     return $plugin_array;
 }
 
@@ -78,7 +78,7 @@ add_action('init', 'tcustom_addbuttons');
 //End Custom Editor Button
 
 function add_widget_script() {
-    wp_enqueue_script( 'widgets.php', WP_PLUGIN_URL.'/8tracks-shortcode/widget.js');
+    wp_enqueue_script( 'widgets.php', plugins_url().'/8tracks-shortcode/widget.js');
 }
 
 add_action('admin_enqueue_scripts', 'add_widget_script');
