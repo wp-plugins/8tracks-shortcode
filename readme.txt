@@ -3,7 +3,7 @@ Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
 Tested up to: 4.2
-Stable tag: 1.12
+Stable tag: 1.20
 License: GPLv2 or later 
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
