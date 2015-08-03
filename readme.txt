@@ -2,36 +2,36 @@
 Contributors: songsthatsaved
 Tags: music, 8tracks, mixtape, shortcode
 Requires at least: 3.0
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.20
-License: GPLv2 or later 
+License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Allows you to embed mixtapes from 8tracks.com via a shortcode.
 
 == Description ==
 
-Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com in your posts and on your sidebar.  
+Much like other WordPress shortcodes do for YouTube or Vimeo, this plugin allows you to embed mixtapes from 8tracks.com in your posts and on your sidebar.
 
 == Usage ==
 
-Some useful syntax examples: 
+Some useful syntax examples:
 
-1. A Specific Mix [8tracks url=""]  
-2. A Specific DJ [8tracks dj="some username"]  
-3. A Specific Collection [8tracks smart_id="collection url"]  
-4. A Collection of Mixes similar to the one you provide [8tracks similar=""] 
+1. A Specific Mix [8tracks url=""]
+2. A Specific DJ [8tracks dj="some username"]
+3. A Specific Collection [8tracks smart_id="collection url"]
+4. A Collection of Mixes similar to the one you provide [8tracks similar=""]
 5. Random Collection from Tags [8tracks tags="some, tags, here"]
 6. Random Collection using WP Category Name(s) as Tags [8tracks usecat="yes"]
 7. Random Collection by Artist [8tracks artist="some artist"]
 8. Random Collection from 8tracks' Charts [8tracks sort="recent, hot, popular"]
 
 Parameters:
-	
+
 You can also add the 'height', 'width', 'flash', 'playops', 'artist', 'dj', 'similar', 'sort', 'smart_id', 'usecat', 'usetags', and 'tags' parameters to the shortcode.
 (There's a help system in the visual editor button.  I'd recommend looking there for useful examples.)
 
-This would look like: 
+This would look like:
 
 [8tracks url="" height="" width="" playops="" flash="" tags="" artist="" dj="" sort="" smart_id=""]
 
@@ -39,15 +39,15 @@ Height and Width are optional, and default to 250 and 300 respectively.
 Height and Width for Collections defaults to 500 and 500.
 Width for widgets is 100%.
 
-Flash allows you to choose whether you want to use the new HTML5 player (default setting), or 
+Flash allows you to choose whether you want to use the new HTML5 player (default setting), or
 whether you'd like to stick with Flash.  To do this, add flash="yes" into your shortcode.
-	
-Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.  
+
+Playops is optional, and can be set to 'shuffle', 'autoplay', or 'shuffle+autoplay'.
 	These shuffle your mix, autostart your mix, or both.
-		
-	Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.  
+
+	Note about shuffle: Shuffle is done for each user - on first play - by 8tracks.
 	It's a randomized mix, but you can still exit and resume where you were.
-	
+
 NOTE: url cannot be used in conjunction with tags, artist, dj, or smart_id. This should be fairly straightforward, as these
 allow you to search for sets of mixes, and url specifies a particular mix.
 
@@ -74,8 +74,8 @@ That's it!  Enjoy!
 
 = Can I customize the plugin's output? =
 
-Yes!  To help you customize the output via CSS, I've added a div around the iframes, which has this id: "tracks-div."  
-The iframe has a class also: "tracks-iframe."  
+Yes!  To help you customize the output via CSS, I've added a div around the iframes, which has this id: "tracks-div."
+The iframe has a class also: "tracks-iframe."
 
 Just add your custom CSS, and you're good to go!
 
@@ -83,14 +83,14 @@ Just add your custom CSS, and you're good to go!
 
 This one's a little more complicated, but not too cumbersome. From your dashboard, go to plugins > editor > 8tracks-shortcode > 8tracks-shortcode.php.
 
-Now, search for " 'flash' => '' " and replace it with " 'flash' => 'yes' ". 
+Now, search for " 'flash' => '' " and replace it with " 'flash' => 'yes' ".
 (Ignore the double quotation marks.)
 
 That's it.  You will now default to Flash instead of HTML5.
 
 You should note that 8tracks is no longer updating the Flash player, even though they plan to keep it around for now.
 
-= Is there any practical reason to change this? = 
+= Is there any practical reason to change this? =
 
 Some themes render the iframe that the HTML5 player uses strangely, and then nothing plays.  In these cases,
 fallback to Flash is the preferred option.  Additionally, Flash is conspicuously absent on many Apple products.  HTML5 is not. :)
@@ -103,7 +103,7 @@ Fixed some very annoying search bugs, and added support for new types of searche
 == Changelog ==
 
 = 1.20 =
-Added a new option that allows you to pull data from Last.fm to create collections of 8tracks mixes. This lives in the editor button and widget interfaces respectively.  I've also added the ability to use list options with DJ collections in the widget (e.g. recommended mixes, listening history, etc.)Enjoy! 
+Added a new option that allows you to pull data from Last.fm to create collections of 8tracks mixes. This lives in the editor button and widget interfaces respectively.  I've also added the ability to use list options with DJ collections in the widget (e.g. recommended mixes, listening history, etc.)Enjoy!
 
 = 1.12 =
 Fixed a bug with custom sorts. Updated readme to indicate 4.1 compatibility.
@@ -129,7 +129,7 @@ This version is the first pass at using 8tracks' HTML5 player (player_v3_univers
 If you find any bugs, please let me know.  I'd love to get us away from Flash for good, one day. :)
 
 = 0.95 =
-Updated the plugin to append an API Key to requests for xml data from 8tracks (in keeping with their new key requirement).  
+Updated the plugin to append an API Key to requests for xml data from 8tracks (in keeping with their new key requirement).
 This should resolve the "blank mix" problem, and let the rock (or hip hop/dubstep/smooth jazz) continue!
 
 = 0.9 =
@@ -149,7 +149,7 @@ Removed unused 'url' value from 8tracks_shortcode array.
 
 = 0.6 =
 Fixed typo.
-Added some code to convert all URL values to the numerical id style link to the same mix.  
+Added some code to convert all URL values to the numerical id style link to the same mix.
 
 
 = 0.3 =
